@@ -124,8 +124,18 @@ class UserController extends Controller {
         ]);
         return redirect("/user");
     }
+
+    public function undo_delete(Request $request,$id){
+        $user = User::findOrFail($id);
+        $user->update([
+            'is_deleted' => 0,
+        ]);
+        return redirect("/user");
+    }
+
     public function mutiple_delete(Request $request){
-        $ids = $request->ids;
+        // $ids = $request->ids;
+        $ids = '6,7,8';
         User::whereIn('id',explode(",",$ids))->update([
             'is_deleted' => 1,
         ]);

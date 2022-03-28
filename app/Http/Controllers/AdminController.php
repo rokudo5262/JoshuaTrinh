@@ -74,7 +74,7 @@ class AdminController extends Controller {
         return redirect('change_password');     
     }
 
-    public function profile(){
+    public function profile() {
         return view('profile');
     }
 
@@ -84,10 +84,9 @@ class AdminController extends Controller {
         ]);
         $files = $request->file('profile_picture');
         $name = $files->getClientOriginalName();
-        
         $profile_picture = User::find(auth()->user()->id)->update(['profile_picture'=> $name]);
         $a = Storage::putFileAs('public/image/'.auth()->user()->id, $files,$name);
-        print_r($a);
+        return redirect('user');
     }
 
     public function home() {

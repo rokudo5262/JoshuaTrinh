@@ -1,7 +1,9 @@
 <!doctype html>
-<html lang="{{ app()->getLocale() }}">
+<html>
 <head>
-  <title>Create Product | Product Store</title>
+  <title>Update User</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/user.css') }}" />
+  <script src="{{ asset('js/user.js') }}"></script>
   <!-- styling etc. -->
 <body>
     @include('header')
@@ -33,8 +35,9 @@
             </form>
         </div>
     </div>
-    <div class="flex-center position-ref full-height">
-        <a type="button" href="{{ config('app.url')}}/user">back</a>
+    <div class="content">
+        <a type="button" class="button" href="{{ config('app.url')}}/user">BACK</a>
     </div>
+    @include('footer')
 </body>
 </html>

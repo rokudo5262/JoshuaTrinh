@@ -1,11 +1,8 @@
 <html>
     <head>
-        <style>
-            .profile_pic{
-                height: 50px;
-                width: 50px;
-            }
-        </style>
+        <title>User Detail</title>
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/user.css') }}" />
+        <script src="{{ asset('js/user.js') }}"></script>
     </head>
     <body>
         @include('header')
@@ -31,8 +28,9 @@
                 @endforeach
         </div>
         <hr>
-        <div class="flex-center position-ref full-height">
-            <a type="button" href="{{ config('app.url')}}/user">back</a>
-        </div>
+        <div class="content">
+        <a type="button" class="button" href="{{ config('app.url')}}/user">BACK</a>
+    </div>
+        @include('footer')
 </body>
 </html>
