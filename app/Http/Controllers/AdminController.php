@@ -105,6 +105,6 @@ class AdminController extends Controller {
     }
     
     public function under_construction() {
-        return view('404');
+        return view('under_construction');
     } 
 }

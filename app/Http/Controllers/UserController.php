@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Post;
@@ -11,7 +12,10 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller {
     public function __construct() {
-        $this->middleware('auth');
+        $this->middleware([
+            'auth',
+            'throttle:20,1',
+            ]);
     }
     /**
      * Display a listing of the resource.
@@ -26,6 +30,7 @@ class UserController extends Controller {
             'all_deleted_users' => $user_deleted,
         ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -68,13 +73,11 @@ class UserController extends Controller {
      */
     public function show($id) {
         $user = User::findOrFail($id);
-        $full_name = $user->get_user_full_name();
         $posts = $user->post()->get();
         // $posts = Post::where("user_id", "=", $user->id)->get();
         return view("user.detail_user",[
             'user' => $user,
             'posts' => $posts,
-            'full_name' => $full_name,
         ]);
 
     }
@@ -121,10 +124,18 @@ class UserController extends Controller {
         ]);
         return redirect("/user");
     }
-    public function destroy($id){
-        $user = User::findOrFail($id);
-        $user -> delete();
+    public function mutiple_delete(Request $request){
+        $ids = $request->ids;
+        User::whereIn('id',explode(",",$ids))->update([
+            'is_deleted' => 1,
+        ]);
+        // return response()->json(['success'=>"Products Deleted successfully."]);
         return redirect("/user");
+    }
+    public function destroy($id){
+            $user = User::findOrFail($id);
+            $user -> delete();
+            return redirect("/user");
     }
     public function search(Request $request) {
         return view("user.search_user");
