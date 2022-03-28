@@ -117,7 +117,7 @@ class UserController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete(Request $request,$id){
+    public function delete(Request $request,$id) {
         $user = User::findOrFail($id);
         $user->update([
             'is_deleted' => 1,
@@ -125,7 +125,7 @@ class UserController extends Controller {
         return redirect("/user");
     }
 
-    public function undo_delete(Request $request,$id){
+    public function undo_delete(Request $request,$id) {
         $user = User::findOrFail($id);
         $user->update([
             'is_deleted' => 0,
@@ -133,7 +133,7 @@ class UserController extends Controller {
         return redirect("/user");
     }
 
-    public function mutiple_delete(Request $request){
+    public function mutiple_delete(Request $request) {
         // $ids = $request->ids;
         $ids = '6,7,8';
         User::whereIn('id',explode(",",$ids))->update([
@@ -142,11 +142,13 @@ class UserController extends Controller {
         // return response()->json(['success'=>"Products Deleted successfully."]);
         return redirect("/user");
     }
-    public function destroy($id){
+
+    public function destroy($id) {
             $user = User::findOrFail($id);
             $user -> delete();
             return redirect("/user");
     }
+
     public function search(Request $request) {
         return view("user.search_user");
     }

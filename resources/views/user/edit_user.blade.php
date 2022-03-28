@@ -36,7 +36,7 @@
         </div>
     </div>
     <div class="content">
-        <a type="button" class="button" href="{{ config('app.url')}}/user">BACK</a>
+        <a type="button" class="button button-info" href="{{ config('app.url')}}/user">BACK</a>
     </div>
     @include('footer')
 </body>

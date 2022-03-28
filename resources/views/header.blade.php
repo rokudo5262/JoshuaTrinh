@@ -1,6 +1,6 @@
 <div class="section-header header">
     @if(auth()->user()->profile_picture == null)
-        <img src="image/avatar.png" class="profile_pic" alt="alt text">
+        <img src="/image/avatar.png" class="profile_pic" alt="alt text">
     @else
         <img src="storage/image/{{auth()->user()->id}}/{{ auth()->user()->profile_picture }}" class="profile_pic" alt="alt text"> 
     @endif
