@@ -7,6 +7,7 @@
 <body>
     @include('header')
     <a type="button" href="{{ config('app.url')}}/user/create">Create user</a>
+    <a type="button" href="{{ config('app.url')}}/under_construction">multiple delete</a>
     <div class="flex-center position-ref full-height">
         <div class="content">
             <h1>Users List</h1>

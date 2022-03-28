@@ -10,7 +10,10 @@ class PostController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware([
+            'auth',
+            'throttle:20,1',
+            ]);
     }
     /**
      * Display a listing of the resource.
