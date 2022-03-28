@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="{{ app()->getLocale() }}">
+<head>
+  <title>Create Product | Product Store</title>
+  <!-- styling etc. -->
+<body>
+    @include('header')
+    <div class="flex-center position-ref full-height">  
+        <div class="content">
+            <form method="POST" action="{{ config('app.url')}}/user/update/{{$user->id}}">
+                @csrf
+                <h1>add user</h1>
+                <div class="form-input">
+                    <label>first_name</label>
+                    <input type="text" name="first_name" value="{{$user->first_name}}">
+                </div>
+                <div class="form-input">
+                    <label>last_name</label>
+                    <input type="text" name="last_name" value="{{$user->last_name}}">
+                </div>
+                <div class="form-input">
+                    <label>email</label>
+                    <input type="text" name="email" value="{{$user->email}}">
+                </div>
+                <div class="form-input">
+                    <label>date of birth</label>
+                    <input type="text" name="date_of_birth" value="{{$user->date_of_birth}}">
+                </div>
+                <div class="form-input">
+                    <label>password</label> <input type="password" name="password">
+                </div>
+                <button type="submit">Edit User</button>
+            </form>
+        </div>
+    </div>
+    <div class="flex-center position-ref full-height">
+        <a type="button" href="{{ config('app.url')}}/user">back</a>
+    </div>
+</body>
+</html>
