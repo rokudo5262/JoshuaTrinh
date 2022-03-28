@@ -16,9 +16,12 @@
                     <td>id</td>
                     <td>first name</td>
                     <td>last name</td>
+                    <td>full name</td>
                     <td>date of birth</td>
                     <td>email</td>
                     <td>password</td>
+                    <td>created at</td>
+                    <td>update at</td>
                     <td>Action</td>
                 </thead>
                 <tbody>
@@ -28,9 +31,12 @@
                             <td>{{ $user->id }}</td>
                             <td>{{ $user->first_name }}</td>
                             <td>{{ $user->last_name}}</td>
+                            <td>{{ $user->full_name}}</td>
                             <td>{{ $user->date_of_birth}}</td>
                             <td>{{ $user->email}}</td>
                             <td>{{ $user->password}}</td>
+                            <td>{{ $user->created_at}}</td>
+                            <td>{{ $user->update_at}}</td>
                             <td>
                                 <a type="button" href="{{ config('app.url')}}/user/show/{{ $user->id }}">detail</a>
                                 <a type="button" href="{{ config('app.url')}}/user/edit/{{ $user->id }}">edit</a>

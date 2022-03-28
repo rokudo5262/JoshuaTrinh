@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -17,7 +19,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('post.viewpost');
+        $posts = Post::all();
+        foreach($posts as $post){
+            echo  (Str::slug($post->title,'_')."\n");
+            }
+        
+        // return view('post.viewpost');
     }
 
     /**

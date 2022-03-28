@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Carbon\Carbon;
 
 
 class User extends Authenticatable
@@ -21,11 +22,13 @@ class User extends Authenticatable
     protected $fillable = [
         'first_name',
         'last_name',
+        'full_name',
         'date_of_birth',
         'profile_picture',
         'email',
         'password',
-        'is_deleted'
+        'is_admin',
+        'is_deleted',
     ];
 
     /**
@@ -37,6 +40,10 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    protected $dates = [
+        'created_at', 
+        'update_at', 
+    ];
 
     /**
      * The attributes that should be cast.
@@ -47,10 +54,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function get_user_full_name(){
+    public function getFullNameAttribute(){
         return "{$this->first_name} {$this->last_name}";
     }
+
     public function post() {
         return $this->hasMany('App\Models\Post');
+    }
+
+    public function getCreatedAtAttribute($value) {
+        return Carbon::parse($value)->format('d-m-Y');
+    }
+
+    public function getUpdateAtAttribute($value) {
+        return Carbon::parse($value)->format('d-m-Y');
     }
 }
