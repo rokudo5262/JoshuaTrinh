@@ -3,6 +3,7 @@
     <title>Create Post</title>
 </head>
 <body>
+<div class="alert alert-success" style="display:none"></div>
 <div class="container">
     <div class="row">
         <h1>Create Post</h1>

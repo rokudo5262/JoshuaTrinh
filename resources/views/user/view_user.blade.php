@@ -2,6 +2,11 @@
 <html>
 <head>
     <title>View User</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                crossorigin="anonymous">
+    </script>
     <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/user.css') }}" />
     <script src="{{ asset('js/user.js') }}"></script>
 </head>
@@ -9,9 +14,15 @@
     @include('header')
     <div class="content">
         <a type="button" class="button button-primary" href="{{ config('app.url')}}/user/create">Create user</a>
-        <!-- <a type="button" class="button button-primary" href="{{ config('app.url')}}/under_construction">multiple delete</a> -->
+        <form id="solf_delete_multiple_user">
+            @csrf
+            <input type="hidden" id="ids" value="">
+            <button type="summit" class="button button-primary">multiple delete</button>
+        </form>
     </div>
     <div class="content">
+    <div class="alert alert-success" style="display:none"></div>
+    <form>
         <h2>Users List</h2>
         @if (count($all_users) == 0)
             <p>No data to display</p>
@@ -30,7 +41,7 @@
                 </thead>
                 <tbody>
                     @foreach ($all_users as $user)
-                        <tr>
+                        <tr id="{{ $user->id }}">
                             <td><input type="checkbox" id="{{ $user->id }}" value="{{ $user->id }}"></td>
                             <td>{{ $user->id }}</td>
                             <td>{{ $user->first_name }}</td>
@@ -49,12 +60,12 @@
             </table>
         @endif
     </div>
-    <div class="content">
+    <!-- <div class="content">
         <h2>Deleted Users List</h2>
         @if (count($all_deleted_users) == 0)
             <p>No data to display</p>
         @else
-            <table class="table">
+            <table class="table" id="user_table">
                 <caption>deleted Users</caption>    
                 <thead>
                     <td></td>
@@ -85,7 +96,42 @@
                 </tbody>
             </table>
         @endif
-    </div>
+    </div> -->
     @include('footer')
+<script>
+jQuery(document).ready(function(){
+    jQuery("input[type='checkbox']").click(function(){
+            var val = [];
+            jQuery(':checkbox:checked').each(function(i){
+            val[i] = $(this).val();
+
+        });
+        jQuery('#ids').val(val.join(','));
+    });
+    jQuery('#solf_delete_multiple_user').submit(function(event){
+        event.preventDefault();
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    jQuery.ajax({
+        
+        method: 'POST',
+        url: "user/mutiple_delete",
+        enctype: 'multipart/form-data',
+        data: {
+            _token: "{{ csrf_token() }}",
+            ids: jQuery('#ids').val(),
+        },
+        success: function(result){
+            jQuery('.alert').show();
+            jQuery('.alert').html(result.success);      
+        },
+    });
+});
+});
+
+</script>
 </body>
 </html>

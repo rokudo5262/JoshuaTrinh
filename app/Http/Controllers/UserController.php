@@ -48,21 +48,26 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        $validated = $request->validate([
-            'email'=>'required|email',
-            'password'=>'required|min:9|max:100',
-        ]);
-        $new_user = User::create([
-            'profile_picture' => $request->get('profile_picture'),
-            'first_name' => Str::ucfirst($request->get('first_name')),
-            'last_name' => Str::ucfirst($request->get('last_name')),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-        ]);
-        $files = $request->file('profile_picture');
-        $name = $files->getClientOriginalName();
-        Storage::putFileAs('public/image/'.$new_user->id, $files,$name);
-        return redirect('/user');
+        // $validated = $request->validate([
+        //     'email'=>'required|email',
+        //     'password'=>'required|min:9|max:100',
+        // ]);
+        if($request->ajax()) {
+            $new_user = User::create([
+                // 'profile_picture' => $request->get('profile_picture'),
+                'first_name'    => Str::ucfirst($request->get('first_name')),
+                'last_name'     => Str::ucfirst($request->get('last_name')),
+                'email'         => $request->get('email'),
+                'password'      => Hash::make($request->get('password')),
+            ]);
+            // $files = $request->file('profile_picture');
+            // $name = $files->getClientOriginalName();
+            // Storage::putFileAs('public/image/'.$new_user->id, $files,$name);
+            // return redirect('/user');
+            return response()->json(['success'=>'Data is successfully added']);
+        } else {
+            return response()->json(['error'=>'Error']);
+        }  
     }
 
     /**
@@ -134,13 +139,11 @@ class UserController extends Controller {
     }
 
     public function mutiple_delete(Request $request) {
-        // $ids = $request->ids;
-        $ids = '6,7,8';
+        $ids = $request->ids;
         User::whereIn('id',explode(",",$ids))->update([
             'is_deleted' => 1,
         ]);
-        // return response()->json(['success'=>"Products Deleted successfully."]);
-        return redirect("/user");
+        return response()->json(['success'=>"User Deleted successfully."]);
     }
 
     public function destroy($id) {

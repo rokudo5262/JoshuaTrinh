@@ -66,9 +66,9 @@ class AdminController extends Controller {
             'new_password_confirmation' => 'same:new_password',
         ]);
         $change_password = User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
-        if($change_password){
+        if($change_password) {
             Log::channel('login')->info(auth()->user()->email." Change Password Succcess");
-        }else{
+        } else {
             Log::channel('login')->info(auth()->user()->email ." Change Password Fail");
         }
         return redirect('change_password');     
