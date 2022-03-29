@@ -153,6 +153,21 @@ class UserController extends Controller {
     }
 
     public function search(Request $request) {
-        return view("user.search_user");
+        $results = User::get();
+        // if ($request->input('search')) {
+            $results->where('first_name', 'like', "%{$request->input('search')}%");
+        // }
+        // $results = $query->sortByDesc('first_name')->get();
+        return view("user.search_user",compact('results'));
+    }
+
+    public function handle_search(Request $request) {
+        $query = User::get();
+        if ($request->input('search')) {
+            $query->where('first_name', 'like', "%{$request->input('search')}%");
+        }
+        $results = $query->sortByDesc('first_name')->get();
+        return response()->json($results);
+        // return view('user.search_user', compact('results'));
     }
 }
