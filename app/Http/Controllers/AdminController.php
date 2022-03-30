@@ -54,7 +54,7 @@ class AdminController extends Controller {
             'name' => $user->full_name,
             'content' => 'your register is a success',
         ];
-        SendEmail::dispatch($message, $user);
+        SendEmail::dispatch($message, $user)->register();
         return redirect()->back();
     }
 
@@ -75,7 +75,14 @@ class AdminController extends Controller {
         ]);
         $change_password = User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
         if($change_password) {
-            Log::channel('login')->info(auth()->user()->email." Change Password Succcess");
+            Log::channel('login')->info(auth()->user()->email." Change Password Succcessfully");
+            $user = User::findOrFail(auth()->user()->id);
+            $message = [
+                'function' => 'Change Password',
+                'name' => auth()->user()->full_name,
+                'content' => 'your Password changed Succcessfully',
+            ];
+            SendEmail::dispatch($message, $user)->change_password();
         } else {
             Log::channel('login')->info(auth()->user()->email ." Change Password Fail");
         }

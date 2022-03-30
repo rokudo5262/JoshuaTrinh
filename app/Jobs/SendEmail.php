@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use Mail;
 use App\Mail\RegisterSuccess;
+use App\Mail\ChangePasswordSuccess;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -33,6 +34,12 @@ class SendEmail implements ShouldQueue
      * @return void
      */
     public function handle() {
-            Mail::to($this->user->email)->send(new RegisterSuccess($this->data));
+            // Mail::to($this->user->email)->send(new RegisterSuccess($this->data));
+    }
+    public function change_password() {
+        Mail::to($this->user->email)->send(new ChangePasswordSuccess($this->data));
+    }
+    public function register() {
+        Mail::to($this->user->email)->send(new RegisterSuccess($this->data));
     }
 }
