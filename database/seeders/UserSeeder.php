@@ -136,6 +136,26 @@ class UserSeeder extends Seeder
                 'created_at'    => Cacbon::now(),
                 'updated_at'    => Cacbon::now(),
             ],
+            [
+                'first_name'    => 'User',
+                'last_name'     => 'Eleven',
+                'is_admin'      => '0',
+                'is_deleted'    => '1',
+                'email'         => 'user_11@gmail.com',
+                'password'      => Hash::make('123456789'),
+                'created_at'    => Cacbon::now(),
+                'updated_at'    => Cacbon::now(),
+            ],
+            [
+                'first_name'    => 'User',
+                'last_name'     => 'Twelve',
+                'is_admin'      => '0',
+                'is_deleted'    => '1',
+                'email'         => 'user_12@gmail.com',
+                'password'      => Hash::make('123456789'),
+                'created_at'    => Cacbon::now(),
+                'updated_at'    => Cacbon::now(),
+            ],
         ]);
     }
 }
