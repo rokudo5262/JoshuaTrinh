@@ -13,7 +13,8 @@
 <body>
     @include('header')
     <div class="content">
-        <a type="button" class="button button-primary" href="{{ config('app.url')}}/user/create">Create user</a>
+        <a type="button" class="button button-primary" href="{{ config('app.url')}}/user/search">Search User</a>
+        <a type="button" class="button button-primary" href="{{ config('app.url')}}/user/create">Create User</a>
         <form id="solf_delete_multiple_user">
             @csrf
             <input type="hidden" id="ids" value="">
@@ -125,6 +126,8 @@ jQuery(document).ready(function(){
             ids: jQuery('#ids').val(),
         },
         success: function(result){
+            var test = jQuery('#ids').val().split(",");
+            // test.each().jQuery('checkbox[id='test[i]').closect('tr').hide();
             jQuery('.alert').show();
             jQuery('.alert').html(result.success);      
         },
