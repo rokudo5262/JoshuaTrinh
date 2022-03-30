@@ -1,25 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page 404</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-    body {
-        background-color: lightgrey;
-        color: blue;
-        text-align: center;
-    }
-
-    </style>
+    <title>Under Contruction Page</title>
 </head>
 <body>
-    <div>
-    <h1>what are you doing step-user this page/function is under contruction</h1>
+    <div class="content">
+        <h1>what are you doing step-user this page/function is under contruction</h1>
     </div>
-    <div class="flex-center position-ref full-height">
-        <a type="button" href="{{ config('app.url')}}/user">back</a>
+    <div class="content">
+        <a type="button" class="button button-info" href="{{ config('app.url')}}/user">BACK</a>
     </div>
 </body>
 </html>

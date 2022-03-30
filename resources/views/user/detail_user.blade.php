@@ -1,38 +1,40 @@
 <html>
     <head>
-        <style>
-            .profile_pic{
-                height: 50px;
-                width: 50px;
-            }
-        </style>
+        <title>User Detail</title>
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/user.css') }}" />
+        <script src="{{ asset('js/user.js') }}"></script>
     </head>
     <body>
         @include('header')
-        @if ($user->profile_picture == null)
-            <img src="image/avatar.png" class="profile_pic" alt="alt text">
-        @else
-            <img src="storage/image/{{$user->id}}/{{$user->profile_picture}}" class="profile_pic" alt="alt text"> 
-        @endif
-        <div class="flex-center position-ref full-height">
+        <div class="content">
+            @if ($user->profile_picture == null)
+                <img src="/image/avatar.png" class="profile_pic" alt="alt text">
+            @else
+                <img src="storage/image/{{$user->id}}/{{$user->profile_picture}}" class="profile_pic" alt="alt text"> 
+            @endif
             <h3>{{ $user->full_name }}</h3>
             <p>{{ $user->email }}</p>
             <p>{{ $user->password }}</p>
         </div>
-        <div class="flex-center position-ref full-height">
+        <div class="content">
             <h3>{{ $user->full_name }}'s Post</h3>
-                
+            @if( count($posts) == 0)
+                <p>No data to display</p>
+            @else
                 @foreach ($posts as $post)
-                <div style="border:1px solid black; width:100px; float:left;" class="card">
-                    <h4>{{ $post->title }}</h4>
-                    <p>{{ $post->content }}</p>
-                    <p>{{ $post->slug }}</p>
+                <div class="card">
+                    <img src="/image/image.jfif" alt="post">
+                    <div class="container">
+                        <h3>{{ $post->title }}</h3>
+                        <p>{{ $post->slug }}</p>
+                    </div>
                 </div>
                 @endforeach
+            @endif
         </div>
-        <hr>
-        <div class="flex-center position-ref full-height">
-            <a type="button" href="{{ config('app.url')}}/user">back</a>
+        <div class="content">
+            <a type="button" class="button button-info" href="{{ config('app.url')}}/user">BACK</a>
         </div>
+        @include('footer')
 </body>
 </html>

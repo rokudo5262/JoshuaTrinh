@@ -24,8 +24,12 @@ Route::middleware(['auth','middleware' => 'throttle:20,1',])->group(function(){
     Route::get('/user/create',[UserController::class, 'create']);
     Route::get('/user/edit/{id}',[UserController::class, 'edit']);
     Route::post('/user/update/{id}',[UserController::class, 'update']);
+    Route::post('/user/mutiple_delete',[UserController::class, 'mutiple_delete']);
+    Route::get('/user/undo_delete/{id}',[UserController::class, 'undo_delete']);
     Route::get('/user/delete/{id}',[UserController::class, 'delete']);
     Route::get('/user/destroy/{id}',[UserController::class, 'destroy']);
+    Route::get('/user/search',[UserController::class, 'search']);
+    Route::get('/user/handle_search',[UserController::class, 'handle_search']);
 });
 
 Route::middleware(['auth','middleware' => 'throttle:20,1',])->group(function(){
