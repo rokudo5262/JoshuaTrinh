@@ -47,5 +47,6 @@
         <div class="flex-center position-ref full-height">
             <a type="button" href="{{ config('app.url')}}/user">back</a>
         </div>
+        @include('footer')
     </body>
 </html>

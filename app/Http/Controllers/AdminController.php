@@ -66,15 +66,15 @@ class AdminController extends Controller {
             'new_password_confirmation' => 'same:new_password',
         ]);
         $change_password = User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
-        if($change_password){
+        if($change_password) {
             Log::channel('login')->info(auth()->user()->email." Change Password Succcess");
-        }else{
+        } else {
             Log::channel('login')->info(auth()->user()->email ." Change Password Fail");
         }
         return redirect('change_password');     
     }
 
-    public function profile(){
+    public function profile() {
         return view('profile');
     }
 
@@ -84,10 +84,9 @@ class AdminController extends Controller {
         ]);
         $files = $request->file('profile_picture');
         $name = $files->getClientOriginalName();
-        
         $profile_picture = User::find(auth()->user()->id)->update(['profile_picture'=> $name]);
         $a = Storage::putFileAs('public/image/'.auth()->user()->id, $files,$name);
-        print_r($a);
+        return redirect('user');
     }
 
     public function home() {
@@ -105,6 +104,6 @@ class AdminController extends Controller {
     }
     
     public function under_construction() {
-        return view('404');
+        return view('under_construction');
     } 
 }

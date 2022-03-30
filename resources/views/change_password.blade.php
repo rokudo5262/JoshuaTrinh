@@ -34,8 +34,9 @@
                 </form>
             </div>
         </div>
-        <div class="flex-center position-ref full-height">
-            <a type="button" href="{{ config('app.url')}}/user">back</a>
+        <div class="content">
+            <button class="button" href="{{ config('app.url')}}/user">BACK</button>
         </div>
+        @include('footer')
     </body>
 </html>
