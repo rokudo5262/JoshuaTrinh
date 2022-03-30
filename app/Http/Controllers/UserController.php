@@ -153,9 +153,10 @@ class UserController extends Controller {
     }
 
     public function search(Request $request) {
-        $user = User::all();
+        $user = User::where('is_deleted',0)-get();
         if ($request->input('search')) {
-            $user = User::where('first_name', 'LIKE', "%{$request->input('search')}%")
+            $user = User::where('is_deleted',0)
+            ->where('first_name', 'LIKE', "%{$request->input('search')}%")
             ->orWhere('last_name', 'LIKE', "%{$request->input('search')}%")
             ->orWhere('email', 'LIKE', "%{$request->input('search')}%")->get();
         }
@@ -163,7 +164,15 @@ class UserController extends Controller {
         return view("user.search_user",compact('results'));
     }
 
-    public function handle_search(Request $request) {
-
-    }
+    // public function handle_search(Request $request) {
+    //     $user = User::where('is_deleted',0)->get();
+    //     if ($request->input('search')) {
+    //         $user = User::where('is_deleted',0)
+    //             ->where('first_name', 'LIKE', "%{$request->input('search')}%")
+    //             ->orWhere('last_name', 'LIKE', "%{$request->input('search')}%")
+    //             ->orWhere('email', 'LIKE', "%{$request->input('search')}%")->get();
+    //     }
+    //     $results = $user->sortByDesc('first_name');
+    //     return response()->json();
+    // }
 }
