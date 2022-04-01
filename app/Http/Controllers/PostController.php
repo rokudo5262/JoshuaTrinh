@@ -22,12 +22,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-        foreach($posts as $post){
-            echo  (Str::slug($post->title,'_')."\n");
-            }
-        
-        // return view('post.viewpost');
+        $posts = Post::where('status','0')->get();
+        return view('post.view_post',[
+            'posts' => $posts,
+        ]);
     }
 
     /**
@@ -37,7 +35,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post.createpost');
+        return view('post.create_post');
     }
 
     /**
@@ -93,5 +91,12 @@ class PostController extends Controller
      */
     public function destroy($id) {
         //z
+    }
+
+    public function test() {
+        $posts = Post::all();
+        foreach($posts as $post){
+            echo (Str::slug($post->title,'_')."\n");
+       }    
     }
 }
