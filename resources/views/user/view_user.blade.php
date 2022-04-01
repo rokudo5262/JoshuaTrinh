@@ -29,8 +29,6 @@
     </div>
     <div class="content">
     <div class="alert alert-success" style="display:none"></div>
-    
-    <form>
         <h2>Users List</h2>
         @if (count($all_users) == 0)
             <p>No data to display</p>
@@ -59,11 +57,11 @@
                             <td>{{ $user->created_at }}</td>
                             <td>
                                 @role('super_admin')
-                                <a type="button" href="{{ config('app.url') }}/user/show/{{ $user->id }}">detail</a>
-                                <a type="button" href="{{ config('app.url') }}/user/edit/{{ $user->id }}">edit</a>
-                                <a type="button" href="{{ config('app.url') }}/user/delete/{{ $user->id }}">delete</a>
+                                    <a type="button" href="{{ config('app.url') }}/user/show/{{ $user->id }}">detail</a>
+                                    <a type="button" href="{{ config('app.url') }}/user/edit/{{ $user->id }}">edit</a>
+                                    <a type="button" href="{{ config('app.url') }}/user/delete/{{ $user->id }}">delete</a>
                                 @else 
-                                 No action allowed
+                                    <p>No action allowed</p>
                                 @endrole
                             </td>
                         </tr>
