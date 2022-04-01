@@ -1,19 +1,23 @@
 <?php
 
 namespace App\Models;
+
 use App\Models\Post;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 use Laravel\Sanctum\HasApiTokens;
 use Carbon\Carbon;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
-
+    use HasRoles, HasApiTokens, HasFactory, Notifiable;
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -44,7 +48,10 @@ class User extends Authenticatable
         'created_at', 
         'update_at', 
     ];
-
+    // public static $rules = [
+    //     'name' => ['min:1','max:191'],
+    //     'email' => ['email']
+    //    ];
     /**
      * The attributes that should be cast.
      *

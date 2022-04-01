@@ -6,13 +6,13 @@
     @endif
     <ul>
         <li>
-            <a type="button" href="{{ config('app.url')}}/profile">profile</a>
+            <a type="button" href="{{ config('app.url')}}/profile">Profile</a>
         </li>
         <li>
             <a type="button" href="{{ config('app.url')}}/change_password">Change Password</a>
         </li>
         <li>
-            <a type="button" href="{{ config('app.url')}}/logout">logout</a>
+            <a type="button" href="{{ config('app.url')}}/logout">Logout</a>
         </li>
     </ul>
 </div>

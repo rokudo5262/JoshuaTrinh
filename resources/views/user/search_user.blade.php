@@ -7,14 +7,14 @@
                 integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
                 crossorigin="anonymous">
     </script>
-    <script src="{{ asset('js/user.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js/user.js') }}"></script>
 </head>
 <body>
     @include('header')
     <div class="content">
-    <form id="search" method="get" action="{{ config('app.url')}}/user/search">
-        <input type="text" name="search" placeholder="Search.." />
-        <button type="submit">Submit</button>
+        <form id="search" method="get" action="{{ config('app.url')}}/user/search">
+            <input type="text" name="search" placeholder="Search.." />
+            <button type="submit">Submit</button>
         </form>
     </div>
     <div class="content">
