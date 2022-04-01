@@ -8,7 +8,7 @@
                 crossorigin="anonymous">
     </script>
     <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/user.css') }}" />
-    <script src="{{ asset('js/user.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js/user.js') }}"></script>
 </head>
 <body>
     @include('header')
@@ -18,11 +18,18 @@
         <form id="solf_delete_multiple_user">
             @csrf
             <input type="hidden" id="ids" value="">
-            <button type="summit" class="button button-primary">multiple delete</button>
+            <button type="summit" class="button button-primary">Multiple Delete</button>
+        </form>
+    </div>
+    <div class="content">
+        <form id="search" method="get" action="{{ config('app.url')}}/user">
+            <input type="text" name="search" placeholder="Search.." />
+            <button type="submit">Submit</button>
         </form>
     </div>
     <div class="content">
     <div class="alert alert-success" style="display:none"></div>
+    
     <form>
         <h2>Users List</h2>
         @if (count($all_users) == 0)
@@ -46,14 +53,18 @@
                             <td><input type="checkbox" id="{{ $user->id }}" value="{{ $user->id }}"></td>
                             <td>{{ $user->id }}</td>
                             <td>{{ $user->first_name }}</td>
-                            <td>{{ $user->last_name}}</td>
-                            <td>{{ $user->full_name}}</td>
-                            <td>{{ $user->email}}</td>
-                            <td>{{ $user->created_at}}</td>
+                            <td>{{ $user->last_name }}</td>
+                            <td>{{ $user->full_name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->created_at }}</td>
                             <td>
-                                <a type="button" href="{{ config('app.url')}}/user/show/{{ $user->id }}">detail</a>
-                                <a type="button" href="{{ config('app.url')}}/user/edit/{{ $user->id }}">edit</a>
-                                <a type="button" href="{{ config('app.url')}}/user/delete/{{ $user->id }}">delete</a>
+                                @role('super_admin')
+                                <a type="button" href="{{ config('app.url') }}/user/show/{{ $user->id }}">detail</a>
+                                <a type="button" href="{{ config('app.url') }}/user/edit/{{ $user->id }}">edit</a>
+                                <a type="button" href="{{ config('app.url') }}/user/delete/{{ $user->id }}">delete</a>
+                                @else 
+                                 No action allowed
+                                @endrole
                             </td>
                         </tr>
                     @endforeach
@@ -61,80 +72,6 @@
             </table>
         @endif
     </div>
-    <!-- <div class="content">
-        <h2>Deleted Users List</h2>
-        @if (count($all_deleted_users) == 0)
-            <p>No data to display</p>
-        @else
-            <table class="table" id="user_table">
-                <caption>deleted Users</caption>    
-                <thead>
-                    <td></td>
-                    <td>id</td>
-                    <td>first name</td>
-                    <td>last name</td>
-                    <td>full name</td>
-                    <td>email</td>
-                    <td>created_at</td>
-                    <td>Action</td>
-                </thead>
-                <tbody>
-                    @foreach ($all_deleted_users as $user)
-                        <tr>
-                            <td><input type="checkbox" id="{{ $user->id }}" value="{{ $user->id }}"></td>
-                            <td>{{ $user->id }}</td>
-                            <td>{{ $user->first_name }}</td>
-                            <td>{{ $user->last_name }}</td>
-                            <td>{{ $user->full_name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>{{ $user->created_at }}</td>
-                            <td>
-                                <a type="button" href="{{ config('app.url')}}/user/undo_delete/{{ $user->id }}">undo delete</a>
-                                <a type="button" href="{{ config('app.url')}}/user/destroy/{{ $user->id }}">permanent delete</a>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        @endif
-    </div> -->
     @include('footer')
-<script>
-jQuery(document).ready(function(){
-    jQuery("input[type='checkbox']").click(function(){
-            var val = [];
-            jQuery(':checkbox:checked').each(function(i){
-            val[i] = $(this).val();
-
-        });
-        jQuery('#ids').val(val.join(','));
-    });
-    jQuery('#solf_delete_multiple_user').submit(function(event){
-        event.preventDefault();
-        $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    jQuery.ajax({
-        
-        method: 'POST',
-        url: "user/mutiple_delete",
-        enctype: 'multipart/form-data',
-        data: {
-            _token: "{{ csrf_token() }}",
-            ids: jQuery('#ids').val(),
-        },
-        success: function(result){
-            var test = jQuery('#ids').val().split(",");
-            // test.each().jQuery('checkbox[id='test[i]').closect('tr').hide();
-            jQuery('.alert').show();
-            jQuery('.alert').html(result.success);      
-        },
-    });
-});
-});
-
-</script>
 </body>
 </html>

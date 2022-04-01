@@ -2,18 +2,12 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use Carbon\Carbon;
 
-class UserSeeder extends Seeder
-{
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
+class UserSeeder extends Seeder {
     public function run() {
         User::insert([
             [
@@ -21,10 +15,20 @@ class UserSeeder extends Seeder
                 'last_name'     => 'Trinh',
                 'is_admin'      => '1',
                 'is_deleted'    => '0',
-                'email'         => ' rokudo5262@gmail.com',
+                'email'         => 'joshuatrinh5262@gmail.com',
                 'password'      => Hash::make('123456789'),
-                'created_at'    => Cacbon::now(),
-                'updated_at'    => Cacbon::now(),
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
+            ],
+            [
+                'first_name'    => 'Truong',
+                'last_name'     => 'Trinh',
+                'is_admin'      => '1',
+                'is_deleted'    => '0',
+                'email'         => 'rokudo5262@gmail.com',
+                'password'      => Hash::make('123456789'),
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
             ],
             [
                 'first_name'    => 'Admin',
@@ -33,8 +37,8 @@ class UserSeeder extends Seeder
                 'is_deleted'    => '0',
                 'email'         => 'admin_1@gmail.com',
                 'password'      => Hash::make('123456789'),
-                'created_at'    => Cacbon::now(),
-                'updated_at'    => Cacbon::now(),
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
             ],
             [
                 'first_name'    =>'Admin',
@@ -43,8 +47,8 @@ class UserSeeder extends Seeder
                 'is_deleted'    => '0',
                 'email'         => 'admin_2@gmail.com',
                 'password'      => Hash::make('123456789'),
-                'created_at'    => Cacbon::now(),
-                'updated_at'    => Cacbon::now(),   
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),   
             ],
             [
                 'first_name'    =>'User',
@@ -53,8 +57,8 @@ class UserSeeder extends Seeder
                 'is_deleted'    => '0',
                 'email'         => 'user_3@gmail.com',
                 'password'      => Hash::make('123456789'),
-                'created_at'    => Cacbon::now(),
-                'updated_at'    => Cacbon::now(),
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
             ],
             [
                 'first_name'    => 'User',
@@ -63,8 +67,8 @@ class UserSeeder extends Seeder
                 'is_deleted'    => '0',
                 'email'         => 'user_4@gmail.com',
                 'password'      => Hash::make('123456789'),
-                'created_at'    => Cacbon::now(),
-                'updated_at'    => Cacbon::now(),
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
             ],
             [
                 'first_name'    => 'User',
@@ -73,8 +77,8 @@ class UserSeeder extends Seeder
                 'is_deleted'    => '0',
                 'email'         => 'user_5@gmail.com',
                 'password'      => Hash::make('123456789'),
-                'created_at'    => Cacbon::now(),
-                'updated_at'    => Cacbon::now(),
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
             ],
             [
                 'first_name'    => 'User',
@@ -83,8 +87,8 @@ class UserSeeder extends Seeder
                 'is_deleted'    => '0',
                 'email'         => 'user_6@gmail.com',
                 'password'      => Hash::make('123456789'),
-                'created_at'    => Cacbon::now(),
-                'updated_at'    => Cacbon::now(),
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
             ],
             [
                 'first_name'    => 'User',
@@ -93,8 +97,8 @@ class UserSeeder extends Seeder
                 'is_deleted'    => '0',
                 'email'         => 'user_7@gmail.com',
                 'password'      => Hash::make('123456789'),
-                'created_at'    => Cacbon::now(),
-                'updated_at'    => Cacbon::now(),
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
             ],
             [
                 'first_name'    => 'User',
@@ -103,8 +107,8 @@ class UserSeeder extends Seeder
                 'is_deleted'    => '0',
                 'email'         => 'user_8@gmail.com',
                 'password'      => Hash::make('123456789'),
-                'created_at'    => Cacbon::now(),
-                'updated_at'    => Cacbon::now(),
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
             ],
             [
                 'first_name'    => 'User',
@@ -113,8 +117,8 @@ class UserSeeder extends Seeder
                 'is_deleted'    => '0',
                 'email'         => 'user_9@gmail.com',
                 'password'      => Hash::make('123456789'),
-                'created_at'    => Cacbon::now(),
-                'updated_at'    => Cacbon::now(),
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
             ],
             [
                 'first_name'    => 'User',
@@ -123,8 +127,8 @@ class UserSeeder extends Seeder
                 'is_deleted'    => '1',
                 'email'         => 'user_0@gmail.com',
                 'password'      => Hash::make('123456789'),
-                'created_at'    => Cacbon::now(),
-                'updated_at'    => Cacbon::now(),
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
             ],
             [
                 'first_name'    => 'User',
@@ -133,8 +137,8 @@ class UserSeeder extends Seeder
                 'is_deleted'    => '1',
                 'email'         => 'user_10@gmail.com',
                 'password'      => Hash::make('123456789'),
-                'created_at'    => Cacbon::now(),
-                'updated_at'    => Cacbon::now(),
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
             ],
             [
                 'first_name'    => 'User',
@@ -143,8 +147,8 @@ class UserSeeder extends Seeder
                 'is_deleted'    => '1',
                 'email'         => 'user_11@gmail.com',
                 'password'      => Hash::make('123456789'),
-                'created_at'    => Cacbon::now(),
-                'updated_at'    => Cacbon::now(),
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
             ],
             [
                 'first_name'    => 'User',
@@ -153,8 +157,8 @@ class UserSeeder extends Seeder
                 'is_deleted'    => '1',
                 'email'         => 'user_12@gmail.com',
                 'password'      => Hash::make('123456789'),
-                'created_at'    => Cacbon::now(),
-                'updated_at'    => Cacbon::now(),
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
             ],
         ]);
     }
