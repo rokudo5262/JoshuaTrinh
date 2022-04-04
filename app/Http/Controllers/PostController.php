@@ -93,10 +93,4 @@ class PostController extends Controller
         //z
     }
 
-    public function test() {
-        $posts = Post::all();
-        foreach($posts as $post){
-            echo (Str::slug($post->title,'_')."\n");
-       }    
-    }
 }

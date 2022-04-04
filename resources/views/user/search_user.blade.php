@@ -12,7 +12,7 @@
 <body>
     @include('header')
     <div class="content">
-        <form id="search" method="get" action="{{ config('app.url')}}/user/search">
+        <form id="search">
             <input type="text" name="search" placeholder="Search.." />
             <button type="submit">Submit</button>
         </form>
@@ -54,21 +54,21 @@
     </div>
     @include('footer')
     <script>
-//     $(document).on('submit', 'form#search', function (event) {
-//     var search_value = $(this).find("input[name='search']").val();
-//     $.ajax({
-//         type: 'GET',
-//         dataType: 'html',
-//         url: '/handle_search',
-//         data: {
-//             q: search_value
-//         },
-//         success: function (data) {
-//             // Do some nice animation to show results
-//             $('#searchdata').html(data);
-//         }
-//     });
-// });
+    $(document).on('submit', 'form#search', function (event) {
+    var search_value = $(this).find("input[name='search']").val();
+    $.ajax({
+        type: 'GET',
+        dataType: 'html',
+        url: '/handle_search',
+        data: {
+            search: search_value
+        },
+        success: function (data) {
+            // Do some nice animation to show results
+            $('#searchdata').html(data);
+        }
+    });
+});
 </script>
 </body>
 </html>
