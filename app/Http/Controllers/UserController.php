@@ -158,29 +158,43 @@ class UserController extends Controller {
     }
 
     public function search(Request $request) {
-        $user = User::where('is_deleted',0)->get();
-        if ($request->input('search')) {
-            $user = User::where('is_deleted',0)
-            ->where('first_name', 'LIKE', "%{$request->input('search')}%")
-            ->orWhere('last_name', 'LIKE', "%{$request->input('search')}%")
-            ->orWhere('email', 'LIKE', "%{$request->input('search')}%")->get();
-        }
-        $results = $user->sortByDesc('first_name');
-        return view("user.search_user",compact('results'));
+        // $user = User::where('is_deleted',0)->get();
+        // if ($request->input('search')) {
+        // if ($request->ajax()) {
+        //     $user = User::where('is_deleted',0)
+        //     ->where('first_name', 'LIKE', "%{$request->input('search')}%")
+        //     ->orWhere('last_name', 'LIKE', "%{$request->input('search')}%")
+        //     ->orWhere('email', 'LIKE', "%{$request->input('search')}%")->get();
+        //     return response()->json($user);
+        // }
+        // $results = $user->sortByDesc('first_name');
+        // return view("user.search_user",compact('results'));
+        return view("user.search_user");
+
     }
 
     public function handle_search(Request $request) {
+        // if ($request->input('search')) {
+        $output="";
         if ($request->ajax()) {
-            $results = User::where('is_deleted',0)
+            $users = User::where('is_deleted',0)
                     ->where('first_name', 'LIKE', "%{$request->input('search')}%")
                     ->orWhere('last_name', 'LIKE', "%{$request->input('search')}%")
                     ->orWhere('email', 'LIKE', "%{$request->input('search')}%")->get();
-
+            if($users) {
+                foreach ($users as $key => $user) {
+                    $output.='<tr>'.
+                    '<td>'.$user->first_name.'</td>'.
+                    '<td>'.$user->last_name.'</td>'.
+                    '<td>'.$user->email.'</td>'.
+                    '</tr>';
+                }
+            }
         }
-        return response()->json($results);
+        return Response($output);
     }
 
-    public function test(){
+    public function test() {
         $user = User::findOrFail('4');
         $result = $user->assignRole('writer');
         $a='';
