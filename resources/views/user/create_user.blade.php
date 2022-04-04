@@ -28,23 +28,23 @@
                 <h1>Add New User</h1>
                 <div class="form-input">
                     <label>Profile Picture :</label>
-                    <input type="file" name="profile_picture">
+                    <input type="file" name="profile_picture"/>
                 </div>
                 <div class="form-input">
                     <label>First Name :</label>
-                    <input type="text" name="first_name">
+                    <input type="text" name="first_name"/>
                 </div>
                 <div class="form-input">
                     <label>Last Name :</label>
-                    <input type="text" name="last_name">
+                    <input type="text" name="last_name"/>
                 </div>
                 <div class="form-input">
                     <label>Email :</label>
-                    <input type="text" name="email">
+                    <input type="text" name="email"/>
                 </div>
                 <div class="form-input">
                     <label>Password :</label>
-                    <input type="password" name="password" id="password">
+                    <input type="password" name="password"/>
                 </div>
             <button type="submit">Submit</button>
             </div>

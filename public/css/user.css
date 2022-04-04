@@ -94,13 +94,15 @@ td {
 .form-group{
     align-content: center;
     overflow: auto;
-    background: #007bff;
+    border: 1px #007bff;
+    background: white;
     border-radius: 5px;
     padding: 4px;
     position: relative;
     display: inline-block
 }
 .form-input input{
+    
     border-radius: 5px;
     margin: 2px;
     width: 90%;
