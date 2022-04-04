@@ -22,12 +22,16 @@ class UserController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
-        $users = User::where('is_deleted',0)->get();
-        $user_deleted = User::where('is_deleted',1)->get();
+    public function index(Request $request) {
+        $users = User::where('is_deleted',0);
+        if ($request->input('search')) {
+            $users->where('first_name', 'LIKE', "%{$request->input('search')}%")
+            ->orWhere('last_name', 'LIKE', "%{$request->input('search')}%")
+            ->orWhere('email', 'LIKE', "%{$request->input('search')}%");
+        }
+        $result = $users->get();
         return view('user.view_user', [
-            'all_users' => $users,
-            'all_deleted_users' => $user_deleted,
+            'all_users' => $result,
         ]);
     }
 
@@ -60,6 +64,7 @@ class UserController extends Controller {
                 'email'         => $request->get('email'),
                 'password'      => Hash::make($request->get('password')),
             ]);
+            $new_user->assignRole('user');
             // $files = $request->file('profile_picture');
             // $name = $files->getClientOriginalName();
             // Storage::putFileAs('public/image/'.$new_user->id, $files,$name);
@@ -153,17 +158,51 @@ class UserController extends Controller {
     }
 
     public function search(Request $request) {
-        $user = User::all();
-        if ($request->input('search')) {
-            $user = User::where('first_name', 'LIKE', "%{$request->input('search')}%")
-            ->orWhere('last_name', 'LIKE', "%{$request->input('search')}%")
-            ->orWhere('email', 'LIKE', "%{$request->input('search')}%")->get();
-        }
-        $results = $user->sortByDesc('first_name');
-        return view("user.search_user",compact('results'));
+        // $user = User::where('is_deleted',0)->get();
+        // if ($request->input('search')) {
+        // if ($request->ajax()) {
+        //     $user = User::where('is_deleted',0)
+        //     ->where('first_name', 'LIKE', "%{$request->input('search')}%")
+        //     ->orWhere('last_name', 'LIKE', "%{$request->input('search')}%")
+        //     ->orWhere('email', 'LIKE', "%{$request->input('search')}%")->get();
+        //     return response()->json($user);
+        // }
+        // $results = $user->sortByDesc('first_name');
+        // return view("user.search_user",compact('results'));
+        return view("user.search_user");
+
     }
 
     public function handle_search(Request $request) {
+        // if ($request->input('search')) {
+        $output="";
+        if ($request->ajax()) {
+            $users = User::where('is_deleted',0)
+                    ->where('first_name', 'LIKE', "%{$request->input('search')}%")
+                    ->orWhere('last_name', 'LIKE', "%{$request->input('search')}%")
+                    ->orWhere('email', 'LIKE', "%{$request->input('search')}%")->get();
+            if($users) {
+                foreach ($users as $key => $user) {
+                    $output.='<tr>'.
+                    '<td>'.$user->first_name.'</td>'.
+                    '<td>'.$user->last_name.'</td>'.
+                    '<td>'.$user->email.'</td>'.
+                    '</tr>';
+                }
+            }
+        }
+        return Response($output);
+    }
 
+    public function test() {
+        $user = User::findOrFail('4');
+        $result = $user->assignRole('writer');
+        $a='';
+        if($result){
+            $a = "true" ;
+        }else {
+            $a = "false";
+        }
+        echo($a);
     }
 }

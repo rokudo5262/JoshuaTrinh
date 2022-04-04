@@ -1,6 +1,7 @@
 body {
     margin: 0px;
 }
+
 .section-header,
 .section-footer {
     padding: 10px;
@@ -8,6 +9,8 @@ body {
     left: 0;
     bottom: 0;
     color: white;
+    overflow: auto;
+    position: relative;
 }
 .button {
     display: block;
@@ -66,9 +69,11 @@ th,
 td {
     border-radius: 2px;
 }
-.content{
+.content {
     padding-bottom: 5px;
     padding-top: 5px;
+    overflow: auto;
+    position: relative;
 }
 .card {
     position: relative;
@@ -85,4 +90,22 @@ td {
 }
 .card img {
     width:100%;
+}
+.form-group{
+    align-content: center;
+    overflow: auto;
+    border: 1px #007bff;
+    background: white;
+    border-radius: 5px;
+    padding: 4px;
+    position: relative;
+    display: inline-block
+}
+.form-input input{
+    
+    border-radius: 5px;
+    margin: 2px;
+    width: 90%;
+    margin: 2px;
+
 }

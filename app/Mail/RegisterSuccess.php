@@ -7,18 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class NotifyMail extends Mailable
+class RegisterSuccess extends Mailable
 {
     use Queueable, SerializesModels;
+
+    public $data;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->data = $data;
     }
 
     /**
@@ -28,6 +30,6 @@ class NotifyMail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->from('joshuatrinh5262@gmail.com')->view('mail_template.mail_register_success')->subject('Notification email');
     }
 }
