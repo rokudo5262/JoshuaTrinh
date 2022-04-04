@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Jobs\SendEmail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -41,13 +43,19 @@ class AdminController extends Controller {
             'password'=>'required|min:9|max:100|confirmed',
             'password_confirmation' => 'required|min:6',
         ]);
-        User::create([
+        $user = User::create([
             'first_name'    => $request->get('first_name'),
             'last_name'     => $request->get('last_name'),
             'email'         => $request->get('email'),
             'password'      => Hash::make($request->get('password')),
         ]);
-        return redirect('/register');
+        $message = [
+            'function' => 'Register',
+            'name' => $user->full_name,
+            'content' => 'your register is a success',
+        ];
+        SendEmail::dispatch($message, $user)->register();
+        return redirect()->back();
     }
 
     public function logout() {
@@ -67,7 +75,14 @@ class AdminController extends Controller {
         ]);
         $change_password = User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
         if($change_password) {
-            Log::channel('login')->info(auth()->user()->email." Change Password Succcess");
+            Log::channel('login')->info(auth()->user()->email." Change Password Succcessfully");
+            $user = User::findOrFail(auth()->user()->id);
+            $message = [
+                'function' => 'Change Password',
+                'name' => auth()->user()->full_name,
+                'content' => 'your Password changed Succcessfully',
+            ];
+            SendEmail::dispatch($message, $user)->change_password();
         } else {
             Log::channel('login')->info(auth()->user()->email ." Change Password Fail");
         }

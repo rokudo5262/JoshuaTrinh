@@ -2,7 +2,7 @@
     <head>
         <title>User Detail</title>
         <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/user.css') }}" />
-        <script src="{{ asset('js/user.js') }}"></script>
+        <script type="text/javascript"  src="{{ asset('js/user.js') }}"></script>
     </head>
     <body>
         @include('header')

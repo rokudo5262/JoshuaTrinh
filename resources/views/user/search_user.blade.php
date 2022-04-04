@@ -7,68 +7,78 @@
                 integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
                 crossorigin="anonymous">
     </script>
-    <script src="{{ asset('js/user.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js/user.js') }}"></script>
 </head>
 <body>
     @include('header')
     <div class="content">
-    <form id="search" method="get" action="{{ config('app.url')}}/user/search">
-        <input type="text" name="search" placeholder="Search.." />
-        <button type="submit">Submit</button>
+        <form >
+            <input type="text" id="search" name="search" placeholder="Search.." />
+            <!-- <button type="submit">Submit</button> -->
         </form>
     </div>
+
     <div class="content">
-    @if ($results)
-        <table class="table">
-            <caption>Users</caption>
-            <thead>
-                <td></td>
-                <td>first name</td>
-                <td>last name</td>
-                <td>email</td>
-                <td>created at</td>
-                <td>action</td>
-            </thead>
-            <tbody>
-                @foreach ($results as $result)
-                    <tr>
-                        <td><input type="checkbox" id="{{ $result->id }}" value="{{ $result->id }}"></td>
-                        <td>{{ $result->first_name }}</td>
-                        <td>{{ $result->last_name}}</td>
-                        <td>{{ $result->email}}</td>
-                        <td>{{ $result->created_at}}</td>
-                        <td>
-                            <a type="button" href="{{ config('app.url')}}/user/show/{{ $result->id }}">detail</a>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    @else
-        <p>No User Found</p>
-    @endif
-    </div>
-    <div id="searchdata"></div>
-    <div class="content">
-        <a type="button" class="button button-info" href="{{ config('app.url')}}/user">BACK</a>
+            <table class="table">
+                <caption>Users</caption>
+                <thead>
+                    <td>first name</td>
+                    <td>last name</td>
+                    <td>email</td>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="content">
+            <a type="button" class="button button-info" href="{{ config('app.url')}}/user">BACK</a>
     </div>
     @include('footer')
-    <script>
-//     $(document).on('submit', 'form#search', function (event) {
-//     var search_value = $(this).find("input[name='search']").val();
-//     $.ajax({
-//         type: 'GET',
-//         dataType: 'html',
-//         url: '/handle_search',
-//         data: {
-//             q: search_value
-//         },
-//         success: function (data) {
-//             // Do some nice animation to show results
-//             $('#searchdata').html(data);
-//         }
-//     });
-// });
+    <!-- <script>
+    $(document).on('submit', 'form#search', function (event) {
+    var search_value = $(this).find("input[name='search']").val();
+    $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: '/handle_search',
+        data: {
+            search: search_value,
+        },
+        success: function (data) {
+            console.log(data);
+            var res='';
+            $.each (data, function (key, value) {
+            res +=
+            '<tr>'+
+                '<td>'+value.first_name+'</td>'+
+                '<td>'+value.last_name+'</td>'+
+                '<td>'+value.email+'</td>'+
+                '<td>'+value.creatd_at+'</td>'+
+           '</tr>';
+            });
+            $('tbody').html(data);
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            console.log("error");
+        }
+    });
+});
+</script> -->
+
+<script type="text/javascript">
+$.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+    $('#search').on('keyup',function(){
+        $value=$(this).val();
+        $.ajax({
+            type : 'get',
+            url : '/user/handle_search',
+            data:{'search':$value},
+            success:function(data) {
+                $('tbody').html(data);
+        }
+    });
+})
 </script>
 </body>
 </html>

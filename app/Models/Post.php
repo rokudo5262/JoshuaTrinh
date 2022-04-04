@@ -15,6 +15,11 @@ class Post extends Model {
         'slug',
         'user_id',
     ];
+    const PUBLISHED = 0;
+    const DRAFT = 1;
+    const PENDING = 2;
+    const PRIVATE = 3;
+    const TRASH = 4;
     public function user(){
         return $this->belongsTo('App\Models\User');
     }
