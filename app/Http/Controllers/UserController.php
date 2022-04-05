@@ -25,9 +25,12 @@ class UserController extends Controller {
     public function index(Request $request) {
         $users = User::where('is_deleted',0);
         if ($request->input('search')) {
-            $users->where('first_name', 'LIKE', "%{$request->input('search')}%")
-            ->orWhere('last_name', 'LIKE', "%{$request->input('search')}%")
-            ->orWhere('email', 'LIKE', "%{$request->input('search')}%");
+            $search = $request->input('search');
+            $users->where(function ($query) use ($search){
+                $query->where('first_name', 'LIKE', "%$search%") 
+                    ->orWhere('last_name', 'LIKE', "%$search%")
+                    ->orWhere('email', 'LIKE', "%$search%");
+                });
         }
         $result = $users->get();
         return view('user.view_user', [
@@ -174,19 +177,22 @@ class UserController extends Controller {
     }
 
     public function handle_search(Request $request) {
-        // if ($request->input('search')) {
         $output="";
         if ($request->ajax()) {
-            $users = User::where('is_deleted',0)
-                    ->where('first_name', 'LIKE', "%{$request->input('search')}%")
-                    ->orWhere('last_name', 'LIKE', "%{$request->input('search')}%")
-                    ->orWhere('email', 'LIKE', "%{$request->input('search')}%")->get();
+            $search = $request->input('search');
+            $users = User::where('is_deleted','0')->where(function ($query) use ($search) {
+                $query->where('first_name', 'LIKE', "%$search%") 
+                    ->orWhere('last_name', 'LIKE', "%$search%")
+                    ->orWhere('email', 'LIKE', "%$search%");
+                })->get();
             if($users) {
                 foreach ($users as $key => $user) {
                     $output.='<tr>'.
+                    '<td><input type="checkbox" id="'.$user->id.'" value="'.$user->id.'"/></td>'.
                     '<td>'.$user->first_name.'</td>'.
                     '<td>'.$user->last_name.'</td>'.
                     '<td>'.$user->email.'</td>'.
+                    '<td>'.$user->is_deleted.'</td>'.
                     '</tr>';
                 }
             }
