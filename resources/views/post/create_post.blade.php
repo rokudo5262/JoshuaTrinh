@@ -1,8 +1,8 @@
-<html>
-<head>
-    <title>Create Post</title>
-</head>
-<body>
+@extends('layout.app')
+
+@section('title', 'Create Post')
+
+@section('content')
 <div class="alert alert-success" style="display:none"></div>
 <div class="container">
     <div class="row">
@@ -22,5 +22,4 @@
         </form>
     </div>
 </div>
-</body>
-</html>
+@endsection

@@ -1,12 +1,6 @@
-<!doctype html>
-<html>
-<head>
-  <title>Update User</title>
-  <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/user.css') }}" />
-  <script type="text/javascript"  src="{{ asset('js/user.js') }}"></script>
-  <!-- styling etc. -->
-<body>
-    @include('header')
+@extends('layout.app')
+
+@section('title', 'Update User')
     <div class="flex-center position-ref full-height">  
         <div class="content">
             <form method="POST" action="{{ config('app.url')}}/user/update/{{$user->id}}">
@@ -38,6 +32,4 @@
     <div class="content">
         <a type="button" class="button button-info" href="{{ config('app.url')}}/user">BACK</a>
     </div>
-    @include('footer')
-</body>
-</html>
+    @endsection

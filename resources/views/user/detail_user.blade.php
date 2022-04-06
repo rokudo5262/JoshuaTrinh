@@ -1,11 +1,8 @@
-<html>
-    <head>
-        <title>User Detail</title>
-        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/user.css') }}" />
-        <script type="text/javascript"  src="{{ asset('js/user.js') }}"></script>
-    </head>
-    <body>
-        @include('header')
+@extends('layout.app')
+
+@section('title', 'Detail User')
+
+@section('content')
         <div class="content">
             @if ($user->profile_picture == null)
                 <img src="/image/avatar.png" class="profile_pic" alt="alt text">
@@ -35,6 +32,4 @@
         <div class="content">
             <a type="button" class="button button-info" href="{{ config('app.url')}}/user">BACK</a>
         </div>
-        @include('footer')
-</body>
-</html>
+@endsection

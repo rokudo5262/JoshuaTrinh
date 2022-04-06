@@ -105,7 +105,7 @@ class AdminController extends Controller {
     }
 
     public function home() {
-        return view('home');
+        return view('child');
     }
 
     public function generate_random_string($length = 10) {

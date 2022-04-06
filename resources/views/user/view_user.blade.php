@@ -1,17 +1,8 @@
-<!doctype html>
-<html>
-<head>
-    <title>View User</title>
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js"
-                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-                crossorigin="anonymous">
-    </script>
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/user.css') }}" />
-    <script type="text/javascript"  src="{{ asset('js/user.js') }}"></script>
-</head>
-<body>
-    @include('header')
+@extends('layout.app')
+
+@section('title', 'View User')
+
+@section('content')
     <div class="content">
         <a type="button" class="button button-primary" href="{{ config('app.url')}}/user/search">Search User</a>
         <a type="button" class="button button-primary" href="{{ config('app.url')}}/user/create">Create User</a>
@@ -27,8 +18,6 @@
             <button type="submit">Submit</button>
         </form>
     </div>
-
-
     <div class="content">
     <div class="alert alert-success" style="display:none"></div>
         <h2>Users List</h2>
@@ -72,42 +61,40 @@
             </table>
         @endif
     </div>
-    @include('footer')
-<script>
-    jQuery(document).ready(function(){
-        jQuery("input[type='checkbox']").click(function(){
-                var val = [];
-                jQuery(':checkbox:checked').each(function(i){
-                val[i] = $(this).val();
 
+    <script>
+        jQuery(document).ready(function(){
+            jQuery("input[type='checkbox']").click(function(){
+                    var val = [];
+                    jQuery(':checkbox:checked').each(function(i){
+                    val[i] = $(this).val();
+                });
+                jQuery('#ids').val(val.join(','));
             });
-            jQuery('#ids').val(val.join(','));
-        });
-        jQuery('#solf_delete_multiple_user').submit(function(event){
-            event.preventDefault();
-            $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        jQuery.ajax({
-            method: 'POST',
-            url: "user/mutiple_delete",
-            enctype: 'multipart/form-data',
-            data: {
-                _token: "{{ csrf_token() }}",
-                ids: jQuery('#ids').val(),
-            },
-            success: function(result){
-                var test = jQuery('#ids').val().split(",");
-                console.log(test);
-                // test.each().jQuery('checkbox[id='test[i]').closect('tr').hide();
-                jQuery('.alert').show();
-                jQuery('.alert').html(result.success);      
+            jQuery('#solf_delete_multiple_user').submit(function(event){
+                event.preventDefault();
+                $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            jQuery.ajax({
+                method: 'POST',
+                url: "user/mutiple_delete",
+                enctype: 'multipart/form-data',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    ids: jQuery('#ids').val(),
                 },
+                success: function(result){
+                    var test = jQuery('#ids').val().split(",");
+                    console.log(test);
+                    // test.each().jQuery('checkbox[id='test[i]').closect('tr').hide();
+                    jQuery('.alert').show();
+                    jQuery('.alert').html(result.success);      
+                    },
+                });
             });
         });
-    });
 </script>
-</body>
-</html>
+@endsection

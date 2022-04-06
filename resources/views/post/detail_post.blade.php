@@ -1,5 +1,5 @@
 @extends('layout.app')
 
-@section('title', 'Update Post')
+@section('title', 'Create Post')
 
 @section('content')

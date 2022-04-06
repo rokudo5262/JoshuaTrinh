@@ -1,0 +1,16 @@
+div.warp {
+    display: flex;
+}
+div.sidebar {
+    width: 20%;
+    background: coral;
+}
+div.container {
+    width: 80%;
+}
+div.sidebar ul{
+    list-style: none;
+}
+div.sidebar a{
+    text-decoration: none;
+}

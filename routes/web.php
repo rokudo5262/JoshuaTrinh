@@ -21,7 +21,8 @@ Route::middleware([
     'middleware' => 'role:super_admin|admin',
     // 'middleware' => 'role:admin',
     ])->group(function(){
-        //post route 
+        //admin route 
+
         Route::get('/logout',[AdminController::class, 'logout'])->name('logout');
         Route::get('/change_password',[AdminController::class, 'change_password']);
         Route::post('/handle_change_password',[AdminController::class, 'handle_change_password']);
@@ -30,6 +31,7 @@ Route::middleware([
         Route::get('/under_construction',[AdminController::class, 'under_construction'])->name('under_construction');
         //post route
         Route::get('/post',[PostController::class, 'index'])->name('post');
+        Route::get('/post/show/{id}',[PostController::class, 'show']);
         Route::post('/post/store',[PostController::class, 'store']);
         Route::get('/post/create',[PostController::class, 'create']);
         Route::get('/post/edit/{id}',[PostController::class, 'edit']);
