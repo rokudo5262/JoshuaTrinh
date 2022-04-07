@@ -29,7 +29,7 @@
             </form>
         </div>
         <div class="links">
-            <a type="button" href="{{ config('app.url')}}/register">register</a>
+            <a type="button" href="{{ config('app.url')}}/register">Register</a>
             <a type="button" href="{{ config('app.url')}}/forget_password">Forget Password</a>
             </div>
         <script>

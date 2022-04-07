@@ -1,16 +1,40 @@
 div.warp {
     display: flex;
 }
+
 div.sidebar {
     width: 20%;
-    background: coral;
+    background: teal;
+    height: 100vh;
 }
+
 div.container {
     width: 80%;
+    padding: 10px;
 }
+
 div.sidebar ul{
     list-style: none;
 }
+
 div.sidebar a{
     text-decoration: none;
+}
+
+.form-group{
+    align-content: center;
+    overflow: auto;
+    border: 1px #007bff;
+    background: white;
+    border-radius: 5px;
+    padding: 4px;
+    position: relative;
+    display: inline-block
+}
+
+.form-input input{  
+    border-radius: 5px;
+    margin: 2px;
+    width: 90%;
+    margin: 2px;
 }

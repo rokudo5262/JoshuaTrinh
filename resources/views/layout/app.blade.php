@@ -11,22 +11,21 @@
     </script>
     </head>
     <body>
-    @section('header')
-        @include('header')
-    @show
-    <div class="warp">
-        <div class="sidebar">
-        @section('sidebar')
-            @include('sidebar')
+        @section('header')
+            @include('layout.header')
         @show
-        </div>
-        <div class="container">
-            @yield('content')
-            @section('footer')
-                @include('footer')
+        <div class="warp">
+            <div class="sidebar">
+            @section('sidebar')
+                @include('layout.sidebar')
             @show
+            </div>
+            <div class="container">
+                @yield('content')
+                @section('footer')
+                    @include('layout.footer')
+                @show
+            </div>
         </div>
-    </div>
-
     </body>
 </html>

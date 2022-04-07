@@ -32,7 +32,7 @@
             </table>
         </div>
         <div class="content">
-            <a type="button" class="button button-info" href="{{ config('app.url')}}/user">BACK</a>
+            <a type="button" href="{{ config('app.url')}}/user">BACK</a>
     </div>
 <script type="text/javascript">
     jQuery(document).ready(function(){

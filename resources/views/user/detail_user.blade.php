@@ -1,9 +1,10 @@
 @extends('layout.app')
 
-@section('title', 'Detail User')
+@section('title', 'User Detail')
 
 @section('content')
         <div class="content">
+            <h2>User Detail</h2>
             @if ($user->profile_picture == null)
                 <img src="/image/avatar.png" class="profile_pic" alt="alt text">
             @else
@@ -30,6 +31,6 @@
             @endif
         </div>
         <div class="content">
-            <a type="button" class="button button-info" href="{{ config('app.url')}}/user">BACK</a>
+            <a type="button" href="{{ config('app.url')}}/user">BACK</a>
         </div>
 @endsection

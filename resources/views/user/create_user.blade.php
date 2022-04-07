@@ -14,10 +14,10 @@
     @endif
     <div class="alert alert-success" style="display:none"></div>
     <div class="content">
+        <h2>Add New User</h2>
         <form id="create_new_user">
             @csrf
-                <div class="form-group">
-                <h1>Add New User</h1>
+            <div class="form-group">
                 <div class="form-input">
                     <label>Profile Picture :</label>
                     <input type="file" name="profile_picture"/>
@@ -43,7 +43,7 @@
         </form>
     </div>
     <div class="content">
-        <a type="button" class="button button-info" href="{{ config('app.url')}}/user">BACK</a>
+        <a type="button" href="{{ config('app.url')}}/user">BACK</a>
     </div>
 <script>
     jQuery(document).ready(function(){
