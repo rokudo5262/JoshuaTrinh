@@ -2,6 +2,7 @@
     <head>
         <title>Login</title>
         <meta name="csrf-token" content="{{ csrf_token() }}" />
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/login.css') }}" />
     </head>
     <body>
         @if ($errors->all())
@@ -18,17 +19,17 @@
                 @csrf
                 <h1>Login</h1>
                 <div class="form-input">
-                    <label>email</label> <input type="text" name="email" >
+                    <label>Email</label> <input type="text" name="email" >
                 </div>
                 <div class="form-input">
-                    <label>password</label> <input type="password" name="password" id="myInput">
+                    <label>Password</label> <input type="password" name="password" id="myInput">
                     <input type="checkbox" onclick="myFunction()">
                 </div>
                 <button type="submit">Login</button>
             </form>
         </div>
         <div class="links">
-            <a type="button" href="{{ config('app.url')}}/register">register</a>
+            <a type="button" href="{{ config('app.url')}}/register">Register</a>
             <a type="button" href="{{ config('app.url')}}/forget_password">Forget Password</a>
             </div>
         <script>

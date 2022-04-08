@@ -1,16 +1,8 @@
-<!doctype html>
-<html>
-<head>
-  <title>Create User</title>
-  <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js"
-                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-                crossorigin="anonymous">
-    </script>
-  <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/user.css') }}" />
-</head>
-<body>
-    @include('header')
+@extends('layout.app')
+
+@section('title', 'Create User')
+
+@section('content')
     @if ($errors->all())
         <div class="alert alert-danger">
             <ul>
@@ -22,10 +14,10 @@
     @endif
     <div class="alert alert-success" style="display:none"></div>
     <div class="content">
+        <h2>Add New User</h2>
         <form id="create_new_user">
             @csrf
-                <div class="form-group">
-                <h1>Add New User</h1>
+            <div class="form-group">
                 <div class="form-input">
                     <label>Profile Picture :</label>
                     <input type="file" name="profile_picture"/>
@@ -51,10 +43,8 @@
         </form>
     </div>
     <div class="content">
-        <a type="button" class="button button-info" href="{{ config('app.url')}}/user">BACK</a>
+        <a type="button" href="{{ config('app.url')}}/user">BACK</a>
     </div>
-    @include('footer')
-</body>
 <script>
     jQuery(document).ready(function(){
         jQuery('#create_new_user').submit(function(event){
@@ -87,4 +77,5 @@
         });
     });
 </script>
-</html>
+
+@endsection

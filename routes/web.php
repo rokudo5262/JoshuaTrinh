@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HomeController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +23,8 @@ Route::middleware([
     'middleware' => 'role:super_admin|admin',
     // 'middleware' => 'role:admin',
     ])->group(function(){
-        //post route 
+        //admin route 
+
         Route::get('/logout',[AdminController::class, 'logout'])->name('logout');
         Route::get('/change_password',[AdminController::class, 'change_password']);
         Route::post('/handle_change_password',[AdminController::class, 'handle_change_password']);
@@ -30,6 +33,7 @@ Route::middleware([
         Route::get('/under_construction',[AdminController::class, 'under_construction'])->name('under_construction');
         //post route
         Route::get('/post',[PostController::class, 'index'])->name('post');
+        Route::get('/post/show/{id}',[PostController::class, 'show']);
         Route::post('/post/store',[PostController::class, 'store']);
         Route::get('/post/create',[PostController::class, 'create']);
         Route::get('/post/edit/{id}',[PostController::class, 'edit']);
@@ -50,12 +54,15 @@ Route::middleware([
         Route::get('/user/search',[UserController::class, 'search']);
         Route::get('/user/handle_search',[UserController::class, 'handle_search']);
         Route::get('/user/test',[UserController::class, 'test'])->name('test');
+        Route::get('/', [HomeController::class, 'index'])->name('home');
+
 });
 Route::middleware(['middleware' => 'throttle:60,1',])->group(function(){
-    Route::get('/',[AdminController::class, 'home'])->name('home');
+    // Route::get('/',[AdminController::class, 'home'])->name('home');
     Route::get('/login',[AdminController::class, 'login'])->name('login');
     Route::get('/register',[AdminController::class, 'register'])->name('register');
     Route::post('/handle_register',[AdminController::class, 'handle_register'])->name('handle_register');
     Route::get('/forget_password',[AdminController::class, 'forget_password'])->name('forget_password');
     Route::post('/handle_login',[AdminController::class, 'handle_login'])->name('handle_login');
+    
 });

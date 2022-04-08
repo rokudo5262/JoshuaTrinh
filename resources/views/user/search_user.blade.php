@@ -1,16 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Search User</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/user.css') }}" />
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js"
-                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-                crossorigin="anonymous">
-    </script>
-    <script type="text/javascript"  src="{{ asset('js/user.js') }}"></script>
-</head>
-<body>
-    @include('header')
+
+@extends('layout.app')
+
+@section('title', 'Search User')
+
+@section('content')
     <div class="content">
     <div class="alert alert-success" style="display:none"></div>
         <form >
@@ -39,9 +32,8 @@
             </table>
         </div>
         <div class="content">
-            <a type="button" class="button button-info" href="{{ config('app.url')}}/user">BACK</a>
+            <a type="button" href="{{ config('app.url')}}/user">BACK</a>
     </div>
-    @include('footer')
 <script type="text/javascript">
     jQuery(document).ready(function(){
         jQuery("input[type='checkbox']").change(function(){
@@ -90,5 +82,4 @@
         })
     });
 </script>
-</body>
-</html>
+@endsection

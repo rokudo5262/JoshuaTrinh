@@ -22,7 +22,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::where('status','0')->get();
+        $posts = Post::where('status','0')->with('user')->get();
+        // $author = $posts->user();
         return view('post.view_post',[
             'posts' => $posts,
         ]);
@@ -55,9 +56,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show($id) {
+        $post = Post::findOrFail($id);
+        return view("post.detail_post",[
+            'post' => $post,
+        ]); 
     }
 
     /**
