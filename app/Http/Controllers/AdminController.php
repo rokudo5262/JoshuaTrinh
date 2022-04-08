@@ -67,6 +67,10 @@ class AdminController extends Controller {
         return view('change_password');
     }
 
+    public function forget_password() {
+        return view('forget_password');
+    }
+
     public function handle_change_password(Request $request) {
         $request->validate([
             'current_password'          => ['required', new MatchOldPassword],
