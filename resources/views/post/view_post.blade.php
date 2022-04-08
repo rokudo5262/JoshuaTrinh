@@ -27,7 +27,7 @@
                 <td>{{ $post->id }}</td>
                 <td>{{ $post->title }}</td>
                 <td>{{ $post->slug }}</td>
-                <td>{{ $post->user->full_name }}</td>
+                <td>{{ $post->user->first_name }}</td>
                 <td>{{ $post->created_at }}</td>
                 <td>
                     <a type="button" href="{{ config('app.url') }}/post/show/{{ $post->id }}">Detail</a>
