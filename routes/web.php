@@ -24,45 +24,47 @@ Route::middleware([
     // 'middleware' => 'role:admin',
     ])->group(function(){
         //admin route 
-
         Route::get('/logout',[AdminController::class, 'logout'])->name('logout');
-        Route::get('/change_password',[AdminController::class, 'change_password']);
+        Route::get('/change_password',[AdminController::class, 'change_password'])->name('change_password');
         Route::post('/handle_change_password',[AdminController::class, 'handle_change_password']);
-        Route::get('/profile',[AdminController::class, 'profile']);
+        Route::get('/profile',[AdminController::class, 'profile'])->name('profile');
         Route::post('/handle_change_profile_picture',[AdminController::class, 'handle_change_profile_picture']);
         Route::get('/under_construction',[AdminController::class, 'under_construction'])->name('under_construction');
         //post route
         Route::get('/post',[PostController::class, 'index'])->name('post');
-        Route::get('/post/show/{id}',[PostController::class, 'show']);
-        Route::post('/post/store',[PostController::class, 'store']);
-        Route::get('/post/create',[PostController::class, 'create']);
-        Route::get('/post/edit/{id}',[PostController::class, 'edit']);
-        Route::post('/post/update/{id}',[PostController::class, 'update']);
-        Route::get('/post/delete/{id}',[PostController::class, 'delete']);
-        Route::get('/post/destroy/{id}',[PostController::class, 'destroy']);
+        Route::prefix('/post')->group( function () {
+            Route::get('/show/{id}',[PostController::class, 'show']);
+            Route::post('/store',[PostController::class, 'store']);
+            Route::get('/create',[PostController::class, 'create']);
+            Route::get('/edit/{id}',[PostController::class, 'edit']);
+            Route::post('/update/{id}',[PostController::class, 'update']);
+            Route::get('/delete/{id}',[PostController::class, 'delete']);
+            Route::get('destroy/{id}',[PostController::class, 'destroy']);
+        });
         // user route
         Route::get('/user',[UserController::class, 'index'])->name('user');
-        Route::get('/user/show/{id}',[UserController::class, 'show']);
-        Route::post('/user/store',[UserController::class, 'store']);
-        Route::get('/user/create',[UserController::class, 'create']);
-        Route::get('/user/edit/{id}',[UserController::class, 'edit']);
-        Route::post('/user/update/{id}',[UserController::class, 'update']);
-        Route::post('/user/mutiple_delete',[UserController::class, 'mutiple_delete']);
-        Route::get('/user/undo_delete/{id}',[UserController::class, 'undo_delete']);
-        Route::get('/user/delete/{id}',[UserController::class, 'delete']);
-        Route::get('/user/destroy/{id}',[UserController::class, 'destroy']);
-        Route::get('/user/search',[UserController::class, 'search']);
-        Route::get('/user/handle_search',[UserController::class, 'handle_search']);
-        Route::get('/user/test',[UserController::class, 'test'])->name('test');
+        Route::prefix('/user')->group( function () {
+            Route::get('/show/{id}',[UserController::class, 'show']);
+            Route::post('/store',[UserController::class, 'store']);
+            Route::get('/create',[UserController::class, 'create']);
+            Route::get('/edit/{id}',[UserController::class, 'edit']);
+            Route::post('/update/{id}',[UserController::class, 'update']);
+            Route::post('/mutiple_delete',[UserController::class, 'mutiple_delete']);
+            Route::get('/undo_delete/{id}',[UserController::class, 'undo_delete']);
+            Route::get('/delete/{id}',[UserController::class, 'delete']);
+            Route::get('/destroy/{id}',[UserController::class, 'destroy']);
+            Route::get('/search',[UserController::class, 'search']);
+            Route::get('/handle_search',[UserController::class, 'handle_search']);
+            Route::get('/test',[UserController::class, 'test'])->name('test');
+        });
         Route::get('/', [HomeController::class, 'index'])->name('home');
 
 });
+
 Route::middleware(['middleware' => 'throttle:60,1',])->group(function(){
-    // Route::get('/',[AdminController::class, 'home'])->name('home');
     Route::get('/login',[AdminController::class, 'login'])->name('login');
     Route::get('/register',[AdminController::class, 'register'])->name('register');
     Route::post('/handle_register',[AdminController::class, 'handle_register'])->name('handle_register');
     Route::get('/forget_password',[AdminController::class, 'forget_password'])->name('forget_password');
-    Route::post('/handle_login',[AdminController::class, 'handle_login'])->name('handle_login');
-    
+    Route::post('/handle_login',[AdminController::class, 'handle_login'])->name('handle_login');  
 });

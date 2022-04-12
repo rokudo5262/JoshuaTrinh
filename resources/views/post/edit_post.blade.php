@@ -1,10 +1,8 @@
-@extends('layout.app')
-
-@section('title', 'Update Post')
+@extends('layouts.app')
 
 @section('content')
-<div class="content">
-    <h2>Post Update</h2>
-    <a type="button" href="{{ config('app.url')}}/post">BACK</a>
-</div>
+    <div class="content">
+        <h2>Post Update</h2>
+        <a type="button" href="{{ config('app.url')}}/post">BACK</a>
+    </div>
 @endsection

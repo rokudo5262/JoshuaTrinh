@@ -1,6 +1,4 @@
-@extends('layout.app')
-
-@section('title', 'Under Contruction Page')
+@extends('layouts.app')
 
 @section('content')
         <div class="content">

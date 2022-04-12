@@ -1,6 +1,4 @@
-@extends('layout.app')
-
-@section('title', 'View Post')
+@extends('layouts.app')
 
 @section('content')
 <div class="content">
@@ -10,7 +8,6 @@
 <div class="content">
     <div class="alert alert-success" style="display:none"></div>
     <table class="table">
-        <caption>Posts</caption>
         <thead>
             <td></td>
             <td>Id</td>
