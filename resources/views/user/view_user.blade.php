@@ -1,11 +1,8 @@
-@extends('layout.app')
-
-@section('title', 'View User')
+@extends('layouts.app')
 
 @section('content')
     <div class="content">
         <h2>Users List</h2>
-        <!-- <a type="button" class="button button-primary" href="{{ config('app.url')}}/user/search">Search User</a> -->
         <a type="button" class="button button-primary" href="{{ config('app.url')}}/user/create">Create User</a>
         <form id="solf_delete_multiple_user">
             @csrf
@@ -17,13 +14,12 @@
             <button type="submit">Submit</button>
         </form>
     </div>
-    <div class="content">
+    <!-- <div class="content">
     <div class="alert alert-success" style="display:none"></div>
         @if (count($all_users) == 0)
             <p>No data to display</p>
         @else
             <table class="table">
-                <caption>Users</caption>
                 <thead>
                     <td></td>
                     <td>Id</td>
@@ -54,41 +50,11 @@
                 </tbody>
             </table>
         @endif
-    </div>
+    </div> -->
+    <example-component 
+        :user_id = "{{ auth()->user()->id }}"
+        :users = "{{ json_encode($all_users) }}"
+    />
 
-    <script>
-        jQuery(document).ready(function(){
-            jQuery("input[type='checkbox']").click(function(){
-                    var val = [];
-                    jQuery(':checkbox:checked').each(function(i){
-                    val[i] = $(this).val();
-                });
-                jQuery('#ids').val(val.join(','));
-            });
-            jQuery('#solf_delete_multiple_user').submit(function(event){
-                event.preventDefault();
-                $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            jQuery.ajax({
-                method: 'POST',
-                url: "user/mutiple_delete",
-                enctype: 'multipart/form-data',
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    ids: jQuery('#ids').val(),
-                },
-                success: function(result){
-                    var test = jQuery('#ids').val().split(",");
-                    console.log(test);
-                    // test.each().jQuery('checkbox[id='test[i]').closect('tr').hide();
-                    jQuery('.alert').show();
-                    jQuery('.alert').html(result.success);      
-                    },
-                });
-            });
-        });
-</script>
+    <count-component></count-component>
 @endsection

@@ -59,7 +59,7 @@ class UserController extends Controller {
         //     'email'=>'required|email',
         //     'password'=>'required|min:9|max:100',
         // ]);
-        if($request->ajax()) {
+        // if($request->ajax()) {
             $new_user = User::create([
                 // 'profile_picture' => $request->get('profile_picture'),
                 'first_name'    => Str::ucfirst($request->get('first_name')),
@@ -71,11 +71,11 @@ class UserController extends Controller {
             // $files = $request->file('profile_picture');
             // $name = $files->getClientOriginalName();
             // Storage::putFileAs('public/image/'.$new_user->id, $files,$name);
-            // return redirect('/user');
-            return response()->json(['success'=>'Data is successfully added']);
-        } else {
-            return response()->json(['error'=>'Error']);
-        }  
+            return redirect('/user');
+        //     return response()->json(['success'=>'Data is successfully added']);
+        // } else {
+        //     return response()->json(['error'=>'Error']);
+        // }  
     }
 
     /**

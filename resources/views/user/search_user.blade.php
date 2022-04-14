@@ -1,7 +1,5 @@
 
-@extends('layout.app')
-
-@section('title', 'Search User')
+@extends('layouts.app')
 
 @section('content')
     <div class="content">
@@ -19,7 +17,6 @@
     <input type="checkbox" id="1" value="1"/>
     <div class="content">
             <table class="table">
-                <caption>Users</caption>
                 <thead>
                     <td></td>
                     <td>first name</td>
@@ -27,14 +24,13 @@
                     <td>email</td>
                 </thead>
                 <tbody>
-
                 </tbody>
             </table>
         </div>
         <div class="content">
             <a type="button" href="{{ config('app.url')}}/user">BACK</a>
     </div>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     jQuery(document).ready(function(){
         jQuery("input[type='checkbox']").change(function(){
                 var val = [];
@@ -81,5 +77,5 @@
             });
         })
     });
-</script>
+</script> -->
 @endsection

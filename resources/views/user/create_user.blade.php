@@ -1,9 +1,7 @@
-@extends('layout.app')
-
-@section('title', 'Create User')
+@extends('layouts.app')
 
 @section('content')
-    @if ($errors->all())
+    <!-- @if ($errors->all())
         <div class="alert alert-danger">
             <ul>
                 @foreach($errors->all() as $error)
@@ -11,11 +9,10 @@
                 @endforeach
             </ul>
         </div>    
-    @endif
-    <div class="alert alert-success" style="display:none"></div>
+    @endif -->
+    <!-- <div class="alert alert-success" style="display:none"></div>
     <div class="content">
-        <h2>Add New User</h2>
-        <form id="create_new_user">
+        <form id="create_new_user" method="POST" action="{{ config('app.url')}}/user/store">
             @csrf
             <div class="form-group">
                 <div class="form-input">
@@ -44,38 +41,6 @@
     </div>
     <div class="content">
         <a type="button" href="{{ config('app.url')}}/user">BACK</a>
-    </div>
-<script>
-    jQuery(document).ready(function(){
-        jQuery('#create_new_user').submit(function(event){
-            event.preventDefault();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        jQuery.ajax({
-            method: 'POST',
-            url: "store",
-            enctype: 'multipart/form-data',
-            data: {
-                _token: "{{ csrf_token() }}",
-                first_name: jQuery('input[name=first_name]').val(),
-                last_name: jQuery('input[name=last_name]').val(),
-                email: jQuery('input[name=email]').val(),
-                password: jQuery('input[name=password]').val(),
-            },
-            success: function(result){
-                jQuery('.alert').show();
-                jQuery('.alert').html(result.success);
-                $("#create_new_user")[0].reset();
-            },
-            error: function(result){
-                jQuery('.alert').show();
-                jQuery('.alert').html(result.error);
-            }});
-        });
-    });
-</script>
-
+    </div> -->
+    <create-user-component></create-user-component>
 @endsection
