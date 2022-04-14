@@ -10,9 +10,8 @@
             </ul>
         </div>    
     @endif -->
-    <div class="alert alert-success" style="display:none"></div>
+    <!-- <div class="alert alert-success" style="display:none"></div>
     <div class="content">
-        <h2>Add New User</h2>
         <form id="create_new_user">
             @csrf
             <div class="form-group">
@@ -42,6 +41,6 @@
     </div>
     <div class="content">
         <a type="button" href="{{ config('app.url')}}/user">BACK</a>
-    </div>
-
+    </div> -->
+    <create-user-component/>
 @endsection

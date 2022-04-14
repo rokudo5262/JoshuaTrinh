@@ -14,7 +14,7 @@
             <button type="submit">Submit</button>
         </form>
     </div>
-    <div class="content">
+    <!-- <div class="content">
     <div class="alert alert-success" style="display:none"></div>
         @if (count($all_users) == 0)
             <p>No data to display</p>
@@ -50,7 +50,11 @@
                 </tbody>
             </table>
         @endif
-    </div>
-    <example-component/>
-    <!-- <count-component></count-component> -->
+    </div> -->
+    <example-component 
+        :user_id = "{{ auth()->user()->id }}"
+        :users = "{{ json_encode($all_users) }}"
+    />
+
+    <count-component></count-component>
 @endsection
