@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\HomeController;
 
 
 /*
@@ -30,6 +29,7 @@ Route::middleware([
         Route::get('/profile',[AdminController::class, 'profile'])->name('profile');
         Route::post('/handle_change_profile_picture',[AdminController::class, 'handle_change_profile_picture']);
         Route::get('/under_construction',[AdminController::class, 'under_construction'])->name('under_construction');
+        Route::get('/setting',[AdminController::class, 'setting'])->name('setting');
         //post route
         Route::get('/post',[PostController::class, 'index'])->name('post');
         Route::prefix('/post')->group( function () {
@@ -57,7 +57,7 @@ Route::middleware([
             Route::get('/handle_search',[UserController::class, 'handle_search']);
             Route::get('/test',[UserController::class, 'test'])->name('test');
         });
-        Route::get('/', [HomeController::class, 'index'])->name('home');
+        Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
 
 });
 

@@ -1,5 +1,5 @@
 @extends('layouts.admin')
 
 @section('content')
-    <profile-component></profile-component>
+    <dashboard-component></dashboard-component>
 @endsection
