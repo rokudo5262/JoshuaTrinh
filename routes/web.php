@@ -29,6 +29,7 @@ Route::middleware([
         Route::get('/profile',[AdminController::class, 'profile'])->name('profile');
         Route::post('/handle_change_profile_picture',[AdminController::class, 'handle_change_profile_picture']);
         Route::get('/under_construction',[AdminController::class, 'under_construction'])->name('under_construction');
+        Route::get('/setting',[AdminController::class, 'setting'])->name('setting');
         //post route
         Route::get('/post',[PostController::class, 'index'])->name('post');
         Route::prefix('/post')->group( function () {

@@ -124,5 +124,10 @@ class AdminController extends Controller {
     
     public function under_construction() {
         return view('under_construction');
-    } 
+    }
+
+    public function setting() {
+        return view('setting');
+    }
+
 }

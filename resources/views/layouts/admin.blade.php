@@ -21,56 +21,26 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <h2>Admin</h2>
+            </div> 
+            <div class="container">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">   
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
+                    <ul class="navbar-nav ms-auto">
                     </ul>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('forget_password'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('forget_password') }}">{{ __('Forget Password') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('profile') }}">
-                                        {{ __('Profile') }}
-                                    </a>
-                                    <a class="dropdown-item" href="{{ route('change_password') }}">
-                                        {{ __('Change Password') }}
-                                    </a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="get" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }}
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
+                                <a class="dropdown-item" href="{{ route('change_password') }}">Change Password</a>
+                                <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -78,13 +48,13 @@
         <main class="py-4">
             <div class="row">
                 <div class="col-3">
-                <div class="container">
-                    <ul class="list-group">
-                        <li class="list-group-item"><a href="{{ config('app.url')}}/user">User</a></li>
-                        <li class="list-group-item"><a href="{{ config('app.url')}}/post">Post</a></li>
-                        <li class="list-group-item"><a href="#">Setting</a></li>
-                    </ul>
-                </div>
+                    <div class="container">
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="{{ config('app.url')}}/user">User</a></li>
+                            <li class="list-group-item"><a href="{{ config('app.url')}}/post">Post</a></li>
+                            <li class="list-group-item"><a href="{{ config('app.url')}}/setting">Setting</a></li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="col-9">
                     @yield('content')

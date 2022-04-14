@@ -8,7 +8,7 @@
                 <div class="row mb-3">
                     <label for="full_name" class="col-md-4 col-form-label text-md-end">Full Name</label>
                     <div class="col-md-6">
-                        <input class="form-control" type="text" name="profile_picture" readonly/>
+                        <input class="form-control" type="text" name="full_name" readonly/>
                     </div>
                 </div>
             </div>

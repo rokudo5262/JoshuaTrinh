@@ -18,7 +18,8 @@ window.Vue = require('vue').default;
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
+Vue.component('change-password-component', require('./components/ChangePasswordComponent.vue').default);
+Vue.component('dashboard-component', require('./components/DashboardComponent.vue').default);
 Vue.component('user-component', require('./components/UserComponent.vue').default);
 Vue.component('create-user-component', require('./components/CreateUserComponent.vue').default);
 Vue.component('login-component', require('./components/LoginComponent.vue').default);
