@@ -6,6 +6,9 @@
                     <div class="card-header">Login</div>
                     <div class="card-body">
                         <form method="POST" action="handle_login">
+                        <div class="row mb-3"> 
+                            <input type="hidden" name="_token" :value="csrf">
+                        </div>
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">Email Address</label>
                             <div class="col-md-6">
@@ -43,6 +46,11 @@
     export default {
         mounted() {
             console.log('Login Component mounted.')
-        }
+        },
+        data: function() {
+            return {
+                csrf: document.head.querySelector('meta[name="csrf-token"]').content
+            }
+        },
     }
 </script>

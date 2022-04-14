@@ -12,7 +12,7 @@
     @endif -->
     <!-- <div class="alert alert-success" style="display:none"></div>
     <div class="content">
-        <form id="create_new_user">
+        <form id="create_new_user" method="POST" action="{{ config('app.url')}}/user/store">
             @csrf
             <div class="form-group">
                 <div class="form-input">
@@ -42,5 +42,5 @@
     <div class="content">
         <a type="button" href="{{ config('app.url')}}/user">BACK</a>
     </div> -->
-    <create-user-component/>
+    <create-user-component></create-user-component>
 @endsection
