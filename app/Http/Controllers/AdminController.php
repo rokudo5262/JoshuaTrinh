@@ -108,8 +108,8 @@ class AdminController extends Controller {
         return redirect('user');
     }
 
-    public function home() {
-        return view('child');
+    public function dashboard() {
+        return view('dashboard');
     }
 
     public function generate_random_string($length = 10) {

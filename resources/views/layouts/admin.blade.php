@@ -76,7 +76,20 @@
             </div>
         </nav>
         <main class="py-4">
-            @yield('content')
+            <div class="row">
+                <div class="col-3">
+                <div class="container">
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="{{ config('app.url')}}/user">User</a></li>
+                        <li class="list-group-item"><a href="{{ config('app.url')}}/post">Post</a></li>
+                        <li class="list-group-item"><a href="#">Setting</a></li>
+                    </ul>
+                </div>
+                </div>
+                <div class="col-9">
+                    @yield('content')
+                </div>
+            </div>
         </main>
     </div>
 </body>

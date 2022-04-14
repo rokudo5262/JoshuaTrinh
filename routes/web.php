@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\HomeController;
 
 
 /*
@@ -57,7 +56,7 @@ Route::middleware([
             Route::get('/handle_search',[UserController::class, 'handle_search']);
             Route::get('/test',[UserController::class, 'test'])->name('test');
         });
-        Route::get('/', [HomeController::class, 'index'])->name('home');
+        Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
 
 });
 
