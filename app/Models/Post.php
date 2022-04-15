@@ -16,18 +16,57 @@ class Post extends Model {
         'title',
         'content',
         'slug',
+        'status',
         'user_id',
     ];
-    const PUBLISHED = 0;
-    const DRAFT = 1;
-    const PENDING = 2;
-    const PRIVATE = 3;
-    const TRASH = 4;
-    public function user(){
+    protected $dates = [
+        'created_at', 
+        'update_at', 
+    ];
+
+    const Published = 0;
+    const Draft = 1;
+    const Pending = 2;
+    const Private = 3;
+    const Trash = 4;
+    public function user() {
         return $this->belongsTo('App\Models\User');
     }
     
-    public function comments() {
+    public function comment() {
         return $this->hasMany('App\Models\Comment');
+    }
+
+    // public function getCommentCountAttribute() {
+    //     return $this->hasMany('App\Models\Comment')->count();
+    // }
+
+    public function getStatusAttribute($value){
+        switch($value) {
+            case 0;
+                return "Published";
+                break;
+            case 1;
+                return "Draft";
+                break;
+            case 2;
+                return "Pending";
+                break;
+            case 3;
+                return "Private";
+                break;
+            case 4;
+                return "Trash";
+                break;
+            default:
+                break;
+        }
+    }
+    public function getCreatedAtAttribute($value) {
+        return Carbon::parse($value)->format('d-m-Y');
+    }
+
+    public function getUpdateAtAttribute($value) {
+        return Carbon::parse($value)->format('d-m-Y');
     }
 }

@@ -48,25 +48,21 @@ class User extends Authenticatable
         'created_at', 
         'update_at', 
     ];
-    // public static $rules = [
-    //     'name' => ['min:1','max:191'],
-    //     'email' => ['email']
-    //    ];
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
+
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    public function getFullNameAttribute(){
-        return "{$this->first_name} {$this->last_name}";
-    }
-
     public function post() {
         return $this->hasMany('App\Models\Post');
+    }
+
+    public function comment() {
+        return $this->hasMany('App\Models\Comment');
+    }
+
+    public function getFullNameAttribute(){
+        return "{$this->first_name} {$this->last_name}";
     }
 
     public function getCreatedAtAttribute($value) {
@@ -75,9 +71,5 @@ class User extends Authenticatable
 
     public function getUpdateAtAttribute($value) {
         return Carbon::parse($value)->format('d-m-Y');
-    }
-    
-    public function comments() {
-        return $this->hasMany('App\Models\Comment');
     }
 }

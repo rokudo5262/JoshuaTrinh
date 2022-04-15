@@ -5,27 +5,29 @@
                 <h2>User List</h2>
             </div>
             <div class="card-body">
-                <a type="button" class="btn btn-primary" href="./user/create">Create User</a>
+                <a type="button" class="btn btn-primary mb-3" href="./user/create">Create User</a>
                 <table class="table">
                     <thead>
                         <td></td>
-                        <td>Id</td>
+                        <td>ID</td>
                         <td>Full Name</td>
                         <td>Email</td>
-                        <td>created at</td>
+                        <td>Created At</td>
                         <td>Action</td>
                     </thead>
                     <tbody>
                         <tr v-for = "user in users" :key="user.id">
-                            <td><input type="checkbox" id="" value=""></td>
+                            <td>
+                                <input type="checkbox" :id="user.id" :value="user.id">
+                            </td>
                             <td>{{ user.id }}</td>
                             <td>{{ user.first_name }} {{ user.last_name }}</td>
                             <td>{{ user.email }}</td>
                             <td>{{ user.created_at }}</td>
                             <td>
-                                <a type="button" href="./detail">Detail</a>
-                                <a type="button" href=".">Update</a>
-                                <a type="button" href=".">Delete</a>
+                                <a type="button" :href="'/user/show/' + user.id">Detail</a>
+                                <a type="button" :href="'./user/edit/' + user.id">Update</a>
+                                <a type="button" :href="'#'">Delete</a>
                             </td>
                         </tr>
                     </tbody>
@@ -43,7 +45,6 @@
         props: ['user_id','users'],
         mounted() {
             console.log('User Component mounted.')
-            
         },
     }
 </script>

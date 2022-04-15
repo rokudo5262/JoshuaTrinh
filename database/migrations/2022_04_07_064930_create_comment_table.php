@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateCommentTable extends Migration {
     public function up() {
-        Schema::create('comment', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('post_id')->unsigned()->index()->comment('comment belong to post');
             $table->bigInteger('user_id')->unsigned()->index()->comment('owner of the comment');
@@ -16,6 +16,6 @@ class CreateCommentTable extends Migration {
     }
 
     public function down() {
-        Schema::dropIfExists('comment');
+        Schema::dropIfExists('comments');
     }
 }
