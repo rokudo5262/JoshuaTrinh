@@ -53,8 +53,6 @@ Route::middleware([
             Route::get('/undo_delete/{id}',[UserController::class, 'undo_delete']);
             Route::get('/delete/{id}',[UserController::class, 'delete']);
             Route::get('/destroy/{id}',[UserController::class, 'destroy']);
-            Route::get('/search',[UserController::class, 'search']);
-            Route::get('/handle_search',[UserController::class, 'handle_search']);
             Route::get('/test',[UserController::class, 'test'])->name('test');
         });
         Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');

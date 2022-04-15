@@ -20,13 +20,17 @@ window.Vue = require('vue').default;
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 Vue.component('change-password-component', require('./components/ChangePasswordComponent.vue').default);
 Vue.component('dashboard-component', require('./components/DashboardComponent.vue').default);
-Vue.component('user-component', require('./components/UserComponent.vue').default);
-Vue.component('create-user-component', require('./components/CreateUserComponent.vue').default);
 Vue.component('login-component', require('./components/LoginComponent.vue').default);
 Vue.component('register-component', require('./components/RegisterComponent.vue').default);
 Vue.component('forget-password-component', require('./components/ForgetPasswordComponent.vue').default);
 Vue.component('profile-component', require('./components/ProfileComponent.vue').default);
+//user
+Vue.component('user-component', require('./components/user/UserComponent.vue').default);
+Vue.component('create-user-component', require('./components/user/CreateUserComponent.vue').default);
+Vue.component('detail-user-component', require('./components/user/DetailUserComponent.vue').default);
 
+//post
+Vue.component('post-component', require('./components/post/PostComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
