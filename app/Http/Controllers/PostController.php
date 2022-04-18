@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Comment;
 use Illuminate\Support\Str;
 
 class PostController extends Controller {
@@ -16,7 +17,7 @@ class PostController extends Controller {
     }
 
     public function index() {
-        $posts = Post::with('user')->withCount('comment')->get();
+        $posts = Post::where('status','!=','4')->with('user')->withCount('comment')->get();
         return view('post.view_post',[
             'posts' => $posts,
         ]);
@@ -30,10 +31,9 @@ class PostController extends Controller {
     }
 
     public function store(Request $request) {
-        
         $new_post = Post::create([
             'title'    => $request->get('title'),
-            'slug'     => slug($request->get('title')),
+            'slug'     => $this->slug($request->get('title')),
             'content'  => $request->get('content'),
             'status'   => $request->get('status'),
             'user_id'  => $request->get('author'),
@@ -45,6 +45,7 @@ class PostController extends Controller {
         $post = Post::findOrFail($id);
         return view("post.detail_post",[
             'post' => $post,
+            'comments' => $comments,
         ]); 
     }
 
@@ -59,7 +60,7 @@ class PostController extends Controller {
         $post = Post::findOrFail($id);
         $post->update([
             'title'    => $request->get('title'),
-            'slug'     => slug($request->get('title')),
+            'slug'     => $this->slug($request->get('title')),
             'content'  => $request->get('content'),
             'status'   => $request->get('status'),
             'user_id'   => $request->get('author'),

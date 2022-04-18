@@ -16,13 +16,13 @@
                 <div class="row mb-3">
                     <label for="title" class="col-md-4 col-form-label text-md-end">Title</label>
                     <div class="col-md-6">
-                        <input class="form-control" type="text" name="title"/>
+                        <input class="form-control" type="text" name="title" value="{{ $post->title}}"/>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="content" class="col-md-4 col-form-label text-md-end">Content</label>
                     <div class="col-md-6">
-                        <textarea  class="form-control" name="content"></textarea>
+                        <textarea  class="form-control" name="content">{{ $post->content}}</textarea>
                     </div>
                 </div>
                 <div class="row mb-3">

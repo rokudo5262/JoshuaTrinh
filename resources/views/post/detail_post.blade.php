@@ -34,11 +34,6 @@
                     <input  class="form-control" name="author" value="{{ $post->status }}" readonly/>
                 </div>
             </div>
-            <div class="row mb-3">
-            <h3>Post's comment</h3>
-            <p>{{$post->comment}}</p>
-
-            </div>
         </div>
         <div class="card-footer">
             <a type="button" href="{{ route('post') }}">BACK</a>
