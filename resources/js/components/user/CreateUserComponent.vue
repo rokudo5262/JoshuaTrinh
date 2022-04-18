@@ -2,7 +2,7 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <h2>Create User</h2>
+                <h2>Create New User</h2>
             </div>
             <div class="card-body">
                 <form id="create_new_user" method="POST" action="store">

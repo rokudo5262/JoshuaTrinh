@@ -7,7 +7,7 @@
             <h2>Post List</h2>
         </div>
         <div class="card-body">
-            <a type="button" class="btn btn-primary mb-3" href="{{ config('app.url')}}/post/create">Create New Post</a>
+            <a type="button" class="btn btn-primary mb-3" href="{{ route('post.create')}}">Create New Post</a>
             <table class="table">
                 <thead>
                     <td></td>
@@ -29,14 +29,14 @@
                         <td>{{ $post->slug }}</td>
                         <td>{{ $post->comment_count }}</td>
                         <td>
-                            <a href="{{ config('app.url') }}/user/show/{{ $post->user->id }}">{{ $post->user->full_name }}</a>
+                            <a href="{{ route('user.show',$post->user->id) }}">{{ $post->user->full_name }}</a>
                         </td>
                         <td>{{ $post->status }}</td>
                         <td>{{ $post->created_at }}</td>
                         <td>
-                            <a type="button" href="{{ config('app.url') }}/post/show/{{ $post->id }}">Detail</a>
-                            <a type="button" href="{{ config('app.url') }}/post/edit/{{ $post->id }}">Edit</a>
-                            <a type="button" href="{{ config('app.url') }}/post/delete/{{ $post->id }}">Delete</a>
+                            <a type="button" href="{{ route('post.show',$post->id) }}">Detail</a>
+                            <a type="button" href="{{ route('post.edit',$post->id) }}">Edit</a>
+                            <a type="button" href="{{ route('post.delete',$post->id) }}">Delete</a>
                         </td>
                     </tr>
                     @endforeach
@@ -44,7 +44,7 @@
             </table>
         </div>
         <div class="card-footer">
-            <a type="button" href="#">BACK</a>
+            <a type="button" href="{{ route('dashboard') }}">BACK</a>
         </div>
     </div>
 </div>

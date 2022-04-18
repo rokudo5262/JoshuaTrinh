@@ -29,6 +29,7 @@ class Post extends Model {
     const Pending = 2;
     const Private = 3;
     const Trash = 4;
+    
     public function user() {
         return $this->belongsTo('App\Models\User');
     }
