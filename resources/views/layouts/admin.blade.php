@@ -21,7 +21,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <h2>Admin</h2>
+                <h2><a href="{{ route('dashboard') }}">Admin</a></h2>
             </div> 
             <div class="container">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">   
@@ -50,9 +50,9 @@
                 <div class="col-3">
                     <div class="container">
                         <ul class="list-group">
-                            <li class="list-group-item"><a href="{{ config('app.url')}}/user">User</a></li>
-                            <li class="list-group-item"><a href="{{ config('app.url')}}/post">Post</a></li>
-                            <li class="list-group-item"><a href="{{ config('app.url')}}/setting">Setting</a></li>
+                            <li class="list-group-item"><a href="{{ config('app.url')}}/admin/user">User</a></li>
+                            <li class="list-group-item"><a href="{{ config('app.url')}}/admin/post">Post</a></li>
+                            <li class="list-group-item"><a href="{{ config('app.url')}}/admin/setting">Setting</a></li>
                         </ul>
                     </div>
                 </div>

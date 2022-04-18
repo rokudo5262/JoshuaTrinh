@@ -30260,7 +30260,7 @@ var render = function () {
                   _c(
                     "a",
                     {
-                      attrs: { type: "button", href: "/user/show/" + user.id },
+                      attrs: { type: "button", href: "./user/show/" + user.id },
                     },
                     [_vm._v("Detail")]
                   ),

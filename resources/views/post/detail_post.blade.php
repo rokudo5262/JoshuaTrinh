@@ -10,7 +10,7 @@
 
         </div>
         <div class="card-footer">
-            <a type="button" href="{{ config('app.url')}}/post">BACK</a>
+            <a type="button" href="{{ config('app.url')}}/admin/post">BACK</a>
         </div>
     </div>
 </div>

@@ -25,7 +25,7 @@
                             <td>{{ user.email }}</td>
                             <td>{{ user.created_at }}</td>
                             <td>
-                                <a type="button" :href="'/user/show/' + user.id">Detail</a>
+                                <a type="button" :href="'./user/show/' + user.id">Detail</a>
                                 <a type="button" :href="'./user/edit/' + user.id">Update</a>
                                 <a type="button" :href="'#'">Delete</a>
                             </td>
