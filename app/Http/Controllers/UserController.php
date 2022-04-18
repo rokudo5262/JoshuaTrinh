@@ -55,7 +55,7 @@ class UserController extends Controller {
 
     public function show($id) {
         $user = User::findOrFail($id);
-        $posts = Post::where("user_id", "=", $user->id)->get();
+        $posts = $user->post()->where('status','!=','4')->get();
         return view("user.detail_user",[
             'user' => $user,
             'posts' => $posts,
@@ -78,7 +78,7 @@ class UserController extends Controller {
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
         ]);
-        return redirect('/user');
+        return redirect()->route('user');
     }
 
     public function delete(Request $request,$id) {
@@ -86,7 +86,7 @@ class UserController extends Controller {
         $user->update([
             'is_deleted' => 1,
         ]);
-        return redirect("/user");
+        return redirect()->route('user');
     }
 
     public function undo_delete(Request $request,$id) {
@@ -94,7 +94,7 @@ class UserController extends Controller {
         $user->update([
             'is_deleted' => 0,
         ]);
-        return redirect("/user");
+        return redirect()->route('user');
     }
 
     public function mutiple_delete(Request $request) {
@@ -106,8 +106,8 @@ class UserController extends Controller {
     }
 
     public function destroy($id) {
-            $user = User::findOrFail($id);
-            $user -> delete();
-            return redirect("/user");
+        $user = User::findOrFail($id);
+        $user -> delete();
+        return redirect()->route('user');;
     }
 }

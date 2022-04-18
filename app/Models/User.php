@@ -72,4 +72,8 @@ class User extends Authenticatable
     public function getUpdateAtAttribute($value) {
         return Carbon::parse($value)->format('d-m-Y');
     }
+
+    public function getDateOfBirthAttribute($value) {
+        return Carbon::parse($value)->format('d-m-Y');
+    }
 }
