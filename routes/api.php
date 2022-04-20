@@ -1,4 +1,5 @@
 <?php
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,3 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::apiResource('user', 'App\Http\Controllers\Api\UserController');
+Route::apiResource('post', 'App\Http\Controllers\Api\PostController');
+Route::apiResource('comment', 'App\Http\Controllers\Api\CommentController');

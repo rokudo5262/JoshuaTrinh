@@ -6055,10 +6055,22 @@ __webpack_require__.r(__webpack_exports__);
   props: ['user'],
   mounted: function mounted() {
     console.log('Update User Component mounted.');
+    axios.get("../show/" + this.user.id).then(function (response) {
+      this.fields = response.data;
+    })["catch"](function () {
+      alert("Could not get user");
+    });
   },
   data: function data() {
     return {
-      fields: this.user,
+      user_id: null,
+      fields: {
+        first_name: '',
+        last_name: '',
+        email: '',
+        date_of_birth: '',
+        adress: ''
+      },
       success: false,
       errors: {}
     };
@@ -31361,9 +31373,11 @@ var render = function () {
               _c("div", { staticClass: "col-md-6" }, [
                 _c("input", {
                   staticClass: "form-control",
-                  attrs: { type: "text", name: "first_name" },
-                  domProps: { value: _vm.user.first_name },
-                  on: { onChange: _vm.onchange },
+                  attrs: {
+                    type: "text",
+                    name: "first_name",
+                    "v-model": _vm.fields.first_name,
+                  },
                 }),
               ]),
             ]),
@@ -31381,8 +31395,11 @@ var render = function () {
               _c("div", { staticClass: "col-md-6" }, [
                 _c("input", {
                   staticClass: "form-control",
-                  attrs: { type: "text", name: "last_name" },
-                  domProps: { value: _vm.user.last_name },
+                  attrs: {
+                    type: "text",
+                    name: "last_name",
+                    "v-model": _vm.fields.last_name,
+                  },
                 }),
               ]),
             ]),
@@ -31400,8 +31417,11 @@ var render = function () {
               _c("div", { staticClass: "col-md-6" }, [
                 _c("input", {
                   staticClass: "form-control",
-                  attrs: { type: "text", name: "email" },
-                  domProps: { value: _vm.user.email },
+                  attrs: {
+                    type: "text",
+                    name: "email",
+                    "v-model": _vm.fields.email,
+                  },
                 }),
               ]),
             ]),
@@ -31419,8 +31439,11 @@ var render = function () {
               _c("div", { staticClass: "col-md-6" }, [
                 _c("input", {
                   staticClass: "form-control",
-                  attrs: { type: "text", name: "email" },
-                  domProps: { value: _vm.user.date_of_birth },
+                  attrs: {
+                    type: "text",
+                    name: "email",
+                    "v-model": _vm.fields.date_of_birth,
+                  },
                 }),
               ]),
             ]),
@@ -31438,8 +31461,11 @@ var render = function () {
               _c("div", { staticClass: "col-md-6" }, [
                 _c("input", {
                   staticClass: "form-control",
-                  attrs: { type: "text", name: "address" },
-                  domProps: { value: _vm.user.address },
+                  attrs: {
+                    type: "text",
+                    name: "address",
+                    "v-model": _vm.fields.address,
+                  },
                 }),
               ]),
             ]),
