@@ -17,7 +17,14 @@ class UserController extends Controller {
             'throttle:20,1',
             ]);
     }
-
+    public function get_users() {
+        $users = User::where('is_deleted',0)->get();
+        return $users;
+    }
+    public function count_users() {
+        $count_users = User::where('is_deleted',0)->count();
+        return $count_users;
+    }
     public function index(Request $request) {
         $users = User::where('is_deleted',0);
         if ($request->input('search')) {
@@ -39,6 +46,12 @@ class UserController extends Controller {
     }
 
     public function store(Request $request) {
+        $validated = $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email'=>'required|email',
+            'password'=>'required|min:9|max:100',
+        ]);
         $new_user = User::create([
             'profile_picture' => $request->get('profile_picture'),
             'first_name'    => Str::ucfirst($request->get('first_name')),
@@ -47,10 +60,12 @@ class UserController extends Controller {
             'password'      => Hash::make($request->get('password')),
         ]);
         $new_user->assignRole('user');
-        $files = $request->file('profile_picture');
-        $name = $files->getClientOriginalName();
-        Storage::putFileAs('public/image/'.$new_user->id, $files,$name);
-        return redirect('/user');
+        if($request->file('profile_picture')){
+            $files = $request->file('profile_picture');
+            $name = $files->getClientOriginalName();
+            Storage::putFileAs('public/image/'.$new_user->id, $files,$name);
+        }
+        return $new_user;
     }
 
     public function show($id) {
@@ -86,7 +101,7 @@ class UserController extends Controller {
         $user->update([
             'is_deleted' => 1,
         ]);
-        return redirect()->route('user');
+        return $user;
     }
 
     public function undo_delete(Request $request,$id) {
@@ -98,16 +113,15 @@ class UserController extends Controller {
     }
 
     public function mutiple_delete(Request $request) {
-        $ids = $request->ids;
-        User::whereIn('id',explode(",",$ids))->update([
+        $delete_mutiple_users = User::whereIn('id',$request)->update([
             'is_deleted' => 1,
         ]);
-        return response()->json(['success'=>"User Deleted successfully."]);
+        return $delete_mutiple_users;
     }
 
     public function destroy($id) {
         $user = User::findOrFail($id);
-        $user -> delete();
-        return redirect()->route('user');;
+        $user->delete();
+        return $user;
     }
 }

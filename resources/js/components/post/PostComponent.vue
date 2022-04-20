@@ -29,7 +29,7 @@
                         <td>{{ post.status }}</td>
                         <td>{{ post.created_at }}</td>
                         <td>
-                            <a type="button" href="">Detail</a>
+                            <a type="button" :href="test">Detail</a>
                             <a type="button" href="">Edit</a>
                             <a type="button" href="">Delete</a>
                         </td>

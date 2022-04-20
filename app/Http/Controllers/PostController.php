@@ -45,7 +45,7 @@ class PostController extends Controller {
         $post = Post::findOrFail($id);
         return view("post.detail_post",[
             'post' => $post,
-            'comments' => $comments,
+            // 'comments' => $comments,
         ]); 
     }
 
@@ -83,5 +83,10 @@ class PostController extends Controller {
 
     public function slug($title){
         return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '_', $title)));
+    }
+
+    public function count_posts() {
+        $count_posts = Post::count();
+        return $count_posts;
     }
 }
