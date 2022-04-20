@@ -5,7 +5,7 @@
 <script>
     export default {
         mounted() {
-            console.log('Update Post Component mounted.')
+            console.log('Count User Component mounted.')
         },
     }
 </script>

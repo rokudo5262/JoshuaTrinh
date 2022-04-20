@@ -37,10 +37,10 @@ Route::prefix('/admin')->group(function(){
                 Route::get('/show/{id}',[PostController::class, 'show'])->name('post.show');
                 Route::post('/store',[PostController::class, 'store'])->name('post.store');
                 Route::get('/create',[PostController::class, 'create'])->name('post.create');
-                Route::get('/edit/{id}',[PostController::class, 'edit'])->name('post.edit');
+                Route::post('/edit/{id}',[PostController::class, 'edit'])->name('post.edit');
                 Route::post('/update/{id}',[PostController::class, 'update'])->name('post.update');
-                Route::get('/delete/{id}',[PostController::class, 'delete'])->name('post.delete');
-                Route::get('destroy/{id}',[PostController::class, 'destroy'])->name('post.destroy');
+                Route::post('/delete/{id}',[PostController::class, 'delete'])->name('post.delete');
+                Route::post('destroy/{id}',[PostController::class, 'destroy'])->name('post.destroy');
             });
             // user route
             Route::get('/user',[UserController::class, 'index'])->name('user');
@@ -51,9 +51,9 @@ Route::prefix('/admin')->group(function(){
                 Route::get('/edit/{id}',[UserController::class, 'edit'])->name('user.edit');
                 Route::post('/update/{id}',[UserController::class, 'update'])->name('user.update');
                 Route::post('/mutiple_delete',[UserController::class, 'mutiple_delete'])->name('user.mutiple_delete');
-                Route::get('/undo_delete/{id}',[UserController::class, 'undo_delete'])->name('user.undo_delete');
-                Route::get('/delete/{id}',[UserController::class, 'delete'])->name('user.delete');
-                Route::get('/destroy/{id}',[UserController::class, 'destroy'])->name('user.destroy');
+                Route::post('/undo_delete/{id}',[UserController::class, 'undo_delete'])->name('user.undo_delete');
+                Route::post('/delete/{id}',[UserController::class, 'delete'])->name('user.delete');
+                Route::post('/destroy/{id}',[UserController::class, 'destroy'])->name('user.destroy');
             });
             Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
     });

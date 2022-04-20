@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="container">
+    <!-- <div class="container">
         <div class="card">
             <div class="card-header">
                 <h2>User Detail</h2>
@@ -72,6 +72,10 @@
             <div class="card-footer">
                 <a type="button" href="{{ route('user') }}">BACK</a>
             </div>
-        </div>
-        <!-- <detail-user-component></detail-user-component> -->
+        </div> -->
+        <detail-user-component 
+            :user = "{{ json_encode($user) }}"
+            :posts = "{{ json_encode($posts) }}"
+            >
+        </detail-user-component>
 @endsection

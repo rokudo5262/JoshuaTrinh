@@ -1,3 +1,9 @@
+window.axios = require('axios');
+
+window.axios.defaults.headers.common = {
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+};
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -24,13 +30,21 @@ Vue.component('login-component', require('./components/LoginComponent.vue').defa
 Vue.component('register-component', require('./components/RegisterComponent.vue').default);
 Vue.component('forget-password-component', require('./components/ForgetPasswordComponent.vue').default);
 Vue.component('profile-component', require('./components/ProfileComponent.vue').default);
+
 //user
 Vue.component('user-component', require('./components/user/UserComponent.vue').default);
 Vue.component('create-user-component', require('./components/user/CreateUserComponent.vue').default);
 Vue.component('detail-user-component', require('./components/user/DetailUserComponent.vue').default);
+Vue.component('update-user-component', require('./components/user/UpdateUserComponent.vue').default);
+Vue.component('count-user-component', require('./components/user/CountUserComponent.vue').default);
 
 //post
 Vue.component('post-component', require('./components/post/PostComponent.vue').default);
+Vue.component('create-post-component', require('./components/post/CreatePostComponent.vue').default);
+Vue.component('detail-post-component', require('./components/post/DetailPostComponent.vue').default);
+Vue.component('update-post-component', require('./components/post/UpdatePostComponent.vue').default);
+Vue.component('count-post-component', require('./components/post/CountPostComponent.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
