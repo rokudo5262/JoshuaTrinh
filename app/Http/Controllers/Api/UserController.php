@@ -9,7 +9,7 @@ use App\Models\User;
 
 class UserController extends Controller {
     public function index() {
-        return User::all();
+        return User::where('is_deleted',0)->get();
     }
 
     public function store(Request $request) {

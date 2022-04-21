@@ -27,7 +27,8 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'full_name',
-        'date_of_birth',
+        'address',
+        'phone_number',
         'profile_picture',
         'email',
         'password',
@@ -45,6 +46,7 @@ class User extends Authenticatable
         'remember_token',
     ];
     protected $dates = [
+        'date_of_birth',
         'created_at', 
         'update_at', 
     ];
@@ -73,7 +75,7 @@ class User extends Authenticatable
         return Carbon::parse($value)->format('d-m-Y');
     }
 
-    public function getDateOfBirthAttribute($value) {
-        return Carbon::parse($value)->format('d-m-Y');
-    }
+    // public function getDateOfBirthAttribute($value) {
+    //     return Carbon::parse($value)->format('d-m-Y');
+    // }
 }

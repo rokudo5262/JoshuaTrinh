@@ -91,9 +91,12 @@ class UserController extends Controller {
             'first_name' => Str::ucfirst($request->get('first_name')),
             'last_name' => Str::ucfirst($request->get('last_name')),
             'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
+            // 'password' => Hash::make($request->get('password')),
+            // 'date_of_birth' => $request->get('date_of_birth'),
+            'address' => $request->get('address'),
+            'phone_number' => $request->get('phone_number'),
         ]);
-        return redirect()->route('user');
+        return $user;
     }
 
     public function delete(Request $request,$id) {

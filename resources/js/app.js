@@ -32,7 +32,7 @@ Vue.component('forget-password-component', require('./components/ForgetPasswordC
 Vue.component('profile-component', require('./components/ProfileComponent.vue').default);
 
 //user
-Vue.component('user-component', require('./components/user/UserComponent.vue').default);
+Vue.component('user-list-component', require('./components/user/UserListComponent.vue').default);
 Vue.component('create-user-component', require('./components/user/CreateUserComponent.vue').default);
 Vue.component('detail-user-component', require('./components/user/DetailUserComponent.vue').default);
 Vue.component('update-user-component', require('./components/user/UpdateUserComponent.vue').default);
