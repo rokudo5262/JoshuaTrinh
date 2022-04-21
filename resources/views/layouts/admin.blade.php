@@ -19,7 +19,7 @@
     @routes
 </head>
 <body>
-    <div id="app">
+    <div id="app" style="overflow:hidden;">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <h2><a href="{{ route('dashboard') }}">Admin</a></h2>
