@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\CreateUserRequest;
 
 class UserController extends Controller {
     public function __construct() {
@@ -45,13 +46,7 @@ class UserController extends Controller {
         return view('user.create_user');
     }
 
-    public function store(Request $request) {
-        $validated = $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email'=>'required|email',
-            'password'=>'required|min:9|max:100',
-        ]);
+    public function store(CreateUserRequest $request) {
         $new_user = User::create([
             'profile_picture' => $request->get('profile_picture'),
             'first_name'    => Str::ucfirst($request->get('first_name')),
@@ -86,16 +81,27 @@ class UserController extends Controller {
     }
 
     public function update(Request $request, $id) {
+        $validated = $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$id,
+            'phone_number' => 'numeric',
+        ]);
         $user = User::findOrFail($id);
         $user->update([
             'first_name' => Str::ucfirst($request->get('first_name')),
             'last_name' => Str::ucfirst($request->get('last_name')),
             'email' => $request->get('email'),
-            // 'password' => Hash::make($request->get('password')),
-            // 'date_of_birth' => $request->get('date_of_birth'),
             'address' => $request->get('address'),
             'phone_number' => $request->get('phone_number'),
+            'date_of_birth' => $request->get('date_of_birth'),
+            'profile_picture' => $request->get('profile_picture'),
         ]);
+        if($request->file('profile_picture')) {
+            $files = $request->file('profile_picture');
+            $name = $files->getClientOriginalName();
+            Storage::putFileAs('public/image/'.$user->id, $files,$name);
+        }
         return $user;
     }
 
@@ -104,7 +110,7 @@ class UserController extends Controller {
         $user->update([
             'is_deleted' => 1,
         ]);
-        return $user;
+        return redirect()->route('user');
     }
 
     public function undo_delete(Request $request,$id) {
@@ -125,6 +131,6 @@ class UserController extends Controller {
     public function destroy($id) {
         $user = User::findOrFail($id);
         $user->delete();
-        return $user;
+        return redirect()->route('user');
     }
 }

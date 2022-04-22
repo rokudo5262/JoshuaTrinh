@@ -13,6 +13,12 @@ class UserController extends Controller {
     }
 
     public function store(Request $request) {
+        $validated = $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email'=>'required|email|exists:user,email',
+            'password'=>'required|min:9|max:100',
+        ]);
         return User::create($request->all());
     }
 
@@ -21,8 +27,20 @@ class UserController extends Controller {
     }
 
     public function update(Request $request, $id) {
+        $validated = $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email'=>'required|email',
+        ]);
         $user = User::findOrFail($id);
         $user->update($request->all());
+        return $user;
+    }
+    public function delete(Request $request, $id) {
+        $user = User::findOrFail($id);
+        $user->update([
+            'is_deleted' => 1,
+        ]);
         return $user;
     }
 
@@ -30,5 +48,10 @@ class UserController extends Controller {
         $user = User::findOrFail($id);
         $user->delete();
         return 204;
+    }
+
+    public function count_user() {
+        $users =  User::where('is_deleted','=',0)->get();
+        return $users->count();
     }
 }
