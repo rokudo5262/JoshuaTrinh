@@ -16,7 +16,7 @@ class UserController extends Controller {
         $validated = $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'email'=>'required|email',
+            'email'=>'required|email|exists:user,email',
             'password'=>'required|min:9|max:100',
         ]);
         return User::create($request->all());
@@ -31,17 +31,9 @@ class UserController extends Controller {
             'first_name' => 'required',
             'last_name' => 'required',
             'email'=>'required|email',
-            'password'=>'required|min:9|max:100',
         ]);
         $user = User::findOrFail($id);
-        $user->update([
-            'first_name' => Str::ucfirst($request->get('first_name')),
-            'last_name' => Str::ucfirst($request->get('last_name')),
-            'email' => $request->get('email'),
-            'address' => $request->get('address'),
-            'phone_number' => $request->get('phone_number'),
-            'date_of_birth' => Carbon::createFromFormat('Y-m-d H:i:s',$request->get('date_of_birth')),
-        ]);
+        $user->update($request->all());
         return $user;
     }
     public function delete(Request $request, $id) {

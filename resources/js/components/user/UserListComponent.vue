@@ -49,6 +49,7 @@
 
 <script>
     export default {
+        props: ['user_id'],
         mounted() {
             console.log('User Component mounted.')
         },

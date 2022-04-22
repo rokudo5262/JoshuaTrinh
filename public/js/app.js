@@ -6111,7 +6111,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['user'],
   data: function data() {
     return {
       fields: {},
@@ -6129,13 +6136,15 @@ __webpack_require__.r(__webpack_exports__);
     update_user: function update_user() {
       var _this = this;
 
-      axios.put('/api/user/' + this.user.id, this.fields).then(function (response) {
+      axios.post('/admin/user/update/' + this.user.id, this.fields).then(function (response) {
         _this.success = true;
         _this.errors = {};
-        console.log(_this.fields);
+        console.log(_this.fields.profile_picture);
       })["catch"](function (error) {
-        if (error.response.status == 422) _this.errors = error.response.data.errors;
-        console.log(error);
+        if (error.response.status == 422) {
+          _this.errors = error.response.data.errors;
+          console.log(error);
+        }
       });
     },
     get_user: function get_user() {
@@ -6144,6 +6153,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/user/" + this.user.id).then(function (response) {
         _this2.fields = response.data;
         console.log("get user success");
+        return _this2.fields;
       })["catch"](function (error) {
         alert("Could not get user");
         console.log(error);
@@ -6215,6 +6225,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['user_id'],
   mounted: function mounted() {
     console.log('User Component mounted.');
   },
@@ -31470,6 +31481,30 @@ var render = function () {
                   staticClass: "col-md-4 col-form-label text-md-end",
                   attrs: { for: "id" },
                 },
+                [_vm._v("Profile Picture")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6" }, [
+                _c(
+                  "input",
+                  _vm._g(
+                    {
+                      staticClass: "form-control",
+                      attrs: { type: "file", name: "profile_picture" },
+                    },
+                    _vm.fields.profile_picture
+                  )
+                ),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row mb-3" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-4 col-form-label text-md-end",
+                  attrs: { for: "id" },
+                },
                 [_vm._v("User ID")]
               ),
               _vm._v(" "),
@@ -31657,6 +31692,47 @@ var render = function () {
                 _vm.errors && _vm.errors.address
                   ? _c("div", { staticClass: "alert alert-danger" }, [
                       _vm._v(_vm._s(_vm.errors.address[0])),
+                    ])
+                  : _vm._e(),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row mb-3" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-4 col-form-label text-md-end",
+                  attrs: { for: "date_of_birth" },
+                },
+                [_vm._v("Date Of Birth")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.fields.date_of_birth,
+                      expression: "fields.date_of_birth",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "date", name: "date_of_birth" },
+                  domProps: { value: _vm.fields.date_of_birth },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.fields, "date_of_birth", $event.target.value)
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.date_of_birth
+                  ? _c("div", { staticClass: "alert alert-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.date_of_birth[0])),
                     ])
                   : _vm._e(),
               ]),
