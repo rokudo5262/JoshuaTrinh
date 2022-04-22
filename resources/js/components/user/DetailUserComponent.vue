@@ -20,12 +20,6 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="date_of_birth" class="col-md-4 col-form-label">Date Of Birth</label>
-                            <div class="col-md-8">
-                                <input class="form-control" type="text" name="date_of_birth" placeholder="dd-mm-yyyy" :value="user.date_of_birth" readonly>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
                             <label for="phone_number" class="col-md-4 col-form-label">Phone Number</label>
                             <div class="col-md-8">
                                 <input class="form-control" type="text" name="phone_number" :value="user.phone_number" readonly>

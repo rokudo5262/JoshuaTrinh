@@ -86,17 +86,21 @@ class UserController extends Controller {
     }
 
     public function update(Request $request, $id) {
+        $validated = $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email'=>'required|email',
+            'password'=>'required|min:9|max:100',
+        ]);
         $user = User::findOrFail($id);
         $user->update([
             'first_name' => Str::ucfirst($request->get('first_name')),
             'last_name' => Str::ucfirst($request->get('last_name')),
             'email' => $request->get('email'),
-            // 'password' => Hash::make($request->get('password')),
-            // 'date_of_birth' => $request->get('date_of_birth'),
             'address' => $request->get('address'),
             'phone_number' => $request->get('phone_number'),
         ]);
-        return $user;
+        return redirect()->route('user');
     }
 
     public function delete(Request $request,$id) {
@@ -104,7 +108,7 @@ class UserController extends Controller {
         $user->update([
             'is_deleted' => 1,
         ]);
-        return $user;
+        return redirect()->route('user');
     }
 
     public function undo_delete(Request $request,$id) {
@@ -125,6 +129,6 @@ class UserController extends Controller {
     public function destroy($id) {
         $user = User::findOrFail($id);
         $user->delete();
-        return $user;
+        return redirect()->route('user');
     }
 }

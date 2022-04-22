@@ -7,10 +7,10 @@
             <div class="card-body">
                 <p>You are logged in!</p>
                 <div class="row">
-                    <div class="col">
+                    <div class="col success alert alert-success">
                         <count-user-component></count-user-component>
                     </div>
-                    <div class="col">
+                    <div class="col success alert alert-success">
                         <count-post-component></count-post-component>
                     </div>
                 </div>

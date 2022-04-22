@@ -50,6 +50,9 @@ class User extends Authenticatable
         'created_at', 
         'update_at', 
     ];
+    protected $appends = [
+        'full_name'
+    ];
 
     protected $casts = [
         'email_verified_at' => 'datetime',
@@ -64,7 +67,7 @@ class User extends Authenticatable
     }
 
     public function getFullNameAttribute(){
-        return "{$this->first_name} {$this->last_name}";
+        return $this->first_name.' '.$this->last_name;
     }
 
     public function getCreatedAtAttribute($value) {

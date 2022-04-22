@@ -43,7 +43,7 @@
                 </form>
             </div>
             <div class="card-footer">
-                <a type="button" href="">BACK</a>
+                <a type="button" href="/admin/user">BACK</a>
             </div>
         </div>
     </div>

@@ -9,38 +9,37 @@
                         <a type="button" class="btn btn-primary mb-3" href="./user/create">Create User</a>
                         <button type="submit" class="btn btn-primary mb-3">Delete Multiple Users</button>
                     </form>
-                <div class="alert alert-success" v-show="success">Delete Multiple Users Successfully</div>
+                <div class="alert alert-success" v-if="success.delete_multiple_user">Delete Multiple Users Successfully</div>
+                <div class="alert alert-success" v-if="success.delete_user">Delete User Successfully</div>
                 <div class="alert alert-danger" v-if="errors && errors.ids">{{errors.ids[0]}}</div>
-
-                <table class="table">
-                    <thead>
-                        <td></td>
-                        <td>ID</td>
-                        <td>Full Name</td>
-                        <td>Email</td>
-                        <td>Created At</td>
-                        <td>Action</td>
-                    </thead>
-                    <tbody>
-                        <tr v-for = "user in users" :key="user.id">      
-                            <td>
-                                <input type="checkbox" v-model="ids" :id="user.id" :value="user.id">
-                            </td>
-                            <td>{{ user.id }}</td>
-                            <td>{{ user.first_name }} {{ user.last_name }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.created_at }}</td>
-                            <td>
-                                <form>
+                    <input v-model="searchQuery">
+                    <table class="table">
+                        <thead>
+                            <td></td>
+                            <td>ID</td>
+                            <td>Full Name</td>
+                            <td>Email</td>
+                            <td>Created At</td>
+                            <td>Action</td>
+                        </thead>
+                        <tbody>
+                            <tr v-for = "user in search_user" :key="user.id">      
+                                <td>
+                                    <input type="checkbox" v-model="ids" :id="user.id" :value="user.id">
+                                </td>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.full_name }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.created_at }}</td>
+                                <td>
                                     <a class="btn btn-sm btn-primary" type="button" :href="'./user/show/' + user.id">Detail</a>
                                     <a class="btn btn-sm btn-success" type="button" :href="'./user/edit/' + user.id">Update</a>
-                                    <button class="btn btn-sm btn-danger" type="submit">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                                    <button class="btn btn-sm btn-danger" @click.prevent="delete_user(user)" type="button">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             <div class="card-footer">
                 <a type="button" href="/admin/user">BACK</a>
             </div>
@@ -50,36 +49,46 @@
 
 <script>
     export default {
-
-        props: ['user_id'],
         mounted() {
             console.log('User Component mounted.')
         },
         data: function() {
             return {
+                searchQuery: null,
                 ids: [],
                 users: [],
-                success:false,
+                success:{
+                    delete_multiple_user: false,
+                    delete_user: false,
+                },
                 errors: {},
             }
         },
-        created(){
+        created() {
             this.get_users();
         },
-        methods:{
+        computed: {
+            search_user() {
+                if (this.searchQuery) {
+                    return  this.users.filter(user => {
+                        return this.searchQuery.toLowerCase().split(" ").every( v => user.email.toLowerCase().includes(v));
+                        });
+                } else {
+                    return this.users;
+                }
+            }
+        },
+        methods: {
             delete_multiple_user() {
                 if(confirm("Do you really want to delete multiple user ?")) {
                     axios.post('user/mutiple_delete',this.ids)
                     .then( response => {
                         this.ids = [];
-                        this.success = true;
+                        this.success.delete_multiple_user = true;
                         this.errors = {};
-                        this.$emit('get_user');
-                        console.log('Success');
                     }).catch( error => {
                         if(error.response.status == 422) {
                             this.errors = error.response.data.errors;
-                            console.log("error");
                         }
                     })
                 }
@@ -88,26 +97,24 @@
                 axios.get('/api/user')
                 .then( response => {
                     this.users = response.data;
-                    console.log(this.users);
                 })
                 .catch(error => {
-                    alert("Could not load users list")
-                    console.log(error);
+                    alert("Could not load users list");
                 });
             },
-            // delete_user() {
-            //     if(confirm("Do you really want to delete multiple user ?")) {
-            //         axios.delete('/api/user/' + this.user.id)
-            //         .then( response => {
-            //             this.users = response.data;
-            //             console.log("delete user successfully");
-            //         })
-            //         .catch(error => {
-            //             alert("Could not delete user")
-            //             console.log(error);
-            //         });
-            //     }
-            // },
+            delete_user(user) {
+                if(confirm("Do you really want to delete this user ?")) {
+                    axios.delete('/api/user/' + user.id)
+                    .then( response => {
+                        const idx = this.users.indexOf(user);
+                        this.users.splice(idx, 1);
+                        this.success.delete_user = true;
+                    })
+                    .catch(error => {
+                        alert("Could not delete user");
+                    });
+                }
+            },
         }
     }
 </script>

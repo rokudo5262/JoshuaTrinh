@@ -31,4 +31,9 @@ class PostController extends Controller {
         $post->delete();
         return 204;
     }
+
+    public function count_post() {
+        $posts =  Post::get();
+        return $posts->count();
+    }
 }

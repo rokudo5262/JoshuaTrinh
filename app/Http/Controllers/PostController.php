@@ -85,8 +85,4 @@ class PostController extends Controller {
         return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '_', $title)));
     }
 
-    public function count_posts() {
-        $count_posts = Post::count();
-        return $count_posts;
-    }
 }

@@ -25,7 +25,7 @@ class AdminController extends Controller {
         if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
             Log::channel('login')->info($input['email']." at ".$request->getClientIp()." Login Success");
             return redirect()->route('user');
-        }else{
+        } else {
             Log::channel('login')->info($input['email']." at ".$request->getClientIp()." Login Fail");
             return redirect()->route('login');
         }
@@ -60,7 +60,7 @@ class AdminController extends Controller {
 
     public function logout() {
         auth()->logout();
-        return redirect('login');
+        return redirect()->route('login');
     }
 
     public function change_password() {
@@ -90,7 +90,7 @@ class AdminController extends Controller {
         } else {
             Log::channel('login')->info(auth()->user()->email ." Change Password Fail");
         }
-        return redirect('change_password');     
+        return redirect()->route('change_password');     
     }
 
     public function profile() {

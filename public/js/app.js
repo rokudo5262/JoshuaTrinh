@@ -5639,9 +5639,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     console.log('Count Post Component mounted.');
+  },
+  data: function data() {
+    return {
+      count: null
+    };
+  },
+  created: function created() {
+    this.count_post();
+  },
+  methods: {
+    count_post: function count_post() {
+      var _this = this;
+
+      axios.get('/api/post/count').then(function (response) {
+        _this.count = response.data;
+        console.log('success');
+      })["catch"](function (error) {
+        console.log('error');
+      });
+    }
   }
 });
 
@@ -5802,9 +5825,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     console.log('Count User Component mounted.');
+  },
+  data: function data() {
+    return {
+      count: null
+    };
+  },
+  created: function created() {
+    this.count_user();
+  },
+  methods: {
+    count_user: function count_user() {
+      var _this = this;
+
+      axios.get('/api/user/count').then(function (response) {
+        _this.count = response.data;
+        console.log('success');
+      })["catch"](function (error) {
+        console.log('error');
+      });
+    }
   }
 });
 
@@ -5974,12 +6020,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['user', 'posts'],
   mounted: function mounted() {
@@ -6072,7 +6112,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['user'],
   data: function data() {
     return {
       fields: {},
@@ -6105,7 +6144,6 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/user/" + this.user.id).then(function (response) {
         _this2.fields = response.data;
         console.log("get user success");
-        return _this2.fields;
       })["catch"](function (error) {
         alert("Could not get user");
         console.log(error);
@@ -6176,68 +6214,80 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['user_id'],
   mounted: function mounted() {
     console.log('User Component mounted.');
   },
   data: function data() {
     return {
+      searchQuery: null,
       ids: [],
       users: [],
-      success: false,
+      success: {
+        delete_multiple_user: false,
+        delete_user: false
+      },
       errors: {}
     };
   },
   created: function created() {
     this.get_users();
   },
+  computed: {
+    search_user: function search_user() {
+      var _this = this;
+
+      if (this.searchQuery) {
+        return this.users.filter(function (user) {
+          return _this.searchQuery.toLowerCase().split(" ").every(function (v) {
+            return user.email.toLowerCase().includes(v);
+          });
+        });
+      } else {
+        return this.users;
+      }
+    }
+  },
   methods: {
     delete_multiple_user: function delete_multiple_user() {
-      var _this = this;
+      var _this2 = this;
 
       if (confirm("Do you really want to delete multiple user ?")) {
         axios.post('user/mutiple_delete', this.ids).then(function (response) {
-          _this.ids = [];
-          _this.success = true;
-          _this.errors = {};
-
-          _this.$emit('get_user');
-
-          console.log('Success');
+          _this2.ids = [];
+          _this2.success.delete_multiple_user = true;
+          _this2.errors = {};
         })["catch"](function (error) {
           if (error.response.status == 422) {
-            _this.errors = error.response.data.errors;
-            console.log("error");
+            _this2.errors = error.response.data.errors;
           }
         });
       }
     },
     get_users: function get_users() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get('/api/user').then(function (response) {
-        _this2.users = response.data;
-        console.log(_this2.users);
+        _this3.users = response.data;
       })["catch"](function (error) {
         alert("Could not load users list");
-        console.log(error);
       });
-    } // delete_user() {
-    //     if(confirm("Do you really want to delete multiple user ?")) {
-    //         axios.delete('/api/user/' + this.user.id)
-    //         .then( response => {
-    //             this.users = response.data;
-    //             console.log("delete user successfully");
-    //         })
-    //         .catch(error => {
-    //             alert("Could not delete user")
-    //             console.log(error);
-    //         });
-    //     }
-    // },
+    },
+    delete_user: function delete_user(user) {
+      var _this4 = this;
 
+      if (confirm("Do you really want to delete this user ?")) {
+        axios["delete"]('/api/user/' + user.id).then(function (response) {
+          var idx = _this4.users.indexOf(user);
+
+          _this4.users.splice(idx, 1);
+
+          _this4.success.delete_user = true;
+        })["catch"](function (error) {
+          alert("Could not delete user");
+        });
+      }
+    }
   }
 });
 
@@ -30112,9 +30162,19 @@ var render = function () {
         _c("p", [_vm._v("You are logged in!")]),
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col" }, [_c("count-user-component")], 1),
+          _c(
+            "div",
+            { staticClass: "col success alert alert-success" },
+            [_c("count-user-component")],
+            1
+          ),
           _vm._v(" "),
-          _c("div", { staticClass: "col" }, [_c("count-post-component")], 1),
+          _c(
+            "div",
+            { staticClass: "col success alert alert-success" },
+            [_c("count-post-component")],
+            1
+          ),
         ]),
       ]),
       _vm._v(" "),
@@ -30679,7 +30739,10 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("div", { attrs: { align: "center" } }, [
+    _c("h2", [_vm._v("Total Post")]),
+    _vm._v("\n    " + _vm._s(_vm.count) + "\n"),
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -30913,7 +30976,10 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("div", { attrs: { align: "center" } }, [
+    _c("h2", [_vm._v("Total User")]),
+    _vm._v("\n    " + _vm._s(_vm.count) + "\n"),
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -31171,7 +31237,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-footer" }, [
-      _c("a", { attrs: { type: "button", href: "" } }, [_vm._v("BACK")]),
+      _c("a", { attrs: { type: "button", href: "/admin/user" } }, [
+        _vm._v("BACK"),
+      ]),
     ])
   },
 ]
@@ -31240,30 +31308,6 @@ var render = function () {
                   staticClass: "form-control",
                   attrs: { type: "text", name: "email", readonly: "" },
                   domProps: { value: _vm.user.email },
-                }),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row mb-3" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "col-md-4 col-form-label",
-                  attrs: { for: "date_of_birth" },
-                },
-                [_vm._v("Date Of Birth")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "text",
-                    name: "date_of_birth",
-                    placeholder: "dd-mm-yyyy",
-                    readonly: "",
-                  },
-                  domProps: { value: _vm.user.date_of_birth },
                 }),
               ]),
             ]),
@@ -31582,47 +31626,6 @@ var render = function () {
                 "label",
                 {
                   staticClass: "col-md-4 col-form-label text-md-end",
-                  attrs: { for: "date_of_birth" },
-                },
-                [_vm._v("Date Of Birth")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.fields.date_of_birth,
-                      expression: "fields.date_of_birth",
-                    },
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "date", name: "date_of_birth" },
-                  domProps: { value: _vm.fields.date_of_birth },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.fields, "date_of_birth", $event.target.value)
-                    },
-                  },
-                }),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.date_of_birth
-                  ? _c("div", { staticClass: "alert alert-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.date_of_birth[0])),
-                    ])
-                  : _vm._e(),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row mb-3" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "col-md-4 col-form-label text-md-end",
                   attrs: { for: "address" },
                 },
                 [_vm._v("Address")]
@@ -31801,21 +31804,17 @@ var render = function () {
           ]
         ),
         _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.success,
-                expression: "success",
-              },
-            ],
-            staticClass: "alert alert-success",
-          },
-          [_vm._v("Delete Multiple Users Successfully")]
-        ),
+        _vm.success.delete_multiple_user
+          ? _c("div", { staticClass: "alert alert-success" }, [
+              _vm._v("Delete Multiple Users Successfully"),
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.success.delete_user
+          ? _c("div", { staticClass: "alert alert-success" }, [
+              _vm._v("Delete User Successfully"),
+            ])
+          : _vm._e(),
         _vm._v(" "),
         _vm.errors && _vm.errors.ids
           ? _c("div", { staticClass: "alert alert-danger" }, [
@@ -31823,12 +31822,32 @@ var render = function () {
             ])
           : _vm._e(),
         _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.searchQuery,
+              expression: "searchQuery",
+            },
+          ],
+          domProps: { value: _vm.searchQuery },
+          on: {
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.searchQuery = $event.target.value
+            },
+          },
+        }),
+        _vm._v(" "),
         _c("table", { staticClass: "table" }, [
           _vm._m(1),
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(_vm.users, function (user) {
+            _vm._l(_vm.search_user, function (user) {
               return _c("tr", { key: user.id }, [
                 _c("td", [
                   _c("input", {
@@ -31873,51 +31892,45 @@ var render = function () {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(user.id))]),
                 _vm._v(" "),
-                _c("td", [
-                  _vm._v(
-                    _vm._s(user.first_name) + " " + _vm._s(user.last_name)
-                  ),
-                ]),
+                _c("td", [_vm._v(_vm._s(user.full_name))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(user.email))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(user.created_at))]),
                 _vm._v(" "),
                 _c("td", [
-                  _c("form", [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-sm btn-primary",
-                        attrs: {
-                          type: "button",
-                          href: "./user/show/" + user.id,
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-sm btn-primary",
+                      attrs: { type: "button", href: "./user/show/" + user.id },
+                    },
+                    [_vm._v("Detail")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-sm btn-success",
+                      attrs: { type: "button", href: "./user/edit/" + user.id },
+                    },
+                    [_vm._v("Update")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-sm btn-danger",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.delete_user(user)
                         },
                       },
-                      [_vm._v("Detail")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-sm btn-success",
-                        attrs: {
-                          type: "button",
-                          href: "./user/edit/" + user.id,
-                        },
-                      },
-                      [_vm._v("Update")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-sm btn-danger",
-                        attrs: { type: "submit" },
-                      },
-                      [_vm._v("Delete")]
-                    ),
-                  ]),
+                    },
+                    [_vm._v("Delete")]
+                  ),
                 ]),
               ])
             }),

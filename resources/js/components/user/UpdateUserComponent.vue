@@ -34,13 +34,13 @@
                             <div class="alert alert-danger" v-if="errors && errors.email">{{errors.email[0]}}</div>
                         </div>
                     </div>
-                    <div class="row mb-3">
+                    <!-- <div class="row mb-3">
                         <label for="date_of_birth" class="col-md-4 col-form-label text-md-end">Date Of Birth</label>
                         <div class="col-md-6">
                             <input class="form-control" type="date" name="date_of_birth" v-model="fields.date_of_birth"/>
                             <div class="alert alert-danger" v-if="errors && errors.date_of_birth">{{errors.date_of_birth[0]}}</div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row mb-3">
                         <label for="address" class="col-md-4 col-form-label text-md-end">Address</label>
                         <div class="col-md-6">
@@ -71,10 +71,9 @@
 
 <script>
     export default {
-        props: ['user'],
         data: function() {
             return {
-                fields:{},
+                fields: {},
                 success: false,
                 errors: {},
             }
@@ -104,7 +103,6 @@
                 .then( response => {
                     this.fields = response.data;
                     console.log("get user success");
-                    return this.fields;
                 })
                 .catch(error => {
                     alert("Could not get user")
