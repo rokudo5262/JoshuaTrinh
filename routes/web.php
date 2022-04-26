@@ -50,6 +50,7 @@ Route::prefix('/admin')->group(function(){
                 Route::get('/create',[UserController::class, 'create'])->name('user.create');
                 Route::get('/edit/{id}',[UserController::class, 'edit'])->name('user.edit');
                 Route::post('/update/{id}',[UserController::class, 'update'])->name('user.update');
+                Route::post('/profile_upload/{id}',[UserController::class, 'profile_upload'])->name('user.profile_upload');
                 Route::post('/mutiple_delete',[UserController::class, 'mutiple_delete'])->name('user.mutiple_delete');
                 Route::post('/undo_delete/{id}',[UserController::class, 'undo_delete'])->name('user.undo_delete');
                 Route::post('/delete/{id}',[UserController::class, 'delete'])->name('user.delete');

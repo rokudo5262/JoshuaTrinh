@@ -24,7 +24,7 @@ class AdminController extends Controller {
         ]);
         if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
             Log::channel('login')->info($input['email']." at ".$request->getClientIp()." Login Success");
-            return redirect()->route('user');
+            return redirect()->route('dashboard');
         } else {
             Log::channel('login')->info($input['email']." at ".$request->getClientIp()." Login Fail");
             return redirect()->route('login');
@@ -105,7 +105,7 @@ class AdminController extends Controller {
         $name = $files->getClientOriginalName();
         $profile_picture = User::find(auth()->user()->id)->update(['profile_picture'=> $name]);
         $a = Storage::putFileAs('public/image/'.auth()->user()->id, $files,$name);
-        return redirect('user');
+        return redirect()->route('user');
     }
 
     public function dashboard() {
