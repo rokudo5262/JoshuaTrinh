@@ -5,14 +5,13 @@
             <h2>Post List</h2>
         </div>
         <div class="card-body">
-            <a type="button" class="btn btn-primary mb-3" href="">Create New Post</a>
+            <a type="button" class="btn btn-primary mb-3" href="/admin/post/create">Create New Post</a>
             <table class="table">
                 <thead>
                     <td></td>
                     <td>Id</td>
                     <td>Title</td>
                     <td>Slug</td>
-                    <td>Author</td>
                     <td>Post Status</td>
                     <td>Created At</td>
                     <td>Action</td>
@@ -23,13 +22,10 @@
                         <td>{{ post.id }}</td>
                         <td>{{ post.title }}</td>
                         <td>{{ post.slug }}</td>
-                        <td>
-                            <a href="">{{ post.user.first_name }} {{ post.user.last_name }}</a>
-                        </td>
                         <td>{{ post.status }}</td>
                         <td>{{ post.created_at }}</td>
                         <td>
-                            <a type="button" :href="test">Detail</a>
+                            <a type="button" href="">Detail</a>
                             <a type="button" href="">Edit</a>
                             <a type="button" href="">Delete</a>
                         </td>
@@ -38,7 +34,7 @@
             </table>
         </div>
         <div class="card-footer">
-            <a type="button" href="#">BACK</a>
+            <a type="button" href="/admin">Dashboard</a>
         </div>
     </div>
 </div>
@@ -46,9 +42,30 @@
 
 <script>
     export default {
-        props: ['posts'],
+        data: function() {
+            return {
+                posts: [],
+                success: false,
+                errors: {},
+            }
+        },
         mounted() {
             console.log('Post Component mounted.')
         },
+        created() {
+            this.get_posts();
+        },
+        methods: {
+            get_posts() {
+                axios.get('/api/post')
+                .then( response => {
+                    this.posts = response.data;
+                })
+                .catch(error => {
+                    alert("Could not load posts list");
+                });
+            },
+        }
     }
+    
 </script>

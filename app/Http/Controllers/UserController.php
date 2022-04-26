@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Post;
 use Illuminate\Support\Str;
@@ -55,11 +56,6 @@ class UserController extends Controller {
             'password'      => Hash::make($request->get('password')),
         ]);
         $new_user->assignRole('user');
-        if($request->file('profile_picture')){
-            $files = $request->file('profile_picture');
-            $name = $files->getClientOriginalName();
-            Storage::putFileAs('public/image/'.$new_user->id, $files,$name);
-        }
         return $new_user;
     }
 
@@ -70,7 +66,6 @@ class UserController extends Controller {
             'user' => $user,
             'posts' => $posts,
         ]);
-
     }
 
     public function edit($id) {
@@ -85,7 +80,7 @@ class UserController extends Controller {
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
-            'phone_number' => 'numeric',
+            'phone_number' => 'nullable|numeric',
         ]);
         $user = User::findOrFail($id);
         $user->update([
@@ -94,15 +89,23 @@ class UserController extends Controller {
             'email' => $request->get('email'),
             'address' => $request->get('address'),
             'phone_number' => $request->get('phone_number'),
-            'date_of_birth' => $request->get('date_of_birth'),
+            'date_of_birth' => Carbon::parse($request->get('date_of_birth')),
             'profile_picture' => $request->get('profile_picture'),
         ]);
+        return $user;
+    }
+
+    public function profile_upload(Request $request, $id) {
         if($request->file('profile_picture')) {
             $files = $request->file('profile_picture');
             $name = $files->getClientOriginalName();
-            Storage::putFileAs('public/image/'.$user->id, $files,$name);
+            $user = User::findOrFail($id);
+            $user->update([
+                'profile_picture' => $name,
+            ]);
+            $storage = Storage::disk('public')->putFileAs('/image/'.$id, $files, $name);
         }
-        return $user;
+        return $storage;
     }
 
     public function delete(Request $request,$id) {

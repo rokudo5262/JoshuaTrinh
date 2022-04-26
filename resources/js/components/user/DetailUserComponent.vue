@@ -5,12 +5,17 @@
                 <h2>User Detail</h2>
             </div>
             <div class="card-body">
-                <div class="row">
+                <div class="row mb-3">
+                    <div class="col-4">
+                        <img src="/image/image.jfif" class="profile_picture" alt="alt text"> 
+                    </div>
+                </div>
+                <div class="row mb-3">
                     <div class="col-9 mb-3">
                         <div class="row mb-3">
                             <label for="new_password" class="col-md-4 col-form-label">Full Name</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" name="full_name" :value="user.first_name + ' ' + user.last_name" readonly>
+                                <input class="form-control" type="text" name="full_name" :value="user.full_name" readonly>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -32,11 +37,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3">
-                        <img style="width: 100%; height: 100%; object-fit: contain;" src="/image/image.jfif" class="profile_pic" alt="alt text"> 
-                    </div>
                 </div>
             </div>
+            <hr class="mb-3">
             <div class="row">
                     <div class="col-3 mb-3">
                         <div class="card">
@@ -52,7 +55,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <a type="button" href="">BACK</a>
+                <a type="button" href="/admin/user">BACK</a>
             </div>
         </div>
 </template>
@@ -65,4 +68,13 @@
         },
     }
 </script>
+
+<style scoped>
+.profile_picture {
+    width: 200px; 
+    height: 200px;
+    border-radius: 5px;
+}
+</style>
+
 

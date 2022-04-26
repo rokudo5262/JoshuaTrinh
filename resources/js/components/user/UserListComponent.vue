@@ -7,7 +7,7 @@
             <div class="card-body">
                     <form @submit.prevent="delete_multiple_user">
                         <a type="button" class="btn btn-primary mb-3" href="./user/create">Create User</a>
-                        <button type="submit" class="btn btn-primary mb-3">Delete Multiple Users</button>
+                        <button type="submit" class="btn btn-primary mb-3" :disabled="this.ids.length < 1">Delete Multiple Users</button>
                     </form>
                 <div class="alert alert-success" v-if="success.delete_multiple_user">Delete Multiple Users Successfully</div>
                 <div class="alert alert-success" v-if="success.delete_user">Delete User Successfully</div>
@@ -41,7 +41,7 @@
                     </table>
                 </div>
             <div class="card-footer">
-                <a type="button" href="/admin/user">BACK</a>
+                <a type="button" href="/admin">Dashboard</a>
             </div>
         </div>
     </div>
@@ -71,8 +71,10 @@
         computed: {
             search_user() {
                 if (this.searchQuery) {
-                    return  this.users.filter(user => {
-                        return this.searchQuery.toLowerCase().split(" ").every( v => user.email.toLowerCase().includes(v));
+                    return  this.users
+                        .filter(user => {
+                            return this.searchQuery.toLowerCase().split(" ").every( v => user.email.toLowerCase().includes(v))
+                                ||this.searchQuery.toLowerCase().split(" ").every( v => user.full_name.toLowerCase().includes(v));
                         });
                 } else {
                     return this.users;
@@ -84,6 +86,7 @@
                 if(confirm("Do you really want to delete multiple user ?")) {
                     axios.post('user/mutiple_delete',this.ids)
                     .then( response => {
+                        this.get_users();
                         this.ids = [];
                         this.success.delete_multiple_user = true;
                         this.errors = {};

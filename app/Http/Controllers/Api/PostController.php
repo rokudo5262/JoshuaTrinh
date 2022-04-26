@@ -8,15 +8,14 @@ use App\Models\Post;
 
 class PostController extends Controller {
     public function index() {
-        return Post::all();
+        return Post::get();
     }
 
     public function store(Request $request) {
         return Post::create($request->all());
     }
 
-    public function show($id)
-    {
+    public function show($id) {
         return Post::find($id);
     }
 

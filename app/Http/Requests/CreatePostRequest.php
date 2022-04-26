@@ -28,3 +28,4 @@ class CreatePostRequest extends FormRequest
         ];
     }
 }
+?>

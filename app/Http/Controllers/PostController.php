@@ -45,7 +45,6 @@ class PostController extends Controller {
         $post = Post::findOrFail($id);
         return view("post.detail_post",[
             'post' => $post,
-            // 'comments' => $comments,
         ]); 
     }
 

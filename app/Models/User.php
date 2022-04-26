@@ -34,6 +34,9 @@ class User extends Authenticatable
         'password',
         'is_admin',
         'is_deleted',
+        'date_of_birth',
+        'created_at', 
+        'update_at',
     ];
 
     /**
@@ -51,7 +54,7 @@ class User extends Authenticatable
         'update_at', 
     ];
     protected $appends = [
-        'full_name'
+        'full_name',
     ];
 
     protected $casts = [
@@ -71,14 +74,24 @@ class User extends Authenticatable
     }
 
     public function getCreatedAtAttribute($value) {
-        return Carbon::parse($value)->format('d-m-Y');
+        // return Carbon::parse($value)->format('d-m-Y');
+        return Carbon::parse($value)->format('Y-m-d');
     }
 
     public function getUpdateAtAttribute($value) {
-        return Carbon::parse($value)->format('d-m-Y');
+        return Carbon::parse($value)->format('Y-m-d');
     }
 
     public function getDateOfBirthAttribute($value) {
-        return Carbon::parse($value)->format('d-m-Y');
+        return Carbon::parse($value)->format('Y-m-d');
+    }
+
+    public function getFirstNameAttribute($value) {
+        return ucfirst($value);
+    }
+
+    public function getLastNameAttribute($value) {
+        return ucfirst($value);
     }
 }
+?>

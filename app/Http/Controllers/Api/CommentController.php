@@ -15,8 +15,7 @@ class CommentController extends Controller {
         return Comment::create($request->all());
     }
 
-    public function show($id)
-    {
+    public function show($id) {
         return Comment::find($id);
     }
 

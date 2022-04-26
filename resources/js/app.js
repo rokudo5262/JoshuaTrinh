@@ -39,7 +39,7 @@ Vue.component('update-user-component', require('./components/user/UpdateUserComp
 Vue.component('count-user-component', require('./components/user/CountUserComponent.vue').default);
 
 //post
-Vue.component('post-component', require('./components/post/PostComponent.vue').default);
+Vue.component('post-list-component', require('./components/post/PostListComponent.vue').default);
 Vue.component('create-post-component', require('./components/post/CreatePostComponent.vue').default);
 Vue.component('detail-post-component', require('./components/post/DetailPostComponent.vue').default);
 Vue.component('update-post-component', require('./components/post/UpdatePostComponent.vue').default);
