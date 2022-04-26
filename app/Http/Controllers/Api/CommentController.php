@@ -30,4 +30,9 @@ class CommentController extends Controller {
         $comment->delete();
         return 204;
     }
+
+    public function count_comment() {
+        $comments =  Comment::get();
+        return $comments->count();
+    }
 }

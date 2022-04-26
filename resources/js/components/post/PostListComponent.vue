@@ -12,6 +12,8 @@
                     <td>Id</td>
                     <td>Title</td>
                     <td>Slug</td>
+                    <td>Author</td>
+                    <td>Total Comment</td>
                     <td>Post Status</td>
                     <td>Created At</td>
                     <td>Action</td>
@@ -22,12 +24,16 @@
                         <td>{{ post.id }}</td>
                         <td>{{ post.title }}</td>
                         <td>{{ post.slug }}</td>
+                        <td>
+                            <a :href="'./user/show/' + post.user.id">{{ post.user.full_name}}</a>
+                        </td>
+                        <td>{{ post.comment_count }}</td>
                         <td>{{ post.status }}</td>
                         <td>{{ post.created_at }}</td>
                         <td>
-                            <a type="button" href="">Detail</a>
-                            <a type="button" href="">Edit</a>
-                            <a type="button" href="">Delete</a>
+                            <a type="button" class="btn btn-sm btn-primary" :href="'./post/show/' + post.id">Detail</a>
+                            <a type="button" class="btn btn-sm btn-success" :href="'./post/edit/' + post.id">Edit</a>
+                            <a type="button" class="btn btn-sm btn-danger" href="">Delete</a>
                         </td>
                     </tr>
                 </tbody>

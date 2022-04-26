@@ -19,9 +19,14 @@ class Post extends Model {
         'status',
         'user_id',
     ];
+
     protected $dates = [
         'created_at', 
         'update_at', 
+    ];
+
+    protected $appends = [
+        'comment_count',
     ];
 
     const Published = 0;
@@ -38,9 +43,9 @@ class Post extends Model {
         return $this->hasMany('App\Models\Comment');
     }
 
-    // public function getCommentCountAttribute() {
-    //     return $this->hasMany('App\Models\Comment')->count();
-    // }
+    public function getCommentCountAttribute() {
+        return $this->hasMany('App\Models\Comment')->count();
+    }
 
     public function getStatusAttribute($value){
         switch($value) {

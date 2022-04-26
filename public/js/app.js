@@ -5335,6 +5335,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _post_CountPostComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./post/CountPostComponent */ "./resources/js/components/post/CountPostComponent.vue");
 /* harmony import */ var _user_CountUserComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./user/CountUserComponent */ "./resources/js/components/user/CountUserComponent.vue");
+/* harmony import */ var _comment_CountCommentComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./comment/CountCommentComponent */ "./resources/js/components/comment/CountCommentComponent.vue");
 //
 //
 //
@@ -5357,6 +5358,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -5365,7 +5370,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   components: {
     CountPostComponent: _post_CountPostComponent__WEBPACK_IMPORTED_MODULE_0__["default"],
-    CountUserComponent: _user_CountUserComponent__WEBPACK_IMPORTED_MODULE_1__["default"]
+    CountUserComponent: _user_CountUserComponent__WEBPACK_IMPORTED_MODULE_1__["default"],
+    CountCommentComponent: _comment_CountCommentComponent__WEBPACK_IMPORTED_MODULE_2__["default"]
   }
 });
 
@@ -5624,6 +5630,52 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/comment/CountCommentComponent.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/comment/CountCommentComponent.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  mounted: function mounted() {
+    console.log('Count Comment Component mounted.');
+  },
+  data: function data() {
+    return {
+      count: null
+    };
+  },
+  created: function created() {
+    this.count_user();
+  },
+  methods: {
+    count_user: function count_user() {
+      var _this = this;
+
+      axios.get('/api/comment/count').then(function (response) {
+        _this.count = response.data;
+        console.log('success');
+      })["catch"](function (error) {
+        console.log('error');
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/post/CountPostComponent.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/post/CountPostComponent.vue?vue&type=script&lang=js& ***!
@@ -5732,6 +5784,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6405,7 +6463,9 @@ Vue.component('post-list-component', (__webpack_require__(/*! ./components/post/
 Vue.component('create-post-component', (__webpack_require__(/*! ./components/post/CreatePostComponent.vue */ "./resources/js/components/post/CreatePostComponent.vue")["default"]));
 Vue.component('detail-post-component', (__webpack_require__(/*! ./components/post/DetailPostComponent.vue */ "./resources/js/components/post/DetailPostComponent.vue")["default"]));
 Vue.component('update-post-component', (__webpack_require__(/*! ./components/post/UpdatePostComponent.vue */ "./resources/js/components/post/UpdatePostComponent.vue")["default"]));
-Vue.component('count-post-component', (__webpack_require__(/*! ./components/post/CountPostComponent.vue */ "./resources/js/components/post/CountPostComponent.vue")["default"]));
+Vue.component('count-post-component', (__webpack_require__(/*! ./components/post/CountPostComponent.vue */ "./resources/js/components/post/CountPostComponent.vue")["default"])); //comment
+
+Vue.component('count-comment-component', (__webpack_require__(/*! ./components/comment/CountCommentComponent.vue */ "./resources/js/components/comment/CountCommentComponent.vue")["default"]));
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -29543,6 +29603,45 @@ component.options.__file = "resources/js/components/RegisterComponent.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/comment/CountCommentComponent.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/comment/CountCommentComponent.vue ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _CountCommentComponent_vue_vue_type_template_id_405abc02___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CountCommentComponent.vue?vue&type=template&id=405abc02& */ "./resources/js/components/comment/CountCommentComponent.vue?vue&type=template&id=405abc02&");
+/* harmony import */ var _CountCommentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CountCommentComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/comment/CountCommentComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CountCommentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CountCommentComponent_vue_vue_type_template_id_405abc02___WEBPACK_IMPORTED_MODULE_0__.render,
+  _CountCommentComponent_vue_vue_type_template_id_405abc02___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/comment/CountCommentComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/post/CountPostComponent.vue":
 /*!*************************************************************!*\
   !*** ./resources/js/components/post/CountPostComponent.vue ***!
@@ -30031,6 +30130,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/comment/CountCommentComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/comment/CountCommentComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CountCommentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CountCommentComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/comment/CountCommentComponent.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CountCommentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/post/CountPostComponent.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************!*\
   !*** ./resources/js/components/post/CountPostComponent.vue?vue&type=script&lang=js& ***!
@@ -30302,6 +30417,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterComponent_vue_vue_type_template_id_51f045bf___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterComponent_vue_vue_type_template_id_51f045bf___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./RegisterComponent.vue?vue&type=template&id=51f045bf& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/RegisterComponent.vue?vue&type=template&id=51f045bf&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/comment/CountCommentComponent.vue?vue&type=template&id=405abc02&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/comment/CountCommentComponent.vue?vue&type=template&id=405abc02& ***!
+  \**************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CountCommentComponent_vue_vue_type_template_id_405abc02___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CountCommentComponent_vue_vue_type_template_id_405abc02___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CountCommentComponent_vue_vue_type_template_id_405abc02___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CountCommentComponent.vue?vue&type=template&id=405abc02& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/comment/CountCommentComponent.vue?vue&type=template&id=405abc02&");
 
 
 /***/ }),
@@ -30662,6 +30794,13 @@ var render = function () {
             "div",
             { staticClass: "col success alert alert-success" },
             [_c("count-post-component")],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col success alert alert-success" },
+            [_c("count-comment-component")],
             1
           ),
         ]),
@@ -31212,6 +31351,34 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/comment/CountCommentComponent.vue?vue&type=template&id=405abc02&":
+/*!*****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/comment/CountCommentComponent.vue?vue&type=template&id=405abc02& ***!
+  \*****************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { attrs: { align: "center" } }, [
+    _c("h2", [_vm._v("Total Comment")]),
+    _vm._v("\n    " + _vm._s(_vm.count) + "\n"),
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/post/CountPostComponent.vue?vue&type=template&id=6482ca62&":
 /*!***********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/post/CountPostComponent.vue?vue&type=template&id=6482ca62& ***!
@@ -31340,11 +31507,46 @@ var render = function () {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(post.slug))]),
                 _vm._v(" "),
+                _c("td", [
+                  _c("a", { attrs: { href: "./user/show/" + post.user.id } }, [
+                    _vm._v(_vm._s(post.user.full_name)),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(post.comment_count))]),
+                _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(post.status))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(post.created_at))]),
                 _vm._v(" "),
-                _vm._m(2, true),
+                _c("td", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-sm btn-primary",
+                      attrs: { type: "button", href: "./post/show/" + post.id },
+                    },
+                    [_vm._v("Detail")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-sm btn-success",
+                      attrs: { type: "button", href: "./post/edit/" + post.id },
+                    },
+                    [_vm._v("Edit")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-sm btn-danger",
+                      attrs: { type: "button", href: "" },
+                    },
+                    [_vm._v("Delete")]
+                  ),
+                ]),
               ])
             }),
             0
@@ -31352,7 +31554,7 @@ var render = function () {
         ]),
       ]),
       _vm._v(" "),
-      _vm._m(3),
+      _vm._m(2),
     ]),
   ])
 }
@@ -31378,23 +31580,15 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("td", [_vm._v("Slug")]),
       _vm._v(" "),
+      _c("td", [_vm._v("Author")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Total Comment")]),
+      _vm._v(" "),
       _c("td", [_vm._v("Post Status")]),
       _vm._v(" "),
       _c("td", [_vm._v("Created At")]),
       _vm._v(" "),
       _c("td", [_vm._v("Action")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("a", { attrs: { type: "button", href: "" } }, [_vm._v("Detail")]),
-      _vm._v(" "),
-      _c("a", { attrs: { type: "button", href: "" } }, [_vm._v("Edit")]),
-      _vm._v(" "),
-      _c("a", { attrs: { type: "button", href: "" } }, [_vm._v("Delete")]),
     ])
   },
   function () {

@@ -45,6 +45,8 @@ Vue.component('detail-post-component', require('./components/post/DetailPostComp
 Vue.component('update-post-component', require('./components/post/UpdatePostComponent.vue').default);
 Vue.component('count-post-component', require('./components/post/CountPostComponent.vue').default);
 
+//comment
+Vue.component('count-comment-component', require('./components/comment/CountCommentComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

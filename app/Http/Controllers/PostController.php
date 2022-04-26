@@ -7,6 +7,8 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\Comment;
 use Illuminate\Support\Str;
+use App\Http\Requests\CreatePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 
 class PostController extends Controller {
     public function __construct() {
@@ -30,7 +32,7 @@ class PostController extends Controller {
             ]);
     }
 
-    public function store(Request $request) {
+    public function store(CreatePostRequest $request) {
         $new_post = Post::create([
             'title'    => $request->get('title'),
             'slug'     => $this->slug($request->get('title')),
@@ -55,7 +57,7 @@ class PostController extends Controller {
         ]);
     }
 
-    public function update(Request $request, $id) {
+    public function update(UpdatePostRequest $request, $id) {
         $post = Post::findOrFail($id);
         $post->update([
             'title'    => $request->get('title'),

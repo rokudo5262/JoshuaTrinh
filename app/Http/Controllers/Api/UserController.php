@@ -36,6 +36,7 @@ class UserController extends Controller {
         $user->update($request->all());
         return $user;
     }
+    
     public function delete(Request $request, $id) {
         $user = User::findOrFail($id);
         $user->update([
