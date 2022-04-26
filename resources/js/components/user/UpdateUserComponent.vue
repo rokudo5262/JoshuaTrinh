@@ -5,14 +5,25 @@
                 <h2>User Update</h2>
             </div>
             <div class="card-body">
-                <div class="alert alert-success" v-show="success">Update User Successfully</div>
-                <form @submit.prevent="update_user">
+                <div class="alert alert-success" v-if="success.upload">Upload Profile Picture Successfully</div>
+                
+                <form @submit.prevent="on_file_upload">
                     <div class="row mb-3">
                         <label for="id" class="col-md-4 col-form-label text-md-end">Profile Picture</label>
                         <div class="col-md-6">
-                            <input class="form-control" type="file" name="profile_picture" v-on="fields.profile_picture"/>
+                            <input class="form-control" type="file" accept="image/*" @change="on_file_changed">
+                            <div class="alert alert-danger" v-if="errors && errors.profile_picture">{{errors.profile_picture[0]}}</div>
                         </div>
                     </div>
+                    <div class="row mb-0">
+                        <div class="col-md-8 offset-md-4">
+                            <button type="submit" class="btn btn-primary">Upload</button>
+                        </div>
+                    </div>
+                </form>
+                <hr>
+                <div class="alert alert-success" v-if="success.update">Update User Successfully</div>
+                <form @submit.prevent="update_user" enctype="multipart/form-data">
                     <div class="row mb-3">
                         <label for="id" class="col-md-4 col-form-label text-md-end">User ID</label>
                         <div class="col-md-6">
@@ -80,24 +91,29 @@
         props: ['user'],
         data: function() {
             return {
+                userid:'',
                 fields:{},
-                success: false,
+                success: {
+                    update: false,
+                    upload: false,
+                    },
                 errors: {},
+                profile_picture: null,
             }
         },
         mounted() {
             console.log('Update User Component mounted.')
         },
-        created(){
+        created() {
             this.get_user();
         },
-        methods:{
+        methods: {
             update_user() {
                 axios.post('/admin/user/update/'+this.user.id,this.fields)
                 .then( response => {
-                    this.success = true;
+                    this.success.update = true;
                     this.errors = {};
-                    console.log(this.fields.profile_picture);
+                    console.log("Success");
                 }).catch( error => {
                     if(error.response.status == 422) {
                         this.errors = error.response.data.errors;
@@ -116,8 +132,22 @@
                     alert("Could not get user")
                     console.log(error);
                 });
-            }
+            },
+            on_file_changed (event) {
+                this.profile_picture = event.target.files[0];
+            },
+            on_file_upload (event) {
+                const form_data = new FormData();
+                form_data.append('profile_picture',this.profile_picture,this.profile_picture.name);
+                axios.post('/admin/user/profile_upload/'+this.user.id,form_data)
+                .then( response => {
+                    this.success.upload = true;
+                    console.log('success');
+                })
+                .catch(error => {
+                    console.log('error');
+                });
+            },
         }
-
     }
 </script>

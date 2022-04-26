@@ -86,6 +86,24 @@ class PostSeeder extends Seeder {
                 'slug'      => 'post_12',
                 'user_id'   => '4',
             ],
+            [
+                'title'     => 'post 13',
+                'content'   => 'post content 13',
+                'slug'      => 'post_13',
+                'user_id'   => '4',
+            ],
+            [
+                'title'     => 'post 14',
+                'content'   => 'post content 14',
+                'slug'      => 'post_14',
+                'user_id'   => '4',
+            ],
+            [
+                'title'     => 'post 15',
+                'content'   => 'post content 15',
+                'slug'      => 'post_11',
+                'user_id'   => '4',
+            ],
         ]);
     }
 }

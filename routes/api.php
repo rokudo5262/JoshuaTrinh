@@ -28,4 +28,5 @@ Route::apiResource('user', 'App\Http\Controllers\Api\UserController');
 Route::get('post/count',[PostController::class, 'count_post'])->name('post.count');
 Route::apiResource('post', 'App\Http\Controllers\Api\PostController');
 
+Route::get('comment/count',[CommentController::class, 'count_comment'])->name('comment.count');
 Route::apiResource('comment', 'App\Http\Controllers\Api\CommentController');

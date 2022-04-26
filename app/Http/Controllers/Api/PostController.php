@@ -8,21 +8,29 @@ use App\Models\Post;
 
 class PostController extends Controller {
     public function index() {
-        return Post::all();
+        // return Post::with('user')->withCount('comment')->get();
+        return Post::with('user')->get();
     }
 
     public function store(Request $request) {
         return Post::create($request->all());
     }
 
-    public function show($id)
-    {
+    public function show($id) {
         return Post::find($id);
     }
 
     public function update(Request $request, $id) {
         $post = Post::findOrFail($id);
         $post->update($request->all());
+        return $post;
+    }
+
+    public function delete(Request $request, $id) {
+        $post = Post::findOrFail($id);
+        $post->update([
+            'status' => 4,
+        ]);
         return $post;
     }
 

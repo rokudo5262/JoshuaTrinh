@@ -15,8 +15,7 @@ class CommentController extends Controller {
         return Comment::create($request->all());
     }
 
-    public function show($id)
-    {
+    public function show($id) {
         return Comment::find($id);
     }
 
@@ -30,5 +29,10 @@ class CommentController extends Controller {
         $comment = Comment::findOrFail($id);
         $comment->delete();
         return 204;
+    }
+
+    public function count_comment() {
+        $comments =  Comment::get();
+        return $comments->count();
     }
 }
