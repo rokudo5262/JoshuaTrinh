@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Jobs\SendEmail;
 use App\Models\User;
+use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\ChangePasswordRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use App\Rules\MatchOldPassword;
 
 class AdminController extends Controller {
     public function login() {
@@ -35,20 +36,14 @@ class AdminController extends Controller {
         return view('register');
     }
 
-    public function handle_register(Request $request) {
-        $validated = $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email'=>'required|email',
-            'password'=>'required|min:9|max:100|confirmed',
-            'password_confirmation' => 'required|min:6',
-        ]);
+    public function handle_register(RegisterRequest $request) {
         $user = User::create([
             'first_name'    => $request->get('first_name'),
             'last_name'     => $request->get('last_name'),
             'email'         => $request->get('email'),
             'password'      => Hash::make($request->get('password')),
         ]);
+        $user->assignRole('user');
         $message = [
             'function' => 'Register',
             'name' => $user->full_name,
@@ -71,13 +66,10 @@ class AdminController extends Controller {
         return view('forget_password');
     }
 
-    public function handle_change_password(Request $request) {
-        $request->validate([
-            'current_password'          => ['required', new MatchOldPassword],
-            'new_password'              => 'required',
-            'new_password_confirmation' => 'same:new_password',
+    public function handle_change_password(ChangePasswordRequest $request) {
+        $change_password = User::find(auth()->user()->id)->update([
+            'password'=> Hash::make($request->get('new_password')),
         ]);
-        $change_password = User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
         if($change_password) {
             Log::channel('login')->info(auth()->user()->email." Change Password Succcessfully");
             $user = User::findOrFail(auth()->user()->id);
@@ -90,7 +82,7 @@ class AdminController extends Controller {
         } else {
             Log::channel('login')->info(auth()->user()->email ." Change Password Fail");
         }
-        return redirect()->route('change_password');     
+        return $change_password;     
     }
 
     public function profile() {
