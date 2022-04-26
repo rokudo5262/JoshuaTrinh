@@ -7,14 +7,11 @@
                         <h2>Forget Password</h2>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="#">
-                            <div class="row mb-3">
-                                <input type="hidden" name="_token" :value="csrf">
-                            </div>
+                        <form>
                             <div class="row mb-3">
                                 <label for="email" class="col-md-4 col-form-label text-md-end">Email Address</label>
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" name="email" required autofocus>
+                                    <input id="email" type="email" class="form-control" name="email"  autofocus>
                                 </div>
                             </div>
                             <div class="row mb-0">

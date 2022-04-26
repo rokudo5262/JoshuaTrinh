@@ -8,8 +8,7 @@ use App\Models\Post;
 
 class PostController extends Controller {
     public function index() {
-        // return Post::with('user')->withCount('comment')->get();
-        return Post::with('user')->get();
+        return Post::with('user')->withCount('comment')->get();
     }
 
     public function store(Request $request) {
