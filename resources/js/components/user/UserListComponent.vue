@@ -6,12 +6,11 @@
             </div>
             <div class="card-body">
                     <form @submit.prevent="delete_multiple_user">
-                        <a type="button" class="btn btn-primary mb-3" href="./user/create">Create User</a>
+                        <a type="button" class="btn btn-primary mb-3" href="./user/create">Create New User</a>
                         <button type="submit" class="btn btn-primary mb-3" :disabled="this.ids.length < 1">Delete Multiple Users</button>
                     </form>
                 <div class="alert alert-success" v-if="success.delete_multiple_user">Delete Multiple Users Successfully</div>
                 <div class="alert alert-success" v-if="success.delete_user">Delete User Successfully</div>
-                <div class="alert alert-danger" v-if="errors && errors.ids">{{errors.ids[0]}}</div>
                     <input v-model="searchQuery">
                     <table class="table">
                         <thead>
@@ -25,7 +24,7 @@
                         <tbody>
                             <tr v-for = "user in search_user" :key="user.id">      
                                 <td>
-                                    <input type="checkbox" v-model="ids" :id="user.id" :value="user.id">
+                                    <input type="checkbox" v-model="ids" :value="user.id">
                                 </td>
                                 <td>{{ user.id }}</td>
                                 <td>{{ user.full_name }}</td>
@@ -115,7 +114,7 @@
                         this.success.delete_user = true;
                     })
                     .catch(error => {
-                        alert("Could not delete user");
+                        alert("Could not delete this user");
                     });
                 }
             },

@@ -8,19 +8,16 @@
                     </div>
                     <div class="card-body">
                         <form method="POST" action="handle_login">
-                            <div class="row mb-3"> 
-                                <input type="hidden" name="_token" :value="csrf">
-                            </div>
                             <div class="row mb-3">
-                                <label for="email" class="col-md-4 col-form-label text-md-end">Email Address</label>
+                                <label for="email" class="col-md-4 col-form-label text-md-end">Email</label>
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" name="email" required autofocus>
+                                    <input type="email" class="form-control" name="email" autofocus>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="password" class="col-md-4 col-form-label text-md-end">Password</label>
                                 <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control" name="password" required autocomplete="current-password">
+                                    <input type="password" class="form-control" name="password">
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -51,7 +48,8 @@
         },
         data: function() {
             return {
-                csrf: document.head.querySelector('meta[name="csrf-token"]').content
+                field: {},
+                error: {},
             }
         },
     }

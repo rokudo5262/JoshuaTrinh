@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="card-footer">
-            <a type="button" href="admin/dashboard">dashboard</a>
+            <a type="button" href="/admin/dashboard">dashboard</a>
         </div>
     </div>
 </template>

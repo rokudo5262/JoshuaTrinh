@@ -5,7 +5,12 @@
             <h2>Post List</h2>
         </div>
         <div class="card-body">
-            <a type="button" class="btn btn-primary mb-3" href="/admin/post/create">Create New Post</a>
+                <form @submit.prevent="delete_multiple_post">
+                    <a type="button" class="btn btn-primary mb-3" href="./post/create">Create New Post</a>
+                    <button type="submit" class="btn btn-primary mb-3" :disabled="this.ids.length < 1">Delete Multiple Posts</button>
+                </form>
+                <div class="alert alert-success" v-if="success.delete_multiple_post">Delete Multiple Posts Successfully</div>
+                <div class="alert alert-success" v-if="success.delete_post">Delete Post Successfully</div>
             <table class="table">
                 <thead>
                     <td></td>
@@ -20,7 +25,7 @@
                 </thead>
                 <tbody>
                     <tr v-for = "post in posts" :key="post.id" >
-                        <td><input type="checkbox" :id="post.id" :value="post.id"></td>
+                        <td><input type="checkbox"  v-model="ids" :value="post.id"></td>
                         <td>{{ post.id }}</td>
                         <td>{{ post.title }}</td>
                         <td>{{ post.slug }}</td>
@@ -50,8 +55,12 @@
     export default {
         data: function() {
             return {
+                ids: [],
                 posts: [],
-                success: false,
+                success: {
+                    delete_multiple_post: false,
+                    delete_post: false,
+                },
                 errors: {},
             }
         },
@@ -71,7 +80,22 @@
                     alert("Could not load posts list");
                 });
             },
+            delete_multiple_post() {
+
+            },
+            delete_user(post) {
+                if(confirm("Do you really want to delete this post ?")) {
+                    axios.delete('/api/post/' + post.id)
+                    .then( response => {
+                        const idx = this.users.indexOf(post);
+                        this.users.splice(idx, 1);
+                        this.success.delete_user = true;
+                    })
+                    .catch(error => {
+                        alert("Could not delete this post");
+                    });
+                }
+            },
         }
     }
-    
 </script>

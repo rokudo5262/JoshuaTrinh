@@ -10,7 +10,7 @@
                 <h1>W.I.P</h1>
             </div>
             <div class="card-footer">
-                <a type="button" href=".">BACK</a>
+                <a type="button" href="/admin">dashboard</a>
             </div>
         </div>
     </div>

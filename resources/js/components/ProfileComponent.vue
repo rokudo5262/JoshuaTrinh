@@ -11,9 +11,27 @@
                         <input class="form-control" type="text" name="full_name" readonly/>
                     </div>
                 </div>
+                <div class="row mb-3">
+                    <label for="email" class="col-md-4 col-form-label text-md-end">Email</label>
+                    <div class="col-md-6">
+                        <input class="form-control" type="text" name="email" readonly/>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="full_name" class="col-md-4 col-form-label text-md-end">Email</label>
+                    <div class="col-md-6">
+                        <input class="form-control" type="text" name="address" readonly/>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="full_name" class="col-md-4 col-form-label text-md-end">Email</label>
+                    <div class="col-md-6">
+                        <input class="form-control" type="text" name="phone_number" readonly/>
+                    </div>
+                </div>
             </div>
             <div class="card-footer">
-                <a type="button" href=".">BACK</a>
+                <a type="button" href="/admin">dashboard</a>
             </div>
         </div>
     </div>
@@ -22,11 +40,10 @@
 <script>
     export default {
         mounted() {
-            console.log('Create User Component mounted.')
+            console.log('Login User Profile Component mounted.')
         },
         data: function() {
             return {
-                csrf: document.head.querySelector('meta[name="csrf-token"]').content
             }
         },
     }
