@@ -7,38 +7,41 @@
                     <h2>Register</h2>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="/handle_register">
-                        <div class="row mb-3">
-                            <input type="hidden" name="_token" :value="csrf">
-                        </div>
+                    <div class="alert alert-success" v-show="success">Register Successfully</div>
+                    <form @submit.prevent="handle_register">
                         <div class="row mb-3">
                             <label for="first_name" class="col-md-4 col-form-label text-md-end">First Name</label>
                             <div class="col-md-6">
-                                <input id="first_name" type="first_name" class="form-control" name="first_name">
+                                <input type="text" class="form-control" v-model="fields.first_name" name="first_name">
+                                <div class="alert alert-danger" v-if="errors && errors.first_name">{{errors.first_name[0]}}</div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="last_name" class="col-md-4 col-form-label text-md-end">Last Name</label>
                             <div class="col-md-6">
-                                <input id="last_name" type="last_name" class="form-control" name="last_name">
+                                <input type="text" class="form-control" v-model="fields.last_name" name="last_name">
+                                <div class="alert alert-danger" v-if="errors && errors.last_name">{{errors.last_name[0]}}</div>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">Email Address</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-end">Email</label>
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" required autofocus>
+                                <input type="text" class="form-control" v-model="fields.email" name="email" autofocus>
+                                <div class="alert alert-danger" v-if="errors && errors.email">{{errors.email[0]}}</div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">Password</label>
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
+                                <input type="password" class="form-control" v-model="fields.password" name="password" >
+                                <div class="alert alert-danger" v-if="errors && errors.password">{{errors.password[0]}}</div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="password_confirmation" class="col-md-4 col-form-label text-md-end">Password Confirmation</label>
                             <div class="col-md-6">
-                                <input id="password_confirmation" type="password_confirmation" class="form-control" name="password_confirmation">
+                                <input type="password" class="form-control " v-model="fields.password_confirmation" name="password_confirmation">
+                                <div class="alert alert-danger" v-if="errors && errors.password_confirmation">{{errors.password_confirmation[0]}}</div>
                             </div>
                         </div>
                         <div class="row mb-0">
@@ -61,8 +64,26 @@
         },
         data: function() {
             return {
-                csrf: document.head.querySelector('meta[name="csrf-token"]').content
+                fields:{},
+                success: false,
+                errors: {},
             }
         },
+        methods:{
+            handle_register() {
+                axios.post('/admin/handle_register',this.fields)
+                .then( response => {
+                    this.fields = {};
+                    this.success = true;
+                    this.errors = {};
+                    console.log('success');
+                }).catch( error => {
+                    if(error.response.status == 422) {
+                        this.errors = error.response.data.errors;
+                        console.log('error');
+                    }
+                })
+            },
+        }
     }
 </script>
