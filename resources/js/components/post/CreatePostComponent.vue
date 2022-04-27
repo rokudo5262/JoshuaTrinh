@@ -5,12 +5,7 @@
             <h2>Create New Post</h2>
         </div>
         <div class="card-body">
-            <form action="{{ route('post.store') }}" method="post">
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <input class="form-control" type="hidden" name="_token" value="{{ csrf_token() }}"/>
-                    </div>
-                </div>
+            <form @submit.prevent="create_new_post">
                 <div class="row mb-3">
                     <label for="title" class="col-md-4 col-form-label text-md-end">Title</label>
                     <div class="col-md-6">
@@ -29,7 +24,7 @@
                 <div class="row mb-3">
                     <label for="author" class="col-md-4 col-form-label text-md-end">Author</label>
                     <div class="col-md-6">
-                        <input  class="form-control" name="author" value="{{ auth()->user()->id }}" readonly/>
+                        <input  class="form-control" name="author">
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -52,7 +47,7 @@
             </form>
         </div>
         <div class="card-footer">
-            <a type="button" href="{{ config('app.url')}}/post">BACK</a>
+            <a type="button" href="/admin/post">BACK</a>
         </div>
     </div>
 </div>

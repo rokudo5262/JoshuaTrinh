@@ -1,5 +1,5 @@
 @extends('layouts.admin')
 
 @section('content')
-    <create_post_component></create_post_component>
+<create-post-component></create-post-component>
 @endsection
