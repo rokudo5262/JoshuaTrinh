@@ -16,7 +16,7 @@ class Post extends Model {
         'title',
         'content',
         'slug',
-        'status',
+        'post_status',
         'user_id',
     ];
 
@@ -47,7 +47,7 @@ class Post extends Model {
         return $this->hasMany('App\Models\Comment')->count();
     }
 
-    public function getStatusAttribute($value){
+    public function getPostStatusAttribute($value){
         switch($value) {
             case 0;
                 return "Published";

@@ -8,7 +8,6 @@
         props:['userid'],
         mounted() {
             console.log('Profile Upload Component mounted.');
-            console.log(this.userid);
         },
         data: function() {
             return {

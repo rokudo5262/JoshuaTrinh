@@ -5,16 +5,18 @@
                 <h2>Dashboard</h2>                        
             </div>
             <div class="card-body">
-                <p>You are logged in!</p>
                 <div class="row">
-                    <div class="col success alert alert-success">
+                    <div class="col-6 success alert alert-success">
                         <count-user-component></count-user-component>
                     </div>
-                    <div class="col success alert alert-success">
+                    <div class="col-6 success alert alert-success">
                         <count-post-component></count-post-component>
                     </div>
-                    <div class="col success alert alert-success">
+                    <div class="col-6 success alert alert-success">
                         <count-comment-component></count-comment-component>
+                    </div>
+                    <div class="col-6 success alert alert-success">
+                        <counter-component></counter-component>
                     </div>
                 </div>
             </div>
@@ -27,6 +29,8 @@
     import CountPostComponent from './post/CountPostComponent'
     import CountUserComponent from './user/CountUserComponent'
     import CountCommentComponent from './comment/CountCommentComponent'
+    import CounterComponent from './CounterComponent'
+
     export default {
         mounted() {
             console.log('Dashboard Component mounted.')
@@ -35,6 +39,7 @@
             CountPostComponent,
             CountUserComponent,
             CountCommentComponent,
+            CounterComponent,
         }
     }
 </script>

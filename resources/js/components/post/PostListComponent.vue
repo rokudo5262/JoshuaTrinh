@@ -33,12 +33,11 @@
                             <a :href="'./user/show/' + post.user.id">{{ post.user.full_name}}</a>
                         </td>
                         <td>{{ post.comment_count }}</td>
-                        <td>{{ post.status }}</td>
+                        <td>{{ post.post_status }}</td>
                         <td>{{ post.created_at }}</td>
                         <td>
-                            <a type="button" class="btn btn-sm btn-primary" :href="'./post/show/' + post.id">Detail</a>
                             <a type="button" class="btn btn-sm btn-success" :href="'./post/edit/' + post.id">Edit</a>
-                            <a type="button" class="btn btn-sm btn-danger" href="">Delete</a>
+                            <button type="button" class="btn btn-sm btn-danger" @click.prevent="delete_post(post)">Delete</button>
                         </td>
                     </tr>
                 </tbody>
@@ -81,15 +80,27 @@
                 });
             },
             delete_multiple_post() {
-
-            },
-            delete_user(post) {
-                if(confirm("Do you really want to delete this post ?")) {
-                    axios.delete('/api/post/' + post.id)
+                if(confirm("Do you really want to delete multiple posts ?")) {
+                    axios.post('post/mutiple_delete',this.ids)
                     .then( response => {
-                        const idx = this.users.indexOf(post);
-                        this.users.splice(idx, 1);
-                        this.success.delete_user = true;
+                        this.get_posts();
+                        this.ids = [];
+                        this.success.delete_multiple_post = true;
+                        this.success.delete_post = false;
+                        this.errors = {};
+                    }).catch( error => {
+                        alert("Could not delete multiple posts");
+                    })
+                }
+            },
+            delete_post(post) {
+                if(confirm("Do you really want to delete this post ?")) {
+                    axios.get('/api/post/delete' + post.id)
+                    .then( response => {
+                        const idx = this.posts.indexOf(post);
+                        this.posts.splice(idx, 1);
+                        this.success.delete_post = true;
+                        this.success.delete_multiple_post = false;
                     })
                     .catch(error => {
                         alert("Could not delete this post");

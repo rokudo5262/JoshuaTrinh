@@ -31,7 +31,6 @@
                                 <td>{{ user.email }}</td>
                                 <td>{{ user.created_at }}</td>
                                 <td>
-                                    <a class="btn btn-sm btn-primary" type="button" :href="'./user/show/' + user.id">Detail</a>
                                     <a class="btn btn-sm btn-success" type="button" :href="'./user/edit/' + user.id">Update</a>
                                     <button class="btn btn-sm btn-danger" @click.prevent="delete_user(user)" type="button">Delete</button>
                                 </td>
@@ -82,17 +81,16 @@
         },
         methods: {
             delete_multiple_user() {
-                if(confirm("Do you really want to delete multiple user ?")) {
+                if(confirm("Do you really want to delete multiple users ?")) {
                     axios.post('user/mutiple_delete',this.ids)
                     .then( response => {
                         this.get_users();
                         this.ids = [];
                         this.success.delete_multiple_user = true;
+                        this.success.delete_user = false;
                         this.errors = {};
                     }).catch( error => {
-                        if(error.response.status == 422) {
-                            this.errors = error.response.data.errors;
-                        }
+                        alert("Could not delete multiple users");
                     })
                 }
             },
@@ -107,7 +105,7 @@
             },
             delete_user(user) {
                 if(confirm("Do you really want to delete this user ?")) {
-                    axios.delete('/api/user/' + user.id)
+                    axios.get('/api/user/delete' + user.id)
                     .then( response => {
                         const idx = this.users.indexOf(user);
                         this.users.splice(idx, 1);

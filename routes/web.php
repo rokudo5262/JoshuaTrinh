@@ -37,9 +37,10 @@ Route::prefix('/admin')->group(function(){
                 Route::get('/show/{id}',[PostController::class, 'show'])->name('post.show');
                 Route::post('/store',[PostController::class, 'store'])->name('post.store');
                 Route::get('/create',[PostController::class, 'create'])->name('post.create');
-                Route::post('/edit/{id}',[PostController::class, 'edit'])->name('post.edit');
+                Route::get('/edit/{id}',[PostController::class, 'edit'])->name('post.edit');
                 Route::post('/update/{id}',[PostController::class, 'update'])->name('post.update');
                 Route::post('/delete/{id}',[PostController::class, 'delete'])->name('post.delete');
+                Route::post('/mutiple_delete',[PostController::class, 'mutiple_delete'])->name('post.mutiple_delete');
                 Route::post('destroy/{id}',[PostController::class, 'destroy'])->name('post.destroy');
             });
             // user route

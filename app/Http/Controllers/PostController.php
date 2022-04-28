@@ -19,7 +19,7 @@ class PostController extends Controller {
     }
 
     public function index() {
-        $posts = Post::where('status','!=','4')->with('user')->withCount('comment')->get();
+        $posts = Post::where('post_status','!=','4')->with('user')->withCount('comment')->get();
         return view('post.view_post',[
             'posts' => $posts,
         ]);
@@ -37,17 +37,15 @@ class PostController extends Controller {
             'title'    => $request->get('title'),
             'slug'     => $this->slug($request->get('title')),
             'content'  => $request->get('content'),
-            'status'   => $request->get('status'),
+            'post_status'   => $request->get('post_status'),
             'user_id'  => $request->get('author'),
         ]);
-        return redirect()->route('post');
+        return $new_post;
     }
 
     public function show($id) {
         $post = Post::findOrFail($id);
-        return view("post.detail_post",[
-            'post' => $post,
-        ]); 
+        return $post; 
     }
 
     public function edit($id) {
@@ -63,7 +61,7 @@ class PostController extends Controller {
             'title'    => $request->get('title'),
             'slug'     => $this->slug($request->get('title')),
             'content'  => $request->get('content'),
-            'status'   => $request->get('status'),
+            'post_status'   => $request->get('post_status'),
             'user_id'   => $request->get('author'),
         ]);
         return redirect()->route('post');
@@ -72,9 +70,16 @@ class PostController extends Controller {
     public function delete(Request $request,$id) {
         $post = Post::findOrFail($id);
         $post->update([
-            'status' => 4,
+            'post_status' => 4,
         ]);
         return redirect()->route('post');
+    }
+
+    public function mutiple_delete(Request $request) {
+        $delete_mutiple_posts = Post::whereIn('id',$request)->update([
+            'post_status' => 4,
+        ]);
+        return $delete_mutiple_posts;
     }
 
     public function destroy($id) {

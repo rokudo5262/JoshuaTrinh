@@ -22,9 +22,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('user/delete/{id}',[UserController::class, 'delete'])->name('user.delete');
 Route::get('user/count',[UserController::class, 'count_user'])->name('user.count');
 Route::apiResource('user', 'App\Http\Controllers\Api\UserController');
 
+Route::post('post/delete/{id}',[PostController::class, 'delete'])->name('post.delete');
 Route::get('post/count',[PostController::class, 'count_post'])->name('post.count');
 Route::apiResource('post', 'App\Http\Controllers\Api\PostController');
 

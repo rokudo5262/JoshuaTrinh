@@ -62,11 +62,7 @@ class UserController extends Controller {
 
     public function show($id) {
         $user = User::findOrFail($id);
-        $posts = $user->post()->where('status','!=','4')->get();
-        return view("user.detail_user",[
-            'user' => $user,
-            'posts' => $posts,
-        ]);
+        return $user;
     }
 
     public function edit($id) {
