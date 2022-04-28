@@ -8,11 +8,17 @@ use App\Models\Post;
 
 class PostController extends Controller {
     public function index() {
-        return Post::with('user')->withCount('comment')->get();
+        return Post::with('user')->withCount('comment')->where('post_status','=!','4')->get();
     }
 
     public function store(Request $request) {
-        return Post::create($request->all());
+        return Post::create([
+            'title' => $request->get('title'),
+            'slug' => $request->get('title'),
+            'content' => $request->get('content'),
+            'user_id' => $request->get('author'),
+            'post_status' => $request->get('post_status'),
+        ]);
     }
 
     public function show($id) {
@@ -28,7 +34,7 @@ class PostController extends Controller {
     public function delete(Request $request, $id) {
         $post = Post::findOrFail($id);
         $post->update([
-            'status' => 4,
+            'post_status' => 4,
         ]);
         return $post;
     }
@@ -40,7 +46,7 @@ class PostController extends Controller {
     }
 
     public function count_post() {
-        $posts =  Post::get();
+        $posts = Post::where('post_status','4')->get();
         return $posts->count();
     }
 }
