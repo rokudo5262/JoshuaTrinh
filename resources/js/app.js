@@ -1,5 +1,7 @@
 
+
 window.axios = require('axios');
+window.Vue = require('vue').default;
 
 window.axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest',
@@ -13,10 +15,9 @@ window.axios.defaults.headers.common = {
 
 require('./bootstrap');
 
-import axios from 'axios'
-import store from './store'
+import store from './store/store';
 
-window.Vue = require('vue').default;
+
 
 /**
  * The following block of code may be used to automatically register your

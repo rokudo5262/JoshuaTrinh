@@ -22,7 +22,7 @@
                             <td>Action</td>
                         </thead>
                         <tbody>
-                            <tr v-for = "user in search_user" :key="user.id">      
+                            <tr v-for = "user in $store.state.users" :key="user.id">      
                                 <td>
                                     <input type="checkbox" v-model="ids" :value="user.id">
                                 </td>
@@ -31,8 +31,8 @@
                                 <td>{{ user.email }}</td>
                                 <td>{{ user.created_at }}</td>
                                 <td>
-                                    <a class="btn btn-sm btn-success" type="button" :href="'./user/edit/' + user.id">Update</a>
-                                    <button class="btn btn-sm btn-danger" @click.prevent="delete_user(user)" type="button">Delete</button>
+                                    <a class="btn btn-sm btn-success" type="button" :href="'./user/edit/' + user.id">Edit</a>
+                                    <button class="btn btn-sm btn-danger" @click.prevent="delete_user(user.id)" type="button">Delete</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -47,7 +47,6 @@
 
 <script>
     export default {
-        props: ['user_id'],
         mounted() {
             console.log('User Component mounted.')
         },
@@ -64,7 +63,7 @@
             }
         },
         created() {
-            this.get_users();
+            this.$store.dispatch('get_users');
         },
         computed: {
             search_user() {
@@ -94,21 +93,10 @@
                     })
                 }
             },
-            get_users() {
-                axios.get('/api/user')
-                .then( response => {
-                    this.users = response.data;
-                })
-                .catch(error => {
-                    alert("Could not load users list");
-                });
-            },
-            delete_user(user) {
+            delete_user(id) {
                 if(confirm("Do you really want to delete this user ?")) {
-                    axios.get('/api/user/delete' + user.id)
+                    this.$store.dispatch('delete_user',id)
                     .then( response => {
-                        const idx = this.users.indexOf(user);
-                        this.users.splice(idx, 1);
                         this.success.delete_user = true;
                     })
                     .catch(error => {

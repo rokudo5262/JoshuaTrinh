@@ -50,7 +50,7 @@ class UserController extends Controller {
 
     public function store(CreateUserRequest $request) {
         $new_user = User::create([
-            'profile_picture' => $request->get('profile_picture'),
+            // 'profile_picture' => $request->get('profile_picture'),
             'first_name'    => Str::ucfirst($request->get('first_name')),
             'last_name'     => Str::ucfirst($request->get('last_name')),
             'email'         => $request->get('email'),
