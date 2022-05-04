@@ -5561,9 +5561,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mounted: function mounted() {
-    console.log('Login Component mounted.');
-  },
   data: function data() {
     return {
       csrf: document.head.querySelector('meta[name="csrf-token"]').content
@@ -6099,7 +6096,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      postid: '',
       fields: {},
       success: {
         update: false,
@@ -6163,9 +6159,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mounted: function mounted() {
-    console.log('Count User Component mounted.');
-  },
   created: function created() {
     this.$store.dispatch('count_user');
   }
@@ -6236,9 +6229,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mounted: function mounted() {
-    console.log('Create User Component mounted.');
-  },
   data: function data() {
     return {
       success: false
@@ -6246,13 +6236,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     user: {
-      get: function get() {
+      get: function get(value) {
         return this.$store.state.user;
-      }
-    },
-    errors: {
-      get: function get() {
-        return this.$store.state.errors;
       }
     }
   },
@@ -6363,12 +6348,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['user'],
   data: function data() {
     return {
-      userid: '',
       fields: {},
       success: {
         update: false,
@@ -6378,11 +6361,12 @@ __webpack_require__.r(__webpack_exports__);
       profile_picture: null
     };
   },
-  mounted: function mounted() {
-    console.log('Update User Component mounted.');
-  },
   created: function created() {
     this.get_user();
+  },
+  computed: {// fields() {
+    //     return this.$store.getters.get_user(this.user_id);
+    // }
   },
   methods: {
     update_user: function update_user() {
@@ -6404,10 +6388,8 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("/api/user/" + this.user.id).then(function (response) {
         _this2.fields = response.data;
-        console.log("get user success");
-        return _this2.fields;
+        console.log('success');
       })["catch"](function (error) {
-        alert("Could not get user");
         console.log(error);
       });
     },
@@ -6489,65 +6471,59 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mounted: function mounted() {
-    console.log('User Component mounted.');
-  },
   data: function data() {
     return {
-      searchQuery: null,
-      ids: [],
-      users: [],
       success: {
         delete_multiple_user: false,
         delete_user: false
-      },
-      errors: {}
+      }
     };
   },
   created: function created() {
     this.$store.dispatch('get_users');
   },
   computed: {
-    search_user: function search_user() {
-      var _this = this;
-
-      if (this.searchQuery) {
-        return this.users.filter(function (user) {
-          return _this.searchQuery.toLowerCase().split(" ").every(function (v) {
-            return user.email.toLowerCase().includes(v);
-          }) || _this.searchQuery.toLowerCase().split(" ").every(function (v) {
-            return user.full_name.toLowerCase().includes(v);
-          });
-        });
-      } else {
-        return this.users;
+    search_user: {
+      get: function get() {
+        return this.$store.state.search_user;
+      },
+      set: function set(value) {
+        this.$store.commit('set_search_user_mutation', value);
+      }
+    },
+    selected_user_ids: {
+      get: function get() {
+        return this.$store.state.user_ids;
+      },
+      set: function set(value) {
+        this.$store.commit('set_selected_user_ids_mutation', value);
       }
     }
   },
   methods: {
     delete_multiple_user: function delete_multiple_user() {
-      var _this2 = this;
+      var _this = this;
 
       if (confirm("Do you really want to delete multiple users ?")) {
-        axios.post('user/mutiple_delete', this.ids).then(function (response) {
-          _this2.get_users();
+        this.$store.dispatch('delete_multiple_user', this.selected_user_ids).then(function (response) {
+          _this.$store.dispatch('get_users');
 
-          _this2.ids = [];
-          _this2.success.delete_multiple_user = true;
-          _this2.success.delete_user = false;
-          _this2.errors = {};
+          _this.success.delete_multiple_user = true;
+          _this.success.delete_user = false;
         })["catch"](function (error) {
-          alert("Could not delete multiple users");
+          alert(error);
         });
       }
     },
     delete_user: function delete_user(id) {
-      var _this3 = this;
+      var _this2 = this;
 
       if (confirm("Do you really want to delete this user ?")) {
         this.$store.dispatch('delete_user', id).then(function (response) {
-          _this3.success.delete_user = true;
+          _this2.success.delete_multiple_user = false;
+          _this2.success.delete_user = true;
         })["catch"](function (error) {
           alert("Could not delete this user");
         });
@@ -6688,9 +6664,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     user: {},
     posts: [],
     post: {},
-    success: false,
-    errors: {},
-    user_ids: []
+    user_ids: [],
+    search_user: null,
+    errors: {}
   },
   //commit
   mutations: {
@@ -6712,8 +6688,17 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     count_comment_mutation: function count_comment_mutation(state, new_value) {
       state.count_comment = new_value;
     },
+    errors_mutation: function errors_mutation(state, new_errors) {
+      state.errors = new_errors;
+    },
     get_users_mutation: function get_users_mutation(state, new_value) {
       state.users = new_value;
+    },
+    get_user_mutation: function get_user_mutation(state, new_value) {
+      state.user = new_value;
+    },
+    set_search_user_mutation: function set_search_user_mutation(state, new_value) {
+      state.search_user = new_value;
     },
     create_new_user_mutation: function create_new_user_mutation(state, new_user) {
       state.users.push(new_user);
@@ -6722,6 +6707,12 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
       state.users = state.users.filter(function (todo) {
         return todo.id !== id;
       });
+    },
+    set_selected_user_ids_mutation: function set_selected_user_ids_mutation(state, id) {
+      state.user_ids = id;
+    },
+    delete_multiple_user_mutation: function delete_multiple_user_mutation(state, ids) {
+      state.user_ids;
     },
     get_posts_mutation: function get_posts_mutation(state, new_value) {
       state.posts = new_value;
@@ -6750,11 +6741,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
       var commit = _ref4.commit;
       axios.get('/api/user/count').then(function (response) {
         commit('count_user_mutation', response.data);
-      })["catch"](function (error) {
-        if (error.response.status == 422) {
-          commit('errors_mutation', error.response.data.errors);
-        }
-      });
+      })["catch"]();
     },
     count_post: function count_post(_ref5) {
       var commit = _ref5.commit;
@@ -6784,23 +6771,31 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
       var commit = _ref8.commit;
       axios.post('/admin/user/store', user).then(function (response) {
         commit('create_new_user_mutation', user);
-      })["catch"]();
+      })["catch"](function (error) {
+        console.log(error);
+      });
     },
     delete_user: function delete_user(_ref9, id) {
       var commit = _ref9.commit;
       axios.post('/admin/user/delete/' + id);
       commit('delete_user_mutation', id);
     },
-    get_posts: function get_posts(_ref10) {
+    delete_multiple_user: function delete_multiple_user(_ref10, ids) {
       var commit = _ref10.commit;
+      axios.post('/admin/user/mutiple_delete', ids);
+      commit('delete_multiple_user_mutation', ids);
+    },
+    //post
+    get_posts: function get_posts(_ref11) {
+      var commit = _ref11.commit;
       axios.get('/api/post').then(function (response) {
         commit('get_posts_mutation', response.data);
       })["catch"](function (error) {
         alert("Could not load posts list");
       });
     },
-    delete_post: function delete_post(_ref11, id) {
-      var commit = _ref11.commit;
+    delete_post: function delete_post(_ref12, id) {
+      var commit = _ref12.commit;
       axios.post('/admin/post/delete/' + id);
       commit('delete_post_mutation', id);
     }
@@ -6808,6 +6803,29 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   getters: {
     counter_squared: function counter_squared(state) {
       return state.counter * state.counter;
+    },
+    user_ids_length: function user_ids_length(state) {
+      return state.user_ids.length;
+    },
+    get_user: function get_user(state) {
+      return function (id) {
+        return state.users.find(function (user) {
+          return user.id === id;
+        });
+      };
+    },
+    search_user: function search_user(state) {
+      if (state.search_user) {
+        return state.users.filter(function (user) {
+          return state.search_user.toLowerCase().split(" ").every(function (v) {
+            return user.email.toLowerCase().includes(v);
+          }) || state.search_user.toLowerCase().split(" ").every(function (v) {
+            return user.full_name.toLowerCase().includes(v);
+          });
+        });
+      } else {
+        return state.users;
+      }
     }
   }
 });
@@ -32390,13 +32408,6 @@ var render = function () {
                     },
                   },
                 }),
-                _vm._v(" "),
-                _vm.$store.getters.errors &&
-                _vm.$store.getters.errors.first_name
-                  ? _c("div", { staticClass: "alert alert-danger" }, [
-                      _vm._v(_vm._s(_vm.$store.getters.errors.first_name)),
-                    ])
-                  : _vm._e(),
               ]),
             ]),
             _vm._v(" "),
@@ -32432,12 +32443,6 @@ var render = function () {
                     },
                   },
                 }),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.last_name
-                  ? _c("div", { staticClass: "alert alert-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.last_name[0])),
-                    ])
-                  : _vm._e(),
               ]),
             ]),
             _vm._v(" "),
@@ -32473,12 +32478,6 @@ var render = function () {
                     },
                   },
                 }),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.email
-                  ? _c("div", { staticClass: "alert alert-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.email[0])),
-                    ])
-                  : _vm._e(),
               ]),
             ]),
             _vm._v(" "),
@@ -32514,12 +32513,6 @@ var render = function () {
                     },
                   },
                 }),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.password
-                  ? _c("div", { staticClass: "alert alert-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.password[0])),
-                    ])
-                  : _vm._e(),
               ]),
             ]),
             _vm._v(" "),
@@ -32650,7 +32643,6 @@ var render = function () {
         _c(
           "form",
           {
-            attrs: { enctype: "multipart/form-data" },
             on: {
               submit: function ($event) {
                 $event.preventDefault()
@@ -33048,7 +33040,10 @@ var render = function () {
               "button",
               {
                 staticClass: "btn btn-primary mb-3",
-                attrs: { type: "submit", disabled: this.ids.length < 1 },
+                attrs: {
+                  type: "submit",
+                  disabled: _vm.$store.getters.user_ids_length < 1,
+                },
               },
               [_vm._v("Delete Multiple Users")]
             ),
@@ -33072,17 +33067,17 @@ var render = function () {
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.searchQuery,
-              expression: "searchQuery",
+              value: _vm.search_user,
+              expression: "search_user",
             },
           ],
-          domProps: { value: _vm.searchQuery },
+          domProps: { value: _vm.search_user },
           on: {
             input: function ($event) {
               if ($event.target.composing) {
                 return
               }
-              _vm.searchQuery = $event.target.value
+              _vm.search_user = $event.target.value
             },
           },
         }),
@@ -33092,7 +33087,7 @@ var render = function () {
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(_vm.$store.state.users, function (user) {
+            _vm._l(_vm.$store.getters.search_user, function (user) {
               return _c("tr", { key: user.id }, [
                 _c("td", [
                   _c("input", {
@@ -33100,35 +33095,36 @@ var render = function () {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.ids,
-                        expression: "ids",
+                        value: _vm.selected_user_ids,
+                        expression: "selected_user_ids",
                       },
                     ],
                     attrs: { type: "checkbox" },
                     domProps: {
                       value: user.id,
-                      checked: Array.isArray(_vm.ids)
-                        ? _vm._i(_vm.ids, user.id) > -1
-                        : _vm.ids,
+                      checked: Array.isArray(_vm.selected_user_ids)
+                        ? _vm._i(_vm.selected_user_ids, user.id) > -1
+                        : _vm.selected_user_ids,
                     },
                     on: {
                       change: function ($event) {
-                        var $$a = _vm.ids,
+                        var $$a = _vm.selected_user_ids,
                           $$el = $event.target,
                           $$c = $$el.checked ? true : false
                         if (Array.isArray($$a)) {
                           var $$v = user.id,
                             $$i = _vm._i($$a, $$v)
                           if ($$el.checked) {
-                            $$i < 0 && (_vm.ids = $$a.concat([$$v]))
+                            $$i < 0 &&
+                              (_vm.selected_user_ids = $$a.concat([$$v]))
                           } else {
                             $$i > -1 &&
-                              (_vm.ids = $$a
+                              (_vm.selected_user_ids = $$a
                                 .slice(0, $$i)
                                 .concat($$a.slice($$i + 1)))
                           }
                         } else {
-                          _vm.ids = $$c
+                          _vm.selected_user_ids = $$c
                         }
                       },
                     },

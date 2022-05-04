@@ -5,8 +5,7 @@
                 <h2>User Update</h2>
             </div>
             <div class="card-body">
-                <div class="alert alert-success" v-if="success.upload">Upload Profile Picture Successfully</div>
-                
+                <div class="alert alert-success" v-if="success.upload">Upload Profile Picture Successfully</div> 
                 <form @submit.prevent="on_file_upload">
                     <div class="row mb-3">
                         <label for="id" class="col-md-4 col-form-label text-md-end">Profile Picture</label>
@@ -23,7 +22,7 @@
                 </form>
                 <hr>
                 <div class="alert alert-success" v-if="success.update">Update User Successfully</div>
-                <form @submit.prevent="update_user" enctype="multipart/form-data">
+                <form @submit.prevent="update_user">
                     <div class="row mb-3">
                         <label for="id" class="col-md-4 col-form-label text-md-end">User ID</label>
                         <div class="col-md-6">
@@ -91,7 +90,6 @@
         props: ['user'],
         data: function() {
             return {
-                userid:'',
                 fields:{},
                 success: {
                     update: false,
@@ -101,15 +99,17 @@
                 profile_picture: null,
             }
         },
-        mounted() {
-            console.log('Update User Component mounted.')
-        },
         created() {
             this.get_user();
         },
+        computed: {
+            // fields() {
+            //     return this.$store.getters.get_user(this.user_id);
+            // }
+        },
         methods: {
             update_user() {
-                axios.post('/admin/user/update/'+this.user.id,this.fields)
+                axios.post('/admin/user/update/'+ this.user.id,this.fields)
                 .then( response => {
                     this.success.update = true;
                     this.errors = {};
@@ -125,11 +125,9 @@
                 axios.get("/api/user/"+ this.user.id)
                 .then( response => {
                     this.fields = response.data;
-                    console.log("get user success");
-                    return this.fields;
+                    console.log('success');
                 })
                 .catch(error => {
-                    alert("Could not get user")
                     console.log(error);
                 });
             },

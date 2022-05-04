@@ -14,9 +14,9 @@ const store = new Vuex.Store({
         user: {},
         posts: [],
         post: {},
-        success: false,
-        errors: {},
         user_ids: [],
+        search_user: null,
+        errors:{},
     },
     //commit
     mutations: {
@@ -44,8 +44,20 @@ const store = new Vuex.Store({
             state.count_comment = new_value;
         },
 
-        get_users_mutation(state,new_value){
+        errors_mutation(state,new_errors) {
+            state.errors = new_errors;
+        },
+
+        get_users_mutation(state,new_value) {
             state.users = new_value;
+        },
+
+        get_user_mutation(state,new_value) {
+            state.user = new_value;
+        },
+
+        set_search_user_mutation(state,new_value) {
+            state.search_user = new_value;
         },
 
         create_new_user_mutation(state,new_user) {
@@ -54,6 +66,14 @@ const store = new Vuex.Store({
 
         delete_user_mutation(state,id) { 
             state.users = state.users.filter((todo) => todo.id !== id)
+        },
+
+        set_selected_user_ids_mutation(state,id) {
+            state.user_ids = id;
+        },
+
+        delete_multiple_user_mutation(state,ids) {
+            state.user_ids;
         },
 
         get_posts_mutation(state,new_value){
@@ -81,11 +101,7 @@ const store = new Vuex.Store({
         count_user({ commit }) {
             axios.get('/api/user/count').then(response => {
                 commit('count_user_mutation', response.data);
-            }).catch(error => {
-                if(error.response.status == 422) {
-                    commit('errors_mutation',error.response.data.errors)
-                }
-            });
+            }).catch();
         },
 
         count_post({ commit }) {
@@ -120,7 +136,9 @@ const store = new Vuex.Store({
             axios.post('/admin/user/store',user)
             .then( response => {
                 commit('create_new_user_mutation',user);
-            }).catch();
+            }).catch(error => {
+                console.log(error)
+            });
         },
 
         delete_user({ commit }, id) {
@@ -128,6 +146,12 @@ const store = new Vuex.Store({
             commit('delete_user_mutation', id);
         },
 
+        delete_multiple_user({ commit}, ids) {
+            axios.post('/admin/user/mutiple_delete', ids);
+            commit('delete_multiple_user_mutation', ids);
+        },
+
+        //post
         get_posts({ commit }) {
             axios.get('/api/post')
             .then( response => {
@@ -148,6 +172,25 @@ const store = new Vuex.Store({
             return state.counter*state.counter;
         },
 
+        user_ids_length(state) {
+            return state.user_ids.length;
+        },
+
+        get_user: (state) => (id) => {
+            return state.users.find( user => user.id === id);
+        },
+
+        search_user(state) {
+            if (state.search_user) {
+                return state.users
+                    .filter(user => {
+                        return state.search_user.toLowerCase().split(" ").every( v => user.email.toLowerCase().includes(v))
+                            ||state.search_user.toLowerCase().split(" ").every( v => user.full_name.toLowerCase().includes(v));
+                    });
+            } else {
+                return state.users;
+            }
+        },
     }
 });
 export default store;

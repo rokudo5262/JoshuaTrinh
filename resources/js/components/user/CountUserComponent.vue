@@ -7,10 +7,6 @@
 
 <script>
     export default {
-        mounted() {
-            console.log('Count User Component mounted.')
-            
-        },
         created() {
             this.$store.dispatch('count_user')
         },

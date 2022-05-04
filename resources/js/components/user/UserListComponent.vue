@@ -7,11 +7,12 @@
             <div class="card-body">
                     <form @submit.prevent="delete_multiple_user">
                         <a type="button" class="btn btn-primary mb-3" href="./user/create">Create New User</a>
-                        <button type="submit" class="btn btn-primary mb-3" :disabled="this.ids.length < 1">Delete Multiple Users</button>
+                        <button type="submit" class="btn btn-primary mb-3" 
+                        :disabled="$store.getters.user_ids_length < 1">Delete Multiple Users</button>
                     </form>
                 <div class="alert alert-success" v-if="success.delete_multiple_user">Delete Multiple Users Successfully</div>
                 <div class="alert alert-success" v-if="success.delete_user">Delete User Successfully</div>
-                    <input v-model="searchQuery">
+                    <input v-model="search_user">
                     <table class="table">
                         <thead>
                             <td></td>
@@ -22,9 +23,9 @@
                             <td>Action</td>
                         </thead>
                         <tbody>
-                            <tr v-for = "user in $store.state.users" :key="user.id">      
+                            <tr v-for = "user in $store.getters.search_user" :key="user.id">      
                                 <td>
-                                    <input type="checkbox" v-model="ids" :value="user.id">
+                                    <input type="checkbox" v-model="selected_user_ids" :value="user.id">
                                 </td>
                                 <td>{{ user.id }}</td>
                                 <td>{{ user.full_name }}</td>
@@ -47,56 +48,61 @@
 
 <script>
     export default {
-        mounted() {
-            console.log('User Component mounted.')
-        },
+
         data: function() {
             return {
-                searchQuery: null,
-                ids: [],
-                users: [],
-                success:{
+                success: {
                     delete_multiple_user: false,
                     delete_user: false,
                 },
-                errors: {},
             }
         },
+
         created() {
             this.$store.dispatch('get_users');
         },
+
         computed: {
-            search_user() {
-                if (this.searchQuery) {
-                    return  this.users
-                        .filter(user => {
-                            return this.searchQuery.toLowerCase().split(" ").every( v => user.email.toLowerCase().includes(v))
-                                ||this.searchQuery.toLowerCase().split(" ").every( v => user.full_name.toLowerCase().includes(v));
-                        });
-                } else {
-                    return this.users;
+            search_user: {
+                get: function() {
+                    return this.$store.state.search_user;
+                },
+
+                set: function(value) {
+                    this.$store.commit('set_search_user_mutation', value);
                 }
-            }
+            },
+
+            selected_user_ids: {
+                get: function() {
+                    return this.$store.state.user_ids;
+                },
+
+                set: function(value) {
+                    this.$store.commit('set_selected_user_ids_mutation', value);
+                }
+            },
         },
+
         methods: {
             delete_multiple_user() {
                 if(confirm("Do you really want to delete multiple users ?")) {
-                    axios.post('user/mutiple_delete',this.ids)
+                    this.$store.dispatch('delete_multiple_user',this.selected_user_ids)
                     .then( response => {
-                        this.get_users();
-                        this.ids = [];
+                        this.$store.dispatch('get_users');
                         this.success.delete_multiple_user = true;
                         this.success.delete_user = false;
-                        this.errors = {};
                     }).catch( error => {
-                        alert("Could not delete multiple users");
+                        alert(error)
                     })
                 }
             },
+
             delete_user(id) {
                 if(confirm("Do you really want to delete this user ?")) {
                     this.$store.dispatch('delete_user',id)
                     .then( response => {
+                        this.success.delete_multiple_user = false;
                         this.success.delete_user = true;
                     })
                     .catch(error => {

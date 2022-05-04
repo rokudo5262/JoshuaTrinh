@@ -61,7 +61,6 @@
         },
         data: function() {
             return {
-                postid:'',
                 fields:{},
                 success: {
                     update: false,
