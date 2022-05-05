@@ -7,7 +7,13 @@
                 <h2>Setting</h2>
             </div>
             <div class="card-body">
-                <h1>W.I.P</h1>
+                <ul>
+                @foreach ($posts as $post)
+                <li>{{ $post->title }}</li>
+                <li>{{ $post }}</li>
+                <hr>
+                @endforeach
+                </ul>
             </div>
             <div class="card-footer">
                 <a type="button" href="/admin">dashboard</a>

@@ -53,7 +53,7 @@ class UserController extends Controller {
     }
 
     public function count_user() {
-        $users =  User::where('is_deleted','=',0)->get();
+        $users = User::where('is_deleted','=',0)->get();
         return $users->count();
     }
 }

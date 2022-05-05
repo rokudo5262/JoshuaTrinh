@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\SendEmail;
 use App\Models\User;
+use App\Models\Post;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\ChangePasswordRequest;
 use Illuminate\Http\Request;
@@ -119,7 +120,11 @@ class AdminController extends Controller {
     }
 
     public function setting() {
-        return view('setting');
+        $posts = Post::withAuthor()->get();
+        return view('setting',[
+            'posts' => $posts
+            ]
+        );
     }
 
 }

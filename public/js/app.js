@@ -5972,6 +5972,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -32006,9 +32038,108 @@ var render = function () {
             0
           ),
         ]),
+        _vm._v(" "),
+        _c("hr"),
+        _vm._v(" "),
+        _c("table", { staticClass: "table" }, [
+          _vm._m(2),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.$store.state.posts, function (post) {
+              return _c("tr", { key: post.id }, [
+                _c("td", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.ids,
+                        expression: "ids",
+                      },
+                    ],
+                    attrs: { type: "checkbox" },
+                    domProps: {
+                      value: post.id,
+                      checked: Array.isArray(_vm.ids)
+                        ? _vm._i(_vm.ids, post.id) > -1
+                        : _vm.ids,
+                    },
+                    on: {
+                      change: function ($event) {
+                        var $$a = _vm.ids,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = post.id,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 && (_vm.ids = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.ids = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
+                        } else {
+                          _vm.ids = $$c
+                        }
+                      },
+                    },
+                  }),
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(post.id))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(post.title))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(post.slug))]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("a", { attrs: { href: "./user/show/" + post.user.id } }, [
+                    _vm._v(_vm._s(post.user.full_name)),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(post.comment_count))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(post.post_status))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(post.created_at))]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-sm btn-success",
+                      attrs: { type: "button", href: "./post/edit/" + post.id },
+                    },
+                    [_vm._v("Edit")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-sm btn-danger",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.delete_post(post.id)
+                        },
+                      },
+                    },
+                    [_vm._v("Delete")]
+                  ),
+                ]),
+              ])
+            }),
+            0
+          ),
+        ]),
       ]),
       _vm._v(" "),
-      _vm._m(2),
+      _vm._m(3),
     ]),
   ])
 }
@@ -32019,6 +32150,30 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("h2", [_vm._v("Post List")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("td"),
+      _vm._v(" "),
+      _c("td", [_vm._v("Id")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Title")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Slug")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Author")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Total Comment")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Post Status")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Created At")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Action")]),
     ])
   },
   function () {
