@@ -61,8 +61,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function post() {
-        return $this->hasMany('App\Models\Post');
+    public function posts() {
+        return $this->hasMany(Post::class,'user_id');
+    }
+    public function first_post() {
+        return $this->belongsTo(Post::class);   
+    }
+
+    public function scopeWithFirstPost($query) {
+        $query->AddSelect(['first_post_id'=>Post::select('id')
+        ->whereColumn('id','posts.user_id')
+        ->orderBy('created_at','asc')
+        ->take(1)
+        ])->with('first_post');
     }
 
     public function comment() {

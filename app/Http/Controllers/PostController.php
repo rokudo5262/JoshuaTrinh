@@ -19,7 +19,7 @@ class PostController extends Controller {
     }
 
     public function index() {
-        $posts = Post::where('post_status','!=','1')->with('user')->withCount('comment')->get();
+        $posts = Post::where('post_status','!=','1')->WithAuthor()->withCount('comment')->get();
         return view('post.view_post',[
             'posts' => $posts,
         ]);

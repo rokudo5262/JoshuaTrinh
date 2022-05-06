@@ -13,6 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 class Post extends Model {
     use HasApiTokens, HasFactory, Notifiable;
     protected $fillable = [
+        'id',
         'title',
         'content',
         'slug',
@@ -40,9 +41,9 @@ class Post extends Model {
 
 
     public function scopeWithAuthor($query) {
-        $query->addSelect(['author' => User::select('id')
+        $query->addSelect(['author_id' => User::select('id')
         ->whereColumn('id','posts.user_id')])
-        ->with('user');
+        ->with('author');
     }
     
     public function comment() {

@@ -120,11 +120,16 @@ class AdminController extends Controller {
     }
 
     public function setting() {
-        $posts = Post::withAuthor()->get();
-        return view('setting',[
-            'posts' => $posts
-            ]
-        );
+        //n+1 Query
+        // $users = User::get();
+
+        // Eager Load
+        // $users = User::with('first_post')->get();
+
+        // Dynamic Relationship
+        $users = User::WithFirstPost()->get();
+        $posts = Post::WithCount('comment')->get();
+        return view('setting',compact('users','posts'));
     }
 
 }
