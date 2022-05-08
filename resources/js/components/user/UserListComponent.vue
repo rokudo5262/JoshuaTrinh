@@ -19,6 +19,9 @@
                             <td>ID</td>
                             <td>Full Name</td>
                             <td>Email</td>
+                            <td>First Post</td>
+                            <td>Post Count</td>
+                            <td>Email</td>
                             <td>Created At</td>
                             <td>Action</td>
                         </thead>
@@ -30,6 +33,10 @@
                                 <td>{{ user.id }}</td>
                                 <td>{{ user.full_name }}</td>
                                 <td>{{ user.email }}</td>
+                                <td>
+                                    <a :href="'/admin/post/show/'+user.first_post.id">{{ user.first_post.title }}</a>
+                                </td>
+                                <td>{{ user.posts_count }}</td>
                                 <td>{{ user.created_at }}</td>
                                 <td>
                                     <a class="btn btn-sm btn-success" type="button" :href="'./user/edit/' + user.id">Edit</a>

@@ -5972,38 +5972,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -6504,6 +6472,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -6715,10 +6690,10 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
       state.count_user += new_value;
     },
     count_post_mutation: function count_post_mutation(state, new_value) {
-      state.count_post = new_value;
+      state.count_post += new_value;
     },
     count_comment_mutation: function count_comment_mutation(state, new_value) {
-      state.count_comment = new_value;
+      state.count_comment += new_value;
     },
     errors_mutation: function errors_mutation(state, new_errors) {
       state.errors = new_errors;
@@ -6773,7 +6748,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
       var commit = _ref4.commit;
       axios.get('/api/user/count').then(function (response) {
         commit('count_user_mutation', response.data);
-      })["catch"]();
+      })["catch"](function (error) {
+        console.log('could not get count user');
+      });
     },
     count_post: function count_post(_ref5) {
       var commit = _ref5.commit;
@@ -31997,107 +31974,8 @@ var render = function () {
                 _c("td", [_vm._v(_vm._s(post.slug))]),
                 _vm._v(" "),
                 _c("td", [
-                  _c("a", { attrs: { href: "./user/show/" + post.user.id } }, [
-                    _vm._v(_vm._s(post.user.full_name)),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(post.comment_count))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(post.post_status))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(post.created_at))]),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-sm btn-success",
-                      attrs: { type: "button", href: "./post/edit/" + post.id },
-                    },
-                    [_vm._v("Edit")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-sm btn-danger",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function ($event) {
-                          $event.preventDefault()
-                          return _vm.delete_post(post.id)
-                        },
-                      },
-                    },
-                    [_vm._v("Delete")]
-                  ),
-                ]),
-              ])
-            }),
-            0
-          ),
-        ]),
-        _vm._v(" "),
-        _c("hr"),
-        _vm._v(" "),
-        _c("table", { staticClass: "table" }, [
-          _vm._m(2),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.$store.state.posts, function (post) {
-              return _c("tr", { key: post.id }, [
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.ids,
-                        expression: "ids",
-                      },
-                    ],
-                    attrs: { type: "checkbox" },
-                    domProps: {
-                      value: post.id,
-                      checked: Array.isArray(_vm.ids)
-                        ? _vm._i(_vm.ids, post.id) > -1
-                        : _vm.ids,
-                    },
-                    on: {
-                      change: function ($event) {
-                        var $$a = _vm.ids,
-                          $$el = $event.target,
-                          $$c = $$el.checked ? true : false
-                        if (Array.isArray($$a)) {
-                          var $$v = post.id,
-                            $$i = _vm._i($$a, $$v)
-                          if ($$el.checked) {
-                            $$i < 0 && (_vm.ids = $$a.concat([$$v]))
-                          } else {
-                            $$i > -1 &&
-                              (_vm.ids = $$a
-                                .slice(0, $$i)
-                                .concat($$a.slice($$i + 1)))
-                          }
-                        } else {
-                          _vm.ids = $$c
-                        }
-                      },
-                    },
-                  }),
-                ]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(post.id))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(post.title))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(post.slug))]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("a", { attrs: { href: "./user/show/" + post.user.id } }, [
-                    _vm._v(_vm._s(post.user.full_name)),
+                  _c("a", { attrs: { href: "./user/show/" + post.user_id } }, [
+                    _vm._v(_vm._s(post.author)),
                   ]),
                 ]),
                 _vm._v(" "),
@@ -32139,7 +32017,7 @@ var render = function () {
         ]),
       ]),
       _vm._v(" "),
-      _vm._m(3),
+      _vm._m(2),
     ]),
   ])
 }
@@ -32150,30 +32028,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("h2", [_vm._v("Post List")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("td"),
-      _vm._v(" "),
-      _c("td", [_vm._v("Id")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Title")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Slug")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Author")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Total Comment")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Post Status")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Created At")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Action")]),
     ])
   },
   function () {
@@ -33292,6 +33146,18 @@ var render = function () {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(user.email))]),
                 _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "a",
+                    {
+                      attrs: { href: "/admin/post/show/" + user.first_post.id },
+                    },
+                    [_vm._v(_vm._s(user.first_post.title))]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(user.posts_count))]),
+                _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(user.created_at))]),
                 _vm._v(" "),
                 _c("td", [
@@ -33349,6 +33215,12 @@ var staticRenderFns = [
       _c("td", [_vm._v("ID")]),
       _vm._v(" "),
       _c("td", [_vm._v("Full Name")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Email")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("First Post")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Post Count")]),
       _vm._v(" "),
       _c("td", [_vm._v("Email")]),
       _vm._v(" "),

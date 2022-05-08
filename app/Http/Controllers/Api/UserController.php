@@ -10,7 +10,7 @@ use App\Http\Requests\CreateUserRequest;
 
 class UserController extends Controller {
     public function index() {
-        return User::where('is_deleted',0)->get();
+        return User::where('is_deleted',0)->withFirstPost()->withCount('posts')->get();
     }
 
     public function store(CreateUserRequest $request) {

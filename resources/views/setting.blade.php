@@ -8,19 +8,12 @@
             </div>
             <div class="card-body">
                 <ul>
-                @foreach ($users as $user)
-                <li>{{ $user->full_name }}</li>
-                @if(is_object($user->first_post))
-                <li>{{ $user->first_post->title }}</li>
-                @else
-                <li>This User Don't Post Anything Yet</li>
-                @endif
-                <hr>
-                @endforeach
-                </ul>
                 @foreach ($posts as $post)
                 <li>{{ $post->title }}</li>
-                <li>{{ $post->comment_count }}</li>
+                {{-- <li>{{ $post->author }}</li> --}}
+                <li>{{ $post->user->full_name }}</li>
+                {{-- <li>{{ $post->comment_count }}</li> --}}
+                <li>{{ $post->comment->count() }}</li>
                 <hr>
                 @endforeach
                 </ul>

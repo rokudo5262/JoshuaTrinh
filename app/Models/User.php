@@ -70,7 +70,7 @@ class User extends Authenticatable
 
     public function scopeWithFirstPost($query) {
         $query->AddSelect(['first_post_id'=>Post::select('id')
-        ->whereColumn('id','posts.user_id')
+        ->whereColumn('user_id','users.id')
         ->orderBy('created_at','asc')
         ->take(1)
         ])->with('first_post');

@@ -37,11 +37,11 @@ const store = new Vuex.Store({
         },
 
         count_post_mutation(state,new_value) {
-            state.count_post = new_value;
+            state.count_post += new_value;
         },
 
         count_comment_mutation(state,new_value) {
-            state.count_comment = new_value;
+            state.count_comment += new_value;
         },
 
         errors_mutation(state,new_errors) {
@@ -99,9 +99,12 @@ const store = new Vuex.Store({
         },
 
         count_user({ commit }) {
-            axios.get('/api/user/count').then(response => {
+            axios.get('/api/user/count')
+            .then(response => {
                 commit('count_user_mutation', response.data);
-            }).catch();
+            }).catch(error => {
+                console.log('could not get count user');
+            });
         },
 
         count_post({ commit }) {

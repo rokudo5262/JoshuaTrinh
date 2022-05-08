@@ -18,10 +18,6 @@ use App\Http\Controllers\Api\CommentController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::post('user/delete/{id}',[UserController::class, 'delete'])->name('user.delete');
 Route::get('user/count',[UserController::class, 'count_user'])->name('user.count');
 Route::apiResource('user', 'App\Http\Controllers\Api\UserController');

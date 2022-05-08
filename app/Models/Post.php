@@ -33,17 +33,12 @@ class Post extends Model {
     const Trash = 4;
     
     public function user() {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class,'user_id');
     }
-    public function author() {
-        return $this->belongsTo('App\Models\User');
-    }
-
 
     public function scopeWithAuthor($query) {
-        $query->addSelect(['author_id' => User::select('id')
-        ->whereColumn('id','posts.user_id')])
-        ->with('author');
+        $query->addSelect(['author' => User::select(User::raw("CONCAT(first_name,' ',last_name) as full_name"))
+        ->whereColumn('id','posts.user_id')]);
     }
     
     public function comment() {

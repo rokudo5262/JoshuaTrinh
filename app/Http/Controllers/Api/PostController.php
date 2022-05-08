@@ -8,7 +8,7 @@ use App\Models\Post;
 
 class PostController extends Controller {
     public function index() {
-        return Post::with('user')->withCount('comment')->where('post_status','=!','4')->get();
+        return Post::withAuthor()->withCount('comment')->where('post_status','=!','4')->get();
     }
 
     public function store(Request $request) {
