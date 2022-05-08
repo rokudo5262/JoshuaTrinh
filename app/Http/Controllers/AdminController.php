@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\SendEmail;
 use App\Models\User;
+use App\Models\Post;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\ChangePasswordRequest;
 use Illuminate\Http\Request;
@@ -119,7 +120,16 @@ class AdminController extends Controller {
     }
 
     public function setting() {
-        return view('setting');
+        //n+1 Query
+        // $users = User::get();
+
+        // Eager Load
+        // $users = User::with('first_post')->get();
+
+        // Dynamic Relationship
+        $users = User::WithFirstPost()->get();
+        $posts = Post::WithCount('comment')->get();
+        return view('setting',compact('users','posts'));
     }
 
 }

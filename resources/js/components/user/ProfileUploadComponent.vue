@@ -6,9 +6,6 @@
 <script>
     export default {
         props:['userid'],
-        mounted() {
-            console.log('Profile Upload Component mounted.');
-        },
         data: function() {
             return {
                 profile_picture: null,

@@ -24,7 +24,7 @@
                     <td>Action</td>
                 </thead>
                 <tbody>
-                    <tr v-for = "post in posts" :key="post.id" >
+                    <tr v-for = "post in $store.state.posts" :key="post.id" >
                         <td><input type="checkbox"  v-model="ids" :value="post.id"></td>
                         <td>{{ post.id }}</td>
                         <td>{{ post.title }}</td>
@@ -37,7 +37,39 @@
                         <td>{{ post.created_at }}</td>
                         <td>
                             <a type="button" class="btn btn-sm btn-success" :href="'./post/edit/' + post.id">Edit</a>
-                            <button type="button" class="btn btn-sm btn-danger" @click.prevent="delete_post(post)">Delete</button>
+                            <button type="button" class="btn btn-sm btn-danger" @click.prevent="delete_post(post.id)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr>  
+            <table class="table">
+                <thead>
+                    <td></td>
+                    <td>Id</td>
+                    <td>Title</td>
+                    <td>Slug</td>
+                    <td>Author</td>
+                    <td>Total Comment</td>
+                    <td>Post Status</td>
+                    <td>Created At</td>
+                    <td>Action</td>
+                </thead>
+                <tbody>
+                    <tr v-for = "post in $store.state.posts" :key="post.id" >
+                        <td><input type="checkbox"  v-model="ids" :value="post.id"></td>
+                        <td>{{ post.id }}</td>
+                        <td>{{ post.title }}</td>
+                        <td>{{ post.slug }}</td>
+                        <td>
+                            <a :href="'./user/show/' + post.user.id">{{ post.user.full_name}}</a>
+                        </td>
+                        <td>{{ post.comment_count }}</td>
+                        <td>{{ post.post_status }}</td>
+                        <td>{{ post.created_at }}</td>
+                        <td>
+                            <a type="button" class="btn btn-sm btn-success" :href="'./post/edit/' + post.id">Edit</a>
+                            <button type="button" class="btn btn-sm btn-danger" @click.prevent="delete_post(post.id)">Delete</button>
                         </td>
                     </tr>
                 </tbody>
@@ -67,18 +99,9 @@
             console.log('Post Component mounted.')
         },
         created() {
-            this.get_posts();
+            this.$store.dispatch('get_posts');
         },
         methods: {
-            get_posts() {
-                axios.get('/api/post')
-                .then( response => {
-                    this.posts = response.data;
-                })
-                .catch(error => {
-                    alert("Could not load posts list");
-                });
-            },
             delete_multiple_post() {
                 if(confirm("Do you really want to delete multiple posts ?")) {
                     axios.post('post/mutiple_delete',this.ids)
@@ -93,14 +116,11 @@
                     })
                 }
             },
-            delete_post(post) {
+            delete_post(id) {
                 if(confirm("Do you really want to delete this post ?")) {
-                    axios.get('/api/post/delete' + post.id)
+                    this.$store.dispatch('delete_post',id)
                     .then( response => {
-                        const idx = this.posts.indexOf(post);
-                        this.posts.splice(idx, 1);
                         this.success.delete_post = true;
-                        this.success.delete_multiple_post = false;
                     })
                     .catch(error => {
                         alert("Could not delete this post");

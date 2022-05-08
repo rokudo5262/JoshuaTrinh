@@ -5561,9 +5561,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mounted: function mounted() {
-    console.log('Login Component mounted.');
-  },
   data: function data() {
     return {
       csrf: document.head.querySelector('meta[name="csrf-token"]').content
@@ -5975,6 +5972,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5991,45 +6020,31 @@ __webpack_require__.r(__webpack_exports__);
     console.log('Post Component mounted.');
   },
   created: function created() {
-    this.get_posts();
+    this.$store.dispatch('get_posts');
   },
   methods: {
-    get_posts: function get_posts() {
-      var _this = this;
-
-      axios.get('/api/post').then(function (response) {
-        _this.posts = response.data;
-      })["catch"](function (error) {
-        alert("Could not load posts list");
-      });
-    },
     delete_multiple_post: function delete_multiple_post() {
-      var _this2 = this;
+      var _this = this;
 
       if (confirm("Do you really want to delete multiple posts ?")) {
         axios.post('post/mutiple_delete', this.ids).then(function (response) {
-          _this2.get_posts();
+          _this.get_posts();
 
-          _this2.ids = [];
-          _this2.success.delete_multiple_post = true;
-          _this2.success.delete_post = false;
-          _this2.errors = {};
+          _this.ids = [];
+          _this.success.delete_multiple_post = true;
+          _this.success.delete_post = false;
+          _this.errors = {};
         })["catch"](function (error) {
           alert("Could not delete multiple posts");
         });
       }
     },
-    delete_post: function delete_post(post) {
-      var _this3 = this;
+    delete_post: function delete_post(id) {
+      var _this2 = this;
 
       if (confirm("Do you really want to delete this post ?")) {
-        axios.get('/api/post/delete' + post.id).then(function (response) {
-          var idx = _this3.posts.indexOf(post);
-
-          _this3.posts.splice(idx, 1);
-
-          _this3.success.delete_post = true;
-          _this3.success.delete_multiple_post = false;
+        this.$store.dispatch('delete_post', id).then(function (response) {
+          _this2.success.delete_post = true;
         })["catch"](function (error) {
           alert("Could not delete this post");
         });
@@ -6113,7 +6128,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      postid: '',
       fields: {},
       success: {
         update: false,
@@ -6177,8 +6191,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mounted: function mounted() {
-    console.log('Count User Component mounted.');
+  created: function created() {
     this.$store.dispatch('count_user');
   }
 });
@@ -6248,31 +6261,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mounted: function mounted() {
-    console.log('Create User Component mounted.');
-  },
   data: function data() {
     return {
-      fields: {},
-      success: false,
-      errors: {}
+      success: false
     };
+  },
+  computed: {
+    user: {
+      get: function get(value) {
+        return this.$store.state.user;
+      }
+    }
   },
   methods: {
     add_new_user: function add_new_user() {
-      var _this = this;
-
-      axios.post('store', this.fields).then(function (response) {
-        _this.fields = {};
-        _this.success = true;
-        _this.errors = {};
-        console.log('Success');
-      })["catch"](function (error) {
-        if (error.response.status == 422) {
-          _this.errors = error.response.data.errors;
-          console.log('Error');
-        }
-      });
+      this.$store.dispatch('create_new_user', this.$store.state.user);
     }
   }
 });
@@ -6377,12 +6380,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['user'],
   data: function data() {
     return {
-      userid: '',
       fields: {},
       success: {
         update: false,
@@ -6392,11 +6393,12 @@ __webpack_require__.r(__webpack_exports__);
       profile_picture: null
     };
   },
-  mounted: function mounted() {
-    console.log('Update User Component mounted.');
-  },
   created: function created() {
     this.get_user();
+  },
+  computed: {// fields() {
+    //     return this.$store.getters.get_user(this.user_id);
+    // }
   },
   methods: {
     update_user: function update_user() {
@@ -6418,10 +6420,8 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("/api/user/" + this.user.id).then(function (response) {
         _this2.fields = response.data;
-        console.log("get user success");
-        return _this2.fields;
+        console.log('success');
       })["catch"](function (error) {
-        alert("Could not get user");
         console.log(error);
       });
     },
@@ -6503,79 +6503,59 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['user_id'],
-  mounted: function mounted() {
-    console.log('User Component mounted.');
-  },
   data: function data() {
     return {
-      searchQuery: null,
-      ids: [],
-      users: [],
       success: {
         delete_multiple_user: false,
         delete_user: false
-      },
-      errors: {}
+      }
     };
   },
   created: function created() {
-    this.get_users();
+    this.$store.dispatch('get_users');
   },
   computed: {
-    search_user: function search_user() {
-      var _this = this;
-
-      if (this.searchQuery) {
-        return this.users.filter(function (user) {
-          return _this.searchQuery.toLowerCase().split(" ").every(function (v) {
-            return user.email.toLowerCase().includes(v);
-          }) || _this.searchQuery.toLowerCase().split(" ").every(function (v) {
-            return user.full_name.toLowerCase().includes(v);
-          });
-        });
-      } else {
-        return this.users;
+    search_user: {
+      get: function get() {
+        return this.$store.state.search_user;
+      },
+      set: function set(value) {
+        this.$store.commit('set_search_user_mutation', value);
+      }
+    },
+    selected_user_ids: {
+      get: function get() {
+        return this.$store.state.user_ids;
+      },
+      set: function set(value) {
+        this.$store.commit('set_selected_user_ids_mutation', value);
       }
     }
   },
   methods: {
     delete_multiple_user: function delete_multiple_user() {
-      var _this2 = this;
+      var _this = this;
 
       if (confirm("Do you really want to delete multiple users ?")) {
-        axios.post('user/mutiple_delete', this.ids).then(function (response) {
-          _this2.get_users();
+        this.$store.dispatch('delete_multiple_user', this.selected_user_ids).then(function (response) {
+          _this.$store.dispatch('get_users');
 
-          _this2.ids = [];
-          _this2.success.delete_multiple_user = true;
-          _this2.success.delete_user = false;
-          _this2.errors = {};
+          _this.success.delete_multiple_user = true;
+          _this.success.delete_user = false;
         })["catch"](function (error) {
-          alert("Could not delete multiple users");
+          alert(error);
         });
       }
     },
-    get_users: function get_users() {
-      var _this3 = this;
-
-      axios.get('/api/user').then(function (response) {
-        _this3.users = response.data;
-      })["catch"](function (error) {
-        alert("Could not load users list");
-      });
-    },
-    delete_user: function delete_user(user) {
-      var _this4 = this;
+    delete_user: function delete_user(id) {
+      var _this2 = this;
 
       if (confirm("Do you really want to delete this user ?")) {
-        axios.get('/api/user/delete' + user.id).then(function (response) {
-          var idx = _this4.users.indexOf(user);
-
-          _this4.users.splice(idx, 1);
-
-          _this4.success.delete_user = true;
+        this.$store.dispatch('delete_user', id).then(function (response) {
+          _this2.success.delete_multiple_user = false;
+          _this2.success.delete_user = true;
         })["catch"](function (error) {
           alert("Could not delete this user");
         });
@@ -6594,10 +6574,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store */ "./resources/js/store.js");
+/* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./store/store */ "./resources/js/store/store.js");
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]);
 window.axios.defaults.headers.common = {
   'X-Requested-With': 'XMLHttpRequest',
   'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
@@ -6611,8 +6590,6 @@ window.axios.defaults.headers.common = {
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
-
-window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -6651,7 +6628,7 @@ Vue.component('counter-component', (__webpack_require__(/*! ./components/Counter
 
 var app = new Vue({
   el: '#app',
-  store: _store__WEBPACK_IMPORTED_MODULE_1__["default"]
+  store: _store_store__WEBPACK_IMPORTED_MODULE_0__["default"]
 });
 
 /***/ }),
@@ -6692,10 +6669,10 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/store.js":
-/*!*******************************!*\
-  !*** ./resources/js/store.js ***!
-  \*******************************/
+/***/ "./resources/js/store/store.js":
+/*!*************************************!*\
+  !*** ./resources/js/store/store.js ***!
+  \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -6703,21 +6680,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 
-
-vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vue__WEBPACK_IMPORTED_MODULE_1__["default"], (axios__WEBPACK_IMPORTED_MODULE_0___default()));
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
+var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
     counter: 0,
     color_code: 'black',
     count_user: 0,
     count_post: 0,
-    count_comment: 0
+    count_comment: 0,
+    users: [],
+    user: {},
+    posts: [],
+    post: {},
+    user_ids: [],
+    search_user: null,
+    errors: {}
   },
   //commit
   mutations: {
@@ -6730,14 +6711,48 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vue__WEBPACK_IMPORTED_MODULE_1__
     set_color_code: function set_color_code(state, new_color) {
       state.color_code = new_color;
     },
-    count_user: function count_user(state, new_value) {
+    count_user_mutation: function count_user_mutation(state, new_value) {
       state.count_user += new_value;
     },
-    count_post: function count_post(state, new_value) {
+    count_post_mutation: function count_post_mutation(state, new_value) {
       state.count_post = new_value;
     },
-    count_comment: function count_comment(state, new_value) {
+    count_comment_mutation: function count_comment_mutation(state, new_value) {
       state.count_comment = new_value;
+    },
+    errors_mutation: function errors_mutation(state, new_errors) {
+      state.errors = new_errors;
+    },
+    get_users_mutation: function get_users_mutation(state, new_value) {
+      state.users = new_value;
+    },
+    get_user_mutation: function get_user_mutation(state, new_value) {
+      state.user = new_value;
+    },
+    set_search_user_mutation: function set_search_user_mutation(state, new_value) {
+      state.search_user = new_value;
+    },
+    create_new_user_mutation: function create_new_user_mutation(state, new_user) {
+      state.users.push(new_user);
+    },
+    delete_user_mutation: function delete_user_mutation(state, id) {
+      state.users = state.users.filter(function (todo) {
+        return todo.id !== id;
+      });
+    },
+    set_selected_user_ids_mutation: function set_selected_user_ids_mutation(state, id) {
+      state.user_ids = id;
+    },
+    delete_multiple_user_mutation: function delete_multiple_user_mutation(state, ids) {
+      state.user_ids;
+    },
+    get_posts_mutation: function get_posts_mutation(state, new_value) {
+      state.posts = new_value;
+    },
+    delete_post_mutation: function delete_post_mutation(state, id) {
+      state.posts = state.posts.filter(function (todo) {
+        return todo.id !== id;
+      });
     }
   },
   //dispatch
@@ -6756,37 +6771,97 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vue__WEBPACK_IMPORTED_MODULE_1__
     },
     count_user: function count_user(_ref4) {
       var commit = _ref4.commit;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/user/count').then(function (response) {
-        commit('count_user', response.data);
-      }).error(function (error) {
-        console.log('could not get count user');
+      axios.get('/api/user/count').then(function (response) {
+        commit('count_user_mutation', response.data);
+      })["catch"]();
+    },
+    count_post: function count_post(_ref5) {
+      var commit = _ref5.commit;
+      axios.get('/api/post/count').then(function (response) {
+        commit('count_post_mutation', response.data);
+      })["catch"](function (error) {
+        console.log('could not get count post');
       });
     },
-    count_post: function count_post(_ref5) {// axios.get('/api/post/count')
-      // .then(response => {
-      //     commit('count_post',response.data);
-      // }).error(error => {
-      //     console.log('could not get count post');
-      // })
-
-      var commit = _ref5.commit;
-    },
-    count_comment: function count_comment(_ref6) {// axios.get('/api/comment/count')
-      // .then(response => {
-      //     commit('count_comment',response.data);
-      // }).error(error => {
-      //     console.log('could not get count comment');
-      // })
-
+    count_comment: function count_comment(_ref6) {
       var commit = _ref6.commit;
+      axios.get('/api/comment/count').then(function (response) {
+        commit('count_comment_mutation', response.data);
+      })["catch"](function (error) {
+        console.log('could not get count comment');
+      });
+    },
+    get_users: function get_users(_ref7) {
+      var commit = _ref7.commit;
+      axios.get('/api/user').then(function (response) {
+        commit('get_users_mutation', response.data);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    create_new_user: function create_new_user(_ref8, user) {
+      var commit = _ref8.commit;
+      axios.post('/admin/user/store', user).then(function (response) {
+        commit('create_new_user_mutation', user);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    delete_user: function delete_user(_ref9, id) {
+      var commit = _ref9.commit;
+      axios.post('/admin/user/delete/' + id);
+      commit('delete_user_mutation', id);
+    },
+    delete_multiple_user: function delete_multiple_user(_ref10, ids) {
+      var commit = _ref10.commit;
+      axios.post('/admin/user/mutiple_delete', ids);
+      commit('delete_multiple_user_mutation', ids);
+    },
+    //post
+    get_posts: function get_posts(_ref11) {
+      var commit = _ref11.commit;
+      axios.get('/api/post').then(function (response) {
+        commit('get_posts_mutation', response.data);
+      })["catch"](function (error) {
+        alert("Could not load posts list");
+      });
+    },
+    delete_post: function delete_post(_ref12, id) {
+      var commit = _ref12.commit;
+      axios.post('/admin/post/delete/' + id);
+      commit('delete_post_mutation', id);
     }
   },
   getters: {
     counter_squared: function counter_squared(state) {
       return state.counter * state.counter;
+    },
+    user_ids_length: function user_ids_length(state) {
+      return state.user_ids.length;
+    },
+    get_user: function get_user(state) {
+      return function (id) {
+        return state.users.find(function (user) {
+          return user.id === id;
+        });
+      };
+    },
+    search_user: function search_user(state) {
+      if (state.search_user) {
+        return state.users.filter(function (user) {
+          return state.search_user.toLowerCase().split(" ").every(function (v) {
+            return user.email.toLowerCase().includes(v);
+          }) || state.search_user.toLowerCase().split(" ").every(function (v) {
+            return user.full_name.toLowerCase().includes(v);
+          });
+        });
+      } else {
+        return state.users;
+      }
     }
   }
-}));
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
 
 /***/ }),
 
@@ -31872,7 +31947,7 @@ var render = function () {
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(_vm.posts, function (post) {
+            _vm._l(_vm.$store.state.posts, function (post) {
               return _c("tr", { key: post.id }, [
                 _c("td", [
                   _c("input", {
@@ -31951,7 +32026,106 @@ var render = function () {
                       on: {
                         click: function ($event) {
                           $event.preventDefault()
-                          return _vm.delete_post(post)
+                          return _vm.delete_post(post.id)
+                        },
+                      },
+                    },
+                    [_vm._v("Delete")]
+                  ),
+                ]),
+              ])
+            }),
+            0
+          ),
+        ]),
+        _vm._v(" "),
+        _c("hr"),
+        _vm._v(" "),
+        _c("table", { staticClass: "table" }, [
+          _vm._m(2),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.$store.state.posts, function (post) {
+              return _c("tr", { key: post.id }, [
+                _c("td", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.ids,
+                        expression: "ids",
+                      },
+                    ],
+                    attrs: { type: "checkbox" },
+                    domProps: {
+                      value: post.id,
+                      checked: Array.isArray(_vm.ids)
+                        ? _vm._i(_vm.ids, post.id) > -1
+                        : _vm.ids,
+                    },
+                    on: {
+                      change: function ($event) {
+                        var $$a = _vm.ids,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = post.id,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 && (_vm.ids = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.ids = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
+                        } else {
+                          _vm.ids = $$c
+                        }
+                      },
+                    },
+                  }),
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(post.id))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(post.title))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(post.slug))]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("a", { attrs: { href: "./user/show/" + post.user.id } }, [
+                    _vm._v(_vm._s(post.user.full_name)),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(post.comment_count))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(post.post_status))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(post.created_at))]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-sm btn-success",
+                      attrs: { type: "button", href: "./post/edit/" + post.id },
+                    },
+                    [_vm._v("Edit")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-sm btn-danger",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.delete_post(post.id)
                         },
                       },
                     },
@@ -31965,7 +32139,7 @@ var render = function () {
         ]),
       ]),
       _vm._v(" "),
-      _vm._m(2),
+      _vm._m(3),
     ]),
   ])
 }
@@ -31976,6 +32150,30 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("h2", [_vm._v("Post List")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("td"),
+      _vm._v(" "),
+      _c("td", [_vm._v("Id")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Title")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Slug")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Author")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Total Comment")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Post Status")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Created At")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Action")]),
     ])
   },
   function () {
@@ -32349,28 +32547,22 @@ var render = function () {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.fields.first_name,
-                      expression: "fields.first_name",
+                      value: _vm.user.first_name,
+                      expression: "user.first_name",
                     },
                   ],
                   staticClass: "form-control",
                   attrs: { type: "text", name: "first_name" },
-                  domProps: { value: _vm.fields.first_name },
+                  domProps: { value: _vm.user.first_name },
                   on: {
                     input: function ($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.fields, "first_name", $event.target.value)
+                      _vm.$set(_vm.user, "first_name", $event.target.value)
                     },
                   },
                 }),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.first_name
-                  ? _c("div", { staticClass: "alert alert-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first_name[0])),
-                    ])
-                  : _vm._e(),
               ]),
             ]),
             _vm._v(" "),
@@ -32390,28 +32582,22 @@ var render = function () {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.fields.last_name,
-                      expression: "fields.last_name",
+                      value: _vm.user.last_name,
+                      expression: "user.last_name",
                     },
                   ],
                   staticClass: "form-control",
                   attrs: { type: "text", name: "last_name" },
-                  domProps: { value: _vm.fields.last_name },
+                  domProps: { value: _vm.user.last_name },
                   on: {
                     input: function ($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.fields, "last_name", $event.target.value)
+                      _vm.$set(_vm.user, "last_name", $event.target.value)
                     },
                   },
                 }),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.last_name
-                  ? _c("div", { staticClass: "alert alert-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.last_name[0])),
-                    ])
-                  : _vm._e(),
               ]),
             ]),
             _vm._v(" "),
@@ -32431,28 +32617,22 @@ var render = function () {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.fields.email,
-                      expression: "fields.email",
+                      value: _vm.user.email,
+                      expression: "user.email",
                     },
                   ],
                   staticClass: "form-control",
                   attrs: { type: "text", name: "email" },
-                  domProps: { value: _vm.fields.email },
+                  domProps: { value: _vm.user.email },
                   on: {
                     input: function ($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.fields, "email", $event.target.value)
+                      _vm.$set(_vm.user, "email", $event.target.value)
                     },
                   },
                 }),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.email
-                  ? _c("div", { staticClass: "alert alert-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.email[0])),
-                    ])
-                  : _vm._e(),
               ]),
             ]),
             _vm._v(" "),
@@ -32472,28 +32652,22 @@ var render = function () {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.fields.password,
-                      expression: "fields.password",
+                      value: _vm.user.password,
+                      expression: "user.password",
                     },
                   ],
                   staticClass: "form-control",
                   attrs: { type: "password", name: "password" },
-                  domProps: { value: _vm.fields.password },
+                  domProps: { value: _vm.user.password },
                   on: {
                     input: function ($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.fields, "password", $event.target.value)
+                      _vm.$set(_vm.user, "password", $event.target.value)
                     },
                   },
                 }),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.password
-                  ? _c("div", { staticClass: "alert alert-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.password[0])),
-                    ])
-                  : _vm._e(),
               ]),
             ]),
             _vm._v(" "),
@@ -32624,7 +32798,6 @@ var render = function () {
         _c(
           "form",
           {
-            attrs: { enctype: "multipart/form-data" },
             on: {
               submit: function ($event) {
                 $event.preventDefault()
@@ -33022,7 +33195,10 @@ var render = function () {
               "button",
               {
                 staticClass: "btn btn-primary mb-3",
-                attrs: { type: "submit", disabled: this.ids.length < 1 },
+                attrs: {
+                  type: "submit",
+                  disabled: _vm.$store.getters.user_ids_length < 1,
+                },
               },
               [_vm._v("Delete Multiple Users")]
             ),
@@ -33046,17 +33222,17 @@ var render = function () {
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.searchQuery,
-              expression: "searchQuery",
+              value: _vm.search_user,
+              expression: "search_user",
             },
           ],
-          domProps: { value: _vm.searchQuery },
+          domProps: { value: _vm.search_user },
           on: {
             input: function ($event) {
               if ($event.target.composing) {
                 return
               }
-              _vm.searchQuery = $event.target.value
+              _vm.search_user = $event.target.value
             },
           },
         }),
@@ -33066,7 +33242,7 @@ var render = function () {
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(_vm.search_user, function (user) {
+            _vm._l(_vm.$store.getters.search_user, function (user) {
               return _c("tr", { key: user.id }, [
                 _c("td", [
                   _c("input", {
@@ -33074,35 +33250,36 @@ var render = function () {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.ids,
-                        expression: "ids",
+                        value: _vm.selected_user_ids,
+                        expression: "selected_user_ids",
                       },
                     ],
                     attrs: { type: "checkbox" },
                     domProps: {
                       value: user.id,
-                      checked: Array.isArray(_vm.ids)
-                        ? _vm._i(_vm.ids, user.id) > -1
-                        : _vm.ids,
+                      checked: Array.isArray(_vm.selected_user_ids)
+                        ? _vm._i(_vm.selected_user_ids, user.id) > -1
+                        : _vm.selected_user_ids,
                     },
                     on: {
                       change: function ($event) {
-                        var $$a = _vm.ids,
+                        var $$a = _vm.selected_user_ids,
                           $$el = $event.target,
                           $$c = $$el.checked ? true : false
                         if (Array.isArray($$a)) {
                           var $$v = user.id,
                             $$i = _vm._i($$a, $$v)
                           if ($$el.checked) {
-                            $$i < 0 && (_vm.ids = $$a.concat([$$v]))
+                            $$i < 0 &&
+                              (_vm.selected_user_ids = $$a.concat([$$v]))
                           } else {
                             $$i > -1 &&
-                              (_vm.ids = $$a
+                              (_vm.selected_user_ids = $$a
                                 .slice(0, $$i)
                                 .concat($$a.slice($$i + 1)))
                           }
                         } else {
-                          _vm.ids = $$c
+                          _vm.selected_user_ids = $$c
                         }
                       },
                     },
@@ -33124,7 +33301,7 @@ var render = function () {
                       staticClass: "btn btn-sm btn-success",
                       attrs: { type: "button", href: "./user/edit/" + user.id },
                     },
-                    [_vm._v("Update")]
+                    [_vm._v("Edit")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -33135,7 +33312,7 @@ var render = function () {
                       on: {
                         click: function ($event) {
                           $event.preventDefault()
-                          return _vm.delete_user(user)
+                          return _vm.delete_user(user.id)
                         },
                       },
                     },
@@ -46693,18 +46870,6 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
 /******/ 		};
 /******/ 	})();
 /******/ 	

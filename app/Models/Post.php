@@ -13,6 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 class Post extends Model {
     use HasApiTokens, HasFactory, Notifiable;
     protected $fillable = [
+        'id',
         'title',
         'content',
         'slug',
@@ -25,10 +26,6 @@ class Post extends Model {
         'update_at', 
     ];
 
-    protected $appends = [
-        'comment_count',
-    ];
-
     const Published = 0;
     const Draft = 1;
     const Pending = 2;
@@ -38,13 +35,19 @@ class Post extends Model {
     public function user() {
         return $this->belongsTo('App\Models\User');
     }
+    public function author() {
+        return $this->belongsTo('App\Models\User');
+    }
+
+
+    public function scopeWithAuthor($query) {
+        $query->addSelect(['author_id' => User::select('id')
+        ->whereColumn('id','posts.user_id')])
+        ->with('author');
+    }
     
     public function comment() {
         return $this->hasMany('App\Models\Comment');
-    }
-
-    public function getCommentCountAttribute() {
-        return $this->hasMany('App\Models\Comment')->count();
     }
 
     public function getPostStatusAttribute($value){

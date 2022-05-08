@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Requests\CreateUserRequest;
 
 
 class UserController extends Controller {
@@ -12,15 +13,15 @@ class UserController extends Controller {
         return User::where('is_deleted',0)->get();
     }
 
-    public function store(Request $request) {
-        $validated = $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email'=>'required|email|exists:user,email',
-            'password'=>'required|min:9|max:100',
+    public function store(CreateUserRequest $request) {
+        $new_user = User::create([
+            'first_name'    => Str::ucfirst($request->get('first_name')),
+            'last_name'     => Str::ucfirst($request->get('last_name')),
+            'email'         => $request->get('email'),
+            'password'      => Hash::make($request->get('password')),
         ]);
-        return User::create($request->all());
-    }
+        $new_user->assignRole('user');
+        return $new_user;    }
 
     public function show($id) {
         return User::find($id);
@@ -52,7 +53,7 @@ class UserController extends Controller {
     }
 
     public function count_user() {
-        $users =  User::where('is_deleted','=',0)->get();
+        $users = User::where('is_deleted','=',0)->get();
         return $users->count();
     }
 }
