@@ -50,9 +50,18 @@
                 <div class="col-3">
                     <div class="container">
                         <ul class="list-group">
-                            <li class="list-group-item"><a href="{{ config('app.url')}}/admin/user">User</a></li>
-                            <li class="list-group-item"><a href="{{ config('app.url')}}/admin/post">Post</a></li>
-                            <li class="list-group-item"><a href="{{ config('app.url')}}/admin/setting">Setting</a></li>
+                            <li class="list-group-item">
+                                <a href="{{ config('app.url')}}/admin/user">User</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="{{ config('app.url')}}/admin/post">Post</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="{{ config('app.url')}}/admin/task">Task</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="{{ config('app.url')}}/admin/setting">Setting</a>
+                            </li>
                         </ul>
                     </div>
                 </div>

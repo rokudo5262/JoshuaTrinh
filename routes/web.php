@@ -5,6 +5,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\StatusController;
 
 
 /*
@@ -56,6 +58,16 @@ Route::prefix('/admin')->group(function(){
                 Route::post('/undo_delete/{id}',[UserController::class, 'undo_delete'])->name('user.undo_delete');
                 Route::post('/delete/{id}',[UserController::class, 'delete'])->name('user.delete');
                 Route::post('/destroy/{id}',[UserController::class, 'destroy'])->name('user.destroy');
+            });
+            // task route
+            Route::get('/task',[TaskController::class, 'index'])->name('task');
+            Route::prefix('/task')->group( function () {
+                Route::get('/show/{id}',[TaskController::class, 'show'])->name('task.show');
+                Route::post('/store',[TaskController::class, 'store'])->name('task.store');
+                Route::get('/create',[TaskController::class, 'create'])->name('task.create');
+                Route::get('/edit/{id}',[TaskController::class, 'edit'])->name('task.edit');
+                Route::post('/update/{id}',[TaskController::class, 'update'])->name('task.update');
+                Route::post('/destroy/{id}',[TaskController::class, 'destroy'])->name('task.destroy');
             });
             Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
     });

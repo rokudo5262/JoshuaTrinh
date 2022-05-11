@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Jobs\SendEmail;
 use App\Models\User;
 use App\Models\Post;
+use App\Models\Logging;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\ChangePasswordRequest;
 use Illuminate\Http\Request;
@@ -26,6 +28,11 @@ class AdminController extends Controller {
         ]);
         if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
             Log::channel('login')->info($input['email']." at ".$request->getClientIp()." Login Success");
+            Logging::create([
+                'user_id' => auth()->user()->id,
+                'login' => Carbon::now(),
+                'login_ip' => $request->getClientIp(),
+            ]);
             return redirect()->route('dashboard');
         } else {
             Log::channel('login')->info($input['email']." at ".$request->getClientIp()." Login Fail");
@@ -121,8 +128,7 @@ class AdminController extends Controller {
 
     public function setting() {
         //n+1 Query
-        $posts = Post::get();
-        // Eager Load
+        $posts = Post::take(1000)->get();
 
         // Dynamic Relationship Eager Load
         // $posts = Post::withAuthor()->withCount('comment')->get();

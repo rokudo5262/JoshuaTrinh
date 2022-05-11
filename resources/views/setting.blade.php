@@ -10,9 +10,9 @@
                 <ul>
                 @foreach ($posts as $post)
                 <li>{{ $post->title }}</li>
-                {{-- <li>{{ $post->author }}</li> --}}
+                <!-- <li>{{ $post->author }}</li> -->
                 <li>{{ $post->user->full_name }}</li>
-                {{-- <li>{{ $post->comment_count }}</li> --}}
+                <!-- <li>{{ $post->comment_count }}</li> -->
                 <li>{{ $post->comment->count() }}</li>
                 <hr>
                 @endforeach

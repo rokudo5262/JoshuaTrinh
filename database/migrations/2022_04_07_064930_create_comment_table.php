@@ -11,6 +11,8 @@ class CreateCommentTable extends Migration {
             $table->bigInteger('post_id')->unsigned()->index()->comment('comment belong to post');
             $table->bigInteger('user_id')->unsigned()->index()->comment('owner of the comment');
             $table->String('content');
+            $table->foreign('post_id')->references('id')->on('posts');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

@@ -4,6 +4,11 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use App\Models\Post;
+use App\Models\Task;
+use App\Models\Status;
+use App\Models\Logging;
+use App\Models\Comment;
+
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -61,9 +66,26 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function loggings() {
+        return $this->hasMany(Logging::class,'user_id');
+    }
+
     public function posts() {
         return $this->hasMany(Post::class,'user_id');
     }
+
+    public function comment() {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function tasks() {
+        return $this->hasMany(Task::class);
+    }
+
+    public function statuses() {
+        return $this->hasMany(Status::class)->orderBy('order');
+    }
+
     public function first_post() {
         return $this->belongsTo(Post::class);   
     }
@@ -76,9 +98,6 @@ class User extends Authenticatable
         ])->with('first_post');
     }
 
-    public function comment() {
-        return $this->hasMany('App\Models\Comment');
-    }
 
     public function getFullNameAttribute(){
         return $this->first_name.' '.$this->last_name;
@@ -103,6 +122,39 @@ class User extends Authenticatable
 
     public function getLastNameAttribute($value) {
         return ucfirst($value);
+    }
+
+    protected static function booted() {
+        static::created(function ($user) {
+            // Create default statuses
+            $user->statuses()->createMany([
+                [
+                    'title' => 'Backlog',
+                    'slug' => 'backlog',
+                    'order' => 1
+                ],
+                [
+                    'title' => 'Up Next',
+                    'slug' => 'up-next',
+                    'order' => 2
+                ],
+                [
+                    'title' => 'In Progress',
+                    'slug' => 'in-progress',
+                    'order' => 3
+                ],
+                [
+                    'title' => 'Testing',
+                    'slug' => 'testing',
+                    'order' => 4
+                ],
+                [
+                    'title' => 'Done',
+                    'slug' => 'done',
+                    'order' => 5
+                ]
+            ]);
+        });
     }
 }
 ?>

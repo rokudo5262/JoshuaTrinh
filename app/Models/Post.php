@@ -38,7 +38,7 @@ class Post extends Model {
 
     public function scopeWithAuthor($query) {
         $query->addSelect(['author' => User::select(User::raw("CONCAT(first_name,' ',last_name) as full_name"))
-        ->whereColumn('id','posts.user_id')]);
+        ->whereColumn('id','posts.user_id')])->with('user');
     }
     
     public function comment() {
