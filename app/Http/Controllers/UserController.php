@@ -24,10 +24,7 @@ class UserController extends Controller {
         $users = User::where('is_deleted',0)->get();
         return $users;
     }
-    public function count_users() {
-        $count_users = User::where('is_deleted',0)->count();
-        return $count_users;
-    }
+    
     public function index(Request $request) {
         $users = User::where('is_deleted',0);
         if ($request->input('search')) {
@@ -62,7 +59,7 @@ class UserController extends Controller {
 
     public function show($id) {
         $user = User::findOrFail($id);
-        return $user;
+        return view("user.detail_user",compact('user'));;
     }
 
     public function edit($id) {

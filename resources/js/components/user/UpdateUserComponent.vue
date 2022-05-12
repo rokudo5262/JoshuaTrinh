@@ -34,6 +34,7 @@
                         <div class="col-md-6">
                             <input class="form-control" type="text" name="first_name"  v-model="fields.first_name"/>
                             <div class="alert alert-danger" v-if="errors && errors.first_name">{{errors.first_name[0]}}</div>
+                            {{ $store.state.user }} fdfdf
                         </div>
                     </div>
                     <div class="row mb-3">

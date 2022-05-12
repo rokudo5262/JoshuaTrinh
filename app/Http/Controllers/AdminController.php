@@ -17,7 +17,12 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller {
     public function login() {
-        return view('login');
+        if(auth()->check){
+            return view('dashboard');
+        } else {
+            return view('login');
+        }
+        
     }
 
     public function handle_login(Request $request) {

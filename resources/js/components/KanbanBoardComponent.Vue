@@ -1,20 +1,20 @@
 <template>
-  <div class="">
+  <div class="mb-3">
     <!-- Columns (Statuses) -->
     <div
       v-for="status in statuses" :key="status.slug" class="">
-      <div class="">
-        <div class="">
-          <h4 class="">
+      <div class="mb-3">
+        <div class="mb-3">
+          <h4 class="mb-3">
             {{ status.title }}
           </h4>
-          <button class="">Add Task</button>
+          <button class="btn-primary">Add Task</button>
         </div>
-        <div class="">
+        <div class="mb-3">
 
           <!-- Tasks -->
           <div v-for="task in status.tasks" :key="task.id" class="" >
-            <span class="">
+            <span class="mb-3">
               {{ task.title }}
             </span>
             <p class="">{{ task.description }} </p>
@@ -23,8 +23,8 @@
 
           <!-- No Tasks -->
           <div v-show="!status.tasks.length" class="">
-            <span class="">No tasks yet</span>
-            <button class=""> Add one</button>
+            <span class="mb-3">No tasks yet</span>
+            <button class="btn-primary"> Add one</button>
           </div>
           <!-- ./No Tasks -->
         </div>

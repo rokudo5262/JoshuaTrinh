@@ -46,7 +46,7 @@ class PostController extends Controller {
     }
 
     public function count_post() {
-        $posts = Post::where('post_status','4')->get();
-        return $posts->count();
+        $post_count = Post::count();
+        return $post_count;
     }
 }

@@ -41,28 +41,28 @@
             </div>
             <hr class="mb-3">
             <div class="row">
-                    <div class="col-3 mb-3">
-                        <div class="card">
-                            <img src="/image/image.jfif" alt="post">
-                            <div class="container">
-                                <h3>
-                                    <a href=""></a>
-                                </h3>
-                                <p></p>
-                            </div>
+                <div class="col-3 mb-3">
+                    <div class="card">
+                        <img src="/image/image.jfif" alt="post">
+                        <div class="container">
+                            <h3>
+                                <a href=""></a>
+                            </h3>
+                            <p></p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="card-footer">
-                <a type="button" href="/admin/user">BACK</a>
-            </div>
         </div>
+        <div class="card-footer">
+            <a type="button" href="/admin/user">BACK</a>
+        </div>
+    </div>
 </template>
 
 <script>
     export default {
-        props:['user','posts'],
+        props:['user'],
         mounted() {
             console.log('Detail User Component mounted.')
         },
