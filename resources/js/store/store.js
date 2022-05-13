@@ -21,11 +21,11 @@ const store = new Vuex.Store({
     //commit
     mutations: {
         increase_counter (state,number) {
-            state.counter+= number;
+            state.counter += number;
         },
 
         decrease_counter (state,number) {
-            state.counter-= number;
+            state.counter -= number;
         },
 
         set_color_code(state,new_color){
@@ -37,11 +37,11 @@ const store = new Vuex.Store({
         },
 
         count_post_mutation(state,new_value) {
-            state.count_post = new_value;
+            state.count_post += new_value;
         },
 
         count_comment_mutation(state,new_value) {
-            state.count_comment = new_value;
+            state.count_comment += new_value;
         },
 
         errors_mutation(state,new_errors) {
@@ -99,9 +99,12 @@ const store = new Vuex.Store({
         },
 
         count_user({ commit }) {
-            axios.get('/api/user/count').then(response => {
+            axios.get('/api/user/count')
+            .then(response => {
                 commit('count_user_mutation', response.data);
-            }).catch();
+            }).catch(error => {
+                console.log('could not get count user');
+            });
         },
 
         count_post({ commit }) {
@@ -126,6 +129,15 @@ const store = new Vuex.Store({
             axios.get('/api/user')
             .then( response => {
                 commit('get_users_mutation', response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        },
+        get_user({ commit },id) {
+            axios.get('/api/user/'+id)
+            .then( response => {
+                commit('get_user_mutation', response.data);
             })
             .catch(error => {
                 console.log(error);
@@ -176,7 +188,7 @@ const store = new Vuex.Store({
             return state.user_ids.length;
         },
 
-        get_user: (state) => (id) => {
+        get_user_by_id: (state) => (id) => {
             return state.users.find( user => user.id === id);
         },
 

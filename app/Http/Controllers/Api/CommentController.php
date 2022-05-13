@@ -32,7 +32,7 @@ class CommentController extends Controller {
     }
 
     public function count_comment() {
-        $comments =  Comment::get();
+        $comments = Comment::get();
         return $comments->count();
     }
 }

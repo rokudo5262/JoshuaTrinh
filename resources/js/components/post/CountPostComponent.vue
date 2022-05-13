@@ -1,5 +1,5 @@
 <template>
-    <div class="" align="center">
+    <div align="center">
         <h2>Total Post</h2>
         {{ $store.state.count_post }}
     </div>

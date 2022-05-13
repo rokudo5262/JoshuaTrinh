@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Jobs\SendEmail;
 use App\Models\User;
 use App\Models\Post;
+use App\Models\Logging;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\ChangePasswordRequest;
 use Illuminate\Http\Request;
@@ -15,7 +17,7 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller {
     public function login() {
-        return view('login');
+        return view('login');      
     }
 
     public function handle_login(Request $request) {
@@ -26,6 +28,11 @@ class AdminController extends Controller {
         ]);
         if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
             Log::channel('login')->info($input['email']." at ".$request->getClientIp()." Login Success");
+            Logging::create([
+                'user_id' => auth()->user()->id,
+                'login' => Carbon::now(),
+                'login_ip' => $request->getClientIp(),
+            ]);
             return redirect()->route('dashboard');
         } else {
             Log::channel('login')->info($input['email']." at ".$request->getClientIp()." Login Fail");
@@ -121,15 +128,10 @@ class AdminController extends Controller {
 
     public function setting() {
         //n+1 Query
-        // $users = User::get();
+        $posts = Post::take(1000)->get();
 
-        // Eager Load
-        // $users = User::with('first_post')->get();
-
-        // Dynamic Relationship
-        $users = User::WithFirstPost()->get();
-        $posts = Post::WithCount('comment')->get();
-        return view('setting',compact('users','posts'));
+        // Dynamic Relationship Eager Load
+        // $posts = Post::withAuthor()->withCount('comment')->get();
+        return view('setting',compact('posts'));
     }
-
 }

@@ -10,7 +10,7 @@ use Spatie\Permission\PermissionRegistrar;
 
 class PermisionSeeder extends Seeder {
     public function run() {
-        Permission::create(['name' => 'edit user']);
+        // Permission::create(['name' => 'edit user']);
         Permission::create(['name' => 'delete user']);
         Permission::create(['name' => 'create user']);
         Permission::create(['name' => 'view user']);
@@ -18,5 +18,9 @@ class PermisionSeeder extends Seeder {
         Permission::create(['name' => 'delete post']);
         Permission::create(['name' => 'create post']);
         Permission::create(['name' => 'view post']);
+        Permission::create(['name' => 'edit task']);
+        Permission::create(['name' => 'delete task']);
+        Permission::create(['name' => 'create task']);
+        Permission::create(['name' => 'view task']);
     }
 }

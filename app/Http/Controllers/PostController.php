@@ -19,10 +19,9 @@ class PostController extends Controller {
     }
 
     public function index() {
-        $posts = Post::where('post_status','!=','1')->WithAuthor()->withCount('comment')->get();
-        return view('post.view_post',[
-            'posts' => $posts,
-        ]);
+        $posts = Post::where('post_status','!=','1')->withCount('comment')->get();
+        // $posts = Post::where('post_status','!=','1')->WithAuthor()->withCount('comment')->get();
+        return view('post.view_post', compact('posts'));
     }
 
     public function create() {
@@ -45,14 +44,12 @@ class PostController extends Controller {
 
     public function show($id) {
         $post = Post::findOrFail($id);
-        return $post; 
+        return view("post.detail_post",compact('post'));;
     }
 
     public function edit($id) {
         $post = Post::findOrFail($id);
-        return view('post.edit_post',[
-            'post' => $post,
-        ]);
+        return view('post.edit_post',compact('post'));
     }
 
     public function update(UpdatePostRequest $request, $id) {

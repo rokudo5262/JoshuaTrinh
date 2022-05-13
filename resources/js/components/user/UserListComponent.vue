@@ -13,12 +13,14 @@
                 <div class="alert alert-success" v-if="success.delete_multiple_user">Delete Multiple Users Successfully</div>
                 <div class="alert alert-success" v-if="success.delete_user">Delete User Successfully</div>
                     <input v-model="search_user">
-                    <table class="table">
+                    <table class="table table-hover table-sm">
                         <thead>
                             <td></td>
                             <td>ID</td>
                             <td>Full Name</td>
                             <td>Email</td>
+                            <td>First Post</td>
+                            <td>Post Count</td>
                             <td>Created At</td>
                             <td>Action</td>
                         </thead>
@@ -30,9 +32,15 @@
                                 <td>{{ user.id }}</td>
                                 <td>{{ user.full_name }}</td>
                                 <td>{{ user.email }}</td>
+                                <td >
+                                    <a v-if="user.first_post!==null" :href="'/admin/post/show/'+user.first_post.id">{{ user.first_post.title }}</a>
+                                    <a v-else>None</a>
+                                </td>
+                                <td>{{ user.posts_count }}</td>
                                 <td>{{ user.created_at }}</td>
                                 <td>
-                                    <a class="btn btn-sm btn-success" type="button" :href="'./user/edit/' + user.id">Edit</a>
+                                    <a type="button" class="btn btn-sm btn-primary" @click="click_show(user.id)">Detail</a>
+                                    <a type="button" class="btn btn-sm btn-success"  @click="click_edit(user.id)">Edit</a>
                                     <button class="btn btn-sm btn-danger" @click.prevent="delete_user(user.id)" type="button">Delete</button>
                                 </td>
                             </tr>
@@ -109,6 +117,14 @@
                         alert("Could not delete this user");
                     });
                 }
+            },
+
+            click_edit(id){
+                window.location.href = "./user/edit/"+ id;
+                this.$store.dispatch('get_user',id);
+            },
+            click_show(id){
+                window.location.href = "./user/show/"+ id;
             },
         }
     }
