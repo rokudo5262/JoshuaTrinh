@@ -11,7 +11,7 @@
                 </form>
                 <div class="alert alert-success" v-if="success.delete_multiple_post">Delete Multiple Posts Successfully</div>
                 <div class="alert alert-success" v-if="success.delete_post">Delete Post Successfully</div>
-            <table class="table">
+            <table class="table table-hover table-sm">
                 <thead>
                     <td></td>
                     <td>Id</td>
@@ -36,6 +36,7 @@
                         <td>{{ post.post_status }}</td>
                         <td>{{ post.created_at }}</td>
                         <td>
+                            <a type="button" class="btn btn-sm btn-primary" :href="'./post/show/' + post.id">Detail</a>
                             <a type="button" class="btn btn-sm btn-success" :href="'./post/edit/' + post.id">Edit</a>
                             <button type="button" class="btn btn-sm btn-danger" @click.prevent="delete_post(post.id)">Delete</button>
                         </td>

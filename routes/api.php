@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +29,6 @@ Route::apiResource('post', 'App\Http\Controllers\Api\PostController');
 
 Route::get('comment/count',[CommentController::class, 'count_comment'])->name('comment.count');
 Route::apiResource('comment', 'App\Http\Controllers\Api\CommentController');
+
+Route::get('task/count',[TaskController::class, 'count_task'])->name('task.count');
+Route::apiResource('task', 'App\Http\Controllers\Api\TaskController');

@@ -8,7 +8,7 @@ use Carbon\Carbon;
 
 class PostSeeder extends Seeder {
     public function run() {
-        $i = 17;
+        $i = 1;
         while ( $i <= 1000) {
             Post::insert([
                 [

@@ -9,8 +9,10 @@ use App\Models\User;
 
 class UserSeeder extends Seeder {
     public function run() {
+        // run role seeder and permision seeder before run user seeder
         User::insert([
             [
+                'id'            => '1',
                 'first_name'    => 'Joshua',
                 'last_name'     => 'Trinh',
                 'is_admin'      => '1',
@@ -21,6 +23,7 @@ class UserSeeder extends Seeder {
                 'updated_at'    => Carbon::now(),
             ],
             [
+                'id'            => '2',
                 'first_name'    => 'Truong',
                 'last_name'     => 'Trinh',
                 'is_admin'      => '1',
@@ -31,6 +34,7 @@ class UserSeeder extends Seeder {
                 'updated_at'    => Carbon::now(),
             ],
             [
+                'id'            => '3',
                 'first_name'    => 'Admin',
                 'last_name'     => 'One',
                 'is_admin'      => '1',
@@ -41,6 +45,7 @@ class UserSeeder extends Seeder {
                 'updated_at'    => Carbon::now(),
             ],
             [
+                'id'            => '4',
                 'first_name'    =>'Admin',
                 'last_name'     =>'Two',
                 'is_admin'      => '1',
@@ -51,6 +56,7 @@ class UserSeeder extends Seeder {
                 'updated_at'    => Carbon::now(),   
             ],
             [
+                'id'            => '5',
                 'first_name'    =>'User',
                 'last_name'     =>'Three',
                 'is_admin'      => '0',
@@ -61,6 +67,7 @@ class UserSeeder extends Seeder {
                 'updated_at'    => Carbon::now(),
             ],
             [
+                'id'            => '6',
                 'first_name'    => 'User',
                 'last_name'     => 'Four',
                 'is_admin'      => '0',
@@ -71,6 +78,7 @@ class UserSeeder extends Seeder {
                 'updated_at'    => Carbon::now(),
             ],
             [
+                'id'            => '7',
                 'first_name'    => 'User',
                 'last_name'     => 'five',
                 'is_admin'      => '0',
@@ -81,6 +89,7 @@ class UserSeeder extends Seeder {
                 'updated_at'    => Carbon::now(),
             ],
             [
+                'id'            => '8',
                 'first_name'    => 'User',
                 'last_name'     => 'Six',
                 'is_admin'      => '0',
@@ -91,6 +100,7 @@ class UserSeeder extends Seeder {
                 'updated_at'    => Carbon::now(),
             ],
             [
+                'id'            => '9',
                 'first_name'    => 'User',
                 'last_name'     => 'Seven',
                 'is_admin'      => '0',
@@ -101,6 +111,7 @@ class UserSeeder extends Seeder {
                 'updated_at'    => Carbon::now(),
             ],
             [
+                'id'            => '10',
                 'first_name'    => 'User',
                 'last_name'     => 'Eight',
                 'is_admin'      => '0',
@@ -111,6 +122,7 @@ class UserSeeder extends Seeder {
                 'updated_at'    => Carbon::now(),
             ],
             [
+                'id'            => '11',
                 'first_name'    => 'User',
                 'last_name '    => 'Nine',
                 'is_admin'      => '0',
@@ -121,6 +133,7 @@ class UserSeeder extends Seeder {
                 'updated_at'    => Carbon::now(),
             ],
             [
+                'id'            => '12',
                 'first_name'    => 'User',
                 'last_name'     => 'Zero',
                 'is_admin'      => '0',
@@ -131,6 +144,7 @@ class UserSeeder extends Seeder {
                 'updated_at'    => Carbon::now(),
             ],
             [
+                'id'            => '13',
                 'first_name'    => 'User',
                 'last_name'     => 'Ten',
                 'is_admin'      => '0',
@@ -141,6 +155,7 @@ class UserSeeder extends Seeder {
                 'updated_at'    => Carbon::now(),
             ],
             [
+                'id'            => '14',
                 'first_name'    => 'User',
                 'last_name'     => 'Eleven',
                 'is_admin'      => '0',
@@ -151,6 +166,7 @@ class UserSeeder extends Seeder {
                 'updated_at'    => Carbon::now(),
             ],
             [
+                'id'            => '15',
                 'first_name'    => 'User',
                 'last_name'     => 'Twelve',
                 'is_admin'      => '0',

@@ -21,7 +21,8 @@ class UserController extends Controller {
             'password'      => Hash::make($request->get('password')),
         ]);
         $new_user->assignRole('user');
-        return $new_user;    }
+        return $new_user;
+    }
 
     public function show($id) {
         return User::find($id);
@@ -53,7 +54,7 @@ class UserController extends Controller {
     }
 
     public function count_user() {
-        $users = User::where('is_deleted','=',0)->get();
+        $users = User::where('is_deleted','0')->get();
         return $users->count();
     }
 }
