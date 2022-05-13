@@ -22,8 +22,8 @@ use App\Http\Controllers\StatusController;
 Route::prefix('/admin')->group(function(){
     Route::middleware([
         'auth',
-        'middleware' => 'throttle:60,1',
-        'middleware' => 'role:super_admin|admin',
+        // 'middleware' => 'throttle:60,1',
+        // 'middleware' => 'role:super_admin|admin',
         ])->group(function(){
             //admin route 
             Route::get('/logout',[AdminController::class, 'logout'])->name('logout');

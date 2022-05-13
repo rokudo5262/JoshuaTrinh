@@ -21,7 +21,8 @@ class UserController extends Controller {
             'password'      => Hash::make($request->get('password')),
         ]);
         $new_user->assignRole('user');
-        return $new_user;    }
+        return $new_user;
+    }
 
     public function show($id) {
         return User::find($id);

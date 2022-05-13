@@ -57,7 +57,7 @@ Vue.component('count-comment-component', require('./components/comment/CountComm
 Vue.component('counter-component', require('./components/CounterComponent.vue').default);
 
 // task kanban
-Vue.component('kanban-board', require('./components/KanbanBoardComponent.vue').default);
+Vue.component('task-kanban-board', require('./components/KanbanBoardComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
