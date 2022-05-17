@@ -11,7 +11,7 @@
                 </form>
                 <div class="alert alert-success" v-if="success.delete_multiple_post">Delete Multiple Posts Successfully</div>
                 <div class="alert alert-success" v-if="success.delete_post">Delete Post Successfully</div>
-            <table class="table table-hover table-sm">
+            <table class="table post-table table-hover table-sm">
                 <thead>
                     <td></td>
                     <td>Id</td>

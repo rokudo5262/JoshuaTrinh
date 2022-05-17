@@ -15,6 +15,9 @@
                     <div class="col-6 success alert alert-success">
                         <count-comment-component></count-comment-component>
                     </div>
+                      <div class="col-6 success alert alert-success">
+                        <count-task-component></count-task-component>
+                    </div>
                     <div class="col-6 success alert alert-success">
                         <counter-component></counter-component>
                     </div>
@@ -29,8 +32,8 @@
     import CountPostComponent from './post/CountPostComponent'
     import CountUserComponent from './user/CountUserComponent'
     import CountCommentComponent from './comment/CountCommentComponent'
+    import CountTaskComponent from './task/CountTaskComponent'
     import CounterComponent from './CounterComponent'
-
     export default {
         mounted() {
             console.log('Dashboard Component mounted.')
@@ -39,6 +42,7 @@
             CountPostComponent,
             CountUserComponent,
             CountCommentComponent,
+            CountTaskComponent,
             CounterComponent,
         }
     }

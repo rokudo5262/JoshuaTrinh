@@ -10,6 +10,7 @@ const store = new Vuex.Store({
         count_user: 0,
         count_post: 0,
         count_comment: 0,
+        count_task: 0,
         users: [],
         user: {},
         posts: [],
@@ -42,6 +43,10 @@ const store = new Vuex.Store({
 
         count_comment_mutation(state,new_value) {
             state.count_comment += new_value;
+        },
+
+        count_task_mutation(state,new_value) {
+            state.count_task += new_value;
         },
 
         errors_mutation(state,new_errors) {
@@ -122,6 +127,15 @@ const store = new Vuex.Store({
                 commit('count_comment_mutation', response.data);
             }).catch(error => {
                 console.log('could not get count comment');
+            });
+        },
+
+        count_task({ commit }) {
+            axios.get('/api/task/count')
+            .then(response => {
+                commit('count_task_mutation', response.data);
+            }).catch(error => {
+                console.log('could not get count task');
             });
         },
 

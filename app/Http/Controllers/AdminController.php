@@ -128,10 +128,11 @@ class AdminController extends Controller {
 
     public function setting() {
         //n+1 Query
-        $posts = Post::take(1000)->get();
+        // $posts = Post::take(1000)->get();
 
         // Dynamic Relationship Eager Load
         // $posts = Post::withAuthor()->withCount('comment')->get();
-        return view('setting',compact('posts'));
+
+        return view('setting');
     }
 }

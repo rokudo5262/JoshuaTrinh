@@ -6,14 +6,14 @@
             </div>
             <div class="card-body">
                     <form @submit.prevent="delete_multiple_user">
-                        <a type="button" class="btn btn-primary mb-3" href="./user/create">Create New User</a>
-                        <button type="submit" class="btn btn-primary mb-3" 
+                        <a type="button" class="create-new-user-btn btn btn-primary mb-3" href="./user/create">Create New User</a>
+                        <button type="submit" class="delete-multiple-user-btn btn btn-primary mb-3" 
                         :disabled="$store.getters.user_ids_length < 1">Delete Multiple Users</button>
                     </form>
                 <div class="alert alert-success" v-if="success.delete_multiple_user">Delete Multiple Users Successfully</div>
                 <div class="alert alert-success" v-if="success.delete_user">Delete User Successfully</div>
-                    <input v-model="search_user">
-                    <table class="table table-hover table-sm">
+                    <input v-model="search_user" class="search-user-bar">
+                    <table class="table user-table table-hover table-sm">
                         <thead>
                             <td></td>
                             <td>ID</td>
@@ -39,8 +39,8 @@
                                 <td>{{ user.posts_count }}</td>
                                 <td>{{ user.created_at }}</td>
                                 <td>
-                                    <a type="button" class="btn btn-sm btn-primary" @click="click_show(user.id)">Detail</a>
-                                    <a type="button" class="btn btn-sm btn-success"  @click="click_edit(user.id)">Edit</a>
+                                    <a type="button" class="detail-user-btn btn btn-sm btn-primary" @click="click_show(user.id)">Detail</a>
+                                    <a type="button" class="edit-user-btn btn btn-sm btn-success"  @click="click_edit(user.id)">Edit</a>
                                     <button class="btn btn-sm btn-danger" @click.prevent="delete_user(user.id)" type="button">Delete</button>
                                 </td>
                             </tr>
@@ -48,7 +48,7 @@
                     </table>
                 </div>
             <div class="card-footer">
-                <a type="button" href="/admin">Dashboard</a>
+                <a type="button" class="back-btn" href="/admin">Dashboard</a>
             </div>
         </div>
     </div>

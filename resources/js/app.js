@@ -17,8 +17,6 @@ require('./bootstrap');
 
 import store from './store/store';
 
-
-
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -53,8 +51,12 @@ Vue.component('count-post-component', require('./components/post/CountPostCompon
 //comment
 Vue.component('count-comment-component', require('./components/comment/CountCommentComponent.vue').default);
 
+//task
+Vue.component('count-task-component', require('./components/task/CountTaskComponent.vue').default);
+
 //test
 Vue.component('counter-component', require('./components/CounterComponent.vue').default);
+Vue.component('setting-component', require('./components/SettingComponent.vue').default);
 
 // task kanban
 Vue.component('task-kanban-board', require('./components/KanbanBoardComponent.vue').default);

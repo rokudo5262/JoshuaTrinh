@@ -8,7 +8,7 @@
                 </div>
                 <div class="card-body">
                     <div class="alert alert-success" v-show="success">Register Successfully</div>
-                    <form @submit.prevent="handle_register">
+                    <form class="register-form" @submit.prevent="handle_register">
                         <div class="row mb-3">
                             <label for="first_name" class="col-md-4 col-form-label text-md-end">First Name</label>
                             <div class="col-md-6">
@@ -59,9 +59,6 @@
 
 <script>
     export default {
-        mounted() {
-            console.log('Register Component mounted.')
-        },
         data: function() {
             return {
                 fields:{},
@@ -69,7 +66,7 @@
                 errors: {},
             }
         },
-        methods:{
+        methods: {
             handle_register() {
                 axios.post('/admin/handle_register',this.fields)
                 .then( response => {
@@ -84,6 +81,6 @@
                     }
                 })
             },
-        }
+        },
     }
 </script>

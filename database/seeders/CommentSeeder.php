@@ -12,7 +12,7 @@ class CommentSeeder extends Seeder {
         while ( $i <= 2000) {
             Comment::insert([
                 [
-                    'id'=> $i,
+                    'id'            => $i,
                     'post_id'       => rand('1','1000'),
                     'user_id'       => rand('1','15'),
                     'content'       => 'This is Comment '.$i.' content',
