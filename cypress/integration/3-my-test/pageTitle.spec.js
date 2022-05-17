@@ -11,4 +11,13 @@ describe('Page Title', function() {
         cy.login(email,password)
         cy.title().should('eq','Laravel')
     })
+    it('Check dashboard', function() {
+        cy.login(email,password)
+        cy.contains('Admin').click()
+        cy.url().should('eq','http://127.0.0.1:8000/admin')
+        cy.contains('Total User')
+        cy.contains('Total Post')
+        cy.contains('Total Comment')
+        cy.contains('Total Task')
+    })
 })
