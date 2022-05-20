@@ -8,6 +8,22 @@ const url = 'http://127.0.0.1:8000/admin'
 const email = 'joshuatrinh5262@gmail.com'
 const password = '123456789'
 describe('Login', function() {
+  before(() => {
+    // runs once before all tests in the block
+  })
+
+  beforeEach(() => {
+      // runs before each test in the block
+      cy.visit('/home')
+  })
+
+  afterEach(() => {
+      // runs after each test in the block
+  })
+
+  after(() => {
+      // runs once after all tests in the block
+  })
   it('Login - Success', function() {
     cy.visit('http://127.0.0.1:8000/admin/login')
     cy.get('input[type="email"]').type('joshuatrinh5262@gmail.com')
@@ -24,7 +40,7 @@ describe('Login', function() {
     cy.get('input[type="checkbox"]').check()
     cy.get('.login-btn').click()
     cy.url().should('eq',url)
-    cy.contains('Dashboard')
+    cy.contains('Login')
   })
   it('Logout', function() {
     cy.login(email,password)

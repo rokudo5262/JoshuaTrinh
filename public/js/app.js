@@ -34574,6 +34574,7 @@ var render = function () {
                 staticClass: "delete-multiple-user-btn btn btn-primary mb-3",
                 attrs: {
                   type: "submit",
+                  id: "delete-multiple-user-btn",
                   disabled: _vm.$store.getters.user_ids_length < 1,
                 },
               },

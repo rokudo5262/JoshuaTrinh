@@ -7,7 +7,7 @@
             <div class="card-body">
                     <form @submit.prevent="delete_multiple_user">
                         <a type="button" class="create-new-user-btn btn btn-primary mb-3" href="./user/create">Create New User</a>
-                        <button type="submit" class="delete-multiple-user-btn btn btn-primary mb-3" 
+                        <button type="submit" id="delete-multiple-user-btn" class="delete-multiple-user-btn btn btn-primary mb-3" 
                         :disabled="$store.getters.user_ids_length < 1">Delete Multiple Users</button>
                     </form>
                 <div class="alert alert-success" v-if="success.delete_multiple_user">Delete Multiple Users Successfully</div>
