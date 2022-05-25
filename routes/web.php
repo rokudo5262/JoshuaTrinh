@@ -66,9 +66,12 @@ Route::prefix('/admin')->group(function(){
                 Route::post('/store',[TaskController::class, 'store'])->name('task.store');
                 Route::get('/create',[TaskController::class, 'create'])->name('task.create');
                 Route::get('/edit/{id}',[TaskController::class, 'edit'])->name('task.edit');
-                Route::post('/update/{id}',[TaskController::class, 'update'])->name('task.update');
+                Route::put('/sync', [TaskController::class, 'sync'])->name('tasks.sync');
+                Route::put('/update/{task}',[TaskController::class, 'update'])->name('task.update');
                 Route::post('/destroy/{id}',[TaskController::class, 'destroy'])->name('task.destroy');
             });
+            Route::post('/status', 'StatusController@store')->name('status.store');
+            Route::put('/status', 'StatusController@update')->name('status.update');
             Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
     });
 

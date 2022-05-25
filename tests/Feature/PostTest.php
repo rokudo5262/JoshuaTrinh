@@ -23,14 +23,14 @@ class PostTest extends TestCase {
         $response->assertStatus(200);
     }
 
-    public function test_a_user_can_read_all_the_post() {
-        //Given we have task in the database
-        $post = factory('App\Models\Post')->create();
+    // public function test_a_user_can_read_all_the_post() {
+    //     //Given we have task in the database
+    //     $post = factory('App\Models\Post')->create();
 
-        //When user visit the tasks page
-        $response = $this->get('api/post');
+    //     //When user visit the tasks page
+    //     $response = $this->get('api/post');
         
-        //He should be able to read the task
-        $response->assertSee($post->title);
-    }
+    //     //He should be able to read the task
+    //     $response->assertSee($post->title);
+    // }
 }
