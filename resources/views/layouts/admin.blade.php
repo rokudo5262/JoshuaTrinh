@@ -60,6 +60,7 @@
                                 <a href="{{ config('app.url')}}/admin/user">User</a>
                             </li>
                             <li class="list-group-item">
+<<<<<<< Updated upstream
                                 <a href="{{ config('app.url')}}/admin/post">Post</a>
                             </li>
                             <li class="list-group-item">
@@ -67,6 +68,13 @@
                             </li>
                             <li class="list-group-item">
                                 <a href="{{ config('app.url')}}/admin/setting">Setting</a>
+=======
+                                <a href="{{ config('app.url')}}/admin/post">Post</a></li>
+                            <li class="list-group-item"><a href="{{ config('app.url')}}/admin/role">Role</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="{{ config('app.url')}}/admin/setting">System Setting</a>
+>>>>>>> Stashed changes
                             </li>
                         </ul>
                     </div>

@@ -5,8 +5,12 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
+<<<<<<< Updated upstream
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\StatusController;
+=======
+use App\Http\Controllers\RoleController;
+>>>>>>> Stashed changes
 
 
 /*
@@ -33,6 +37,7 @@ Route::prefix('/admin')->group(function(){
             Route::post('/handle_change_profile_picture',[AdminController::class, 'handle_change_profile_picture']);
             Route::get('/under_construction',[AdminController::class, 'under_construction'])->name('under_construction');
             Route::get('/setting',[AdminController::class, 'setting'])->name('setting');
+
             //post route
             Route::get('/post',[PostController::class, 'index'])->name('post');
             Route::prefix('/post')->group( function () {
@@ -45,6 +50,7 @@ Route::prefix('/admin')->group(function(){
                 Route::post('/mutiple_delete',[PostController::class, 'mutiple_delete'])->name('post.mutiple_delete');
                 Route::post('destroy/{id}',[PostController::class, 'destroy'])->name('post.destroy');
             });
+
             // user route
             Route::get('/user',[UserController::class, 'index'])->name('user');
             Route::prefix('/user')->group( function () {
@@ -59,6 +65,7 @@ Route::prefix('/admin')->group(function(){
                 Route::post('/delete/{id}',[UserController::class, 'delete'])->name('user.delete');
                 Route::post('/destroy/{id}',[UserController::class, 'destroy'])->name('user.destroy');
             });
+<<<<<<< Updated upstream
             // task route
             Route::get('/task',[TaskController::class, 'index'])->name('task');
             Route::prefix('/task')->group( function () {
@@ -72,6 +79,12 @@ Route::prefix('/admin')->group(function(){
             });
             Route::post('/status', 'StatusController@store')->name('status.store');
             Route::put('/status', 'StatusController@update')->name('status.update');
+=======
+
+            //role route
+            Route::get('/role',[RoleController::class, 'index'])->name('role');
+
+>>>>>>> Stashed changes
             Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
     });
 

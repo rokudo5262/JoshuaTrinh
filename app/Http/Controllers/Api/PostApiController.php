@@ -6,7 +6,7 @@ use App\Models\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class PostController extends Controller {
+class PostApiController extends Controller {
     public function index() {
         return Post::withAuthor()->withCount('comment')->where('post_status','=!','4')->get();
     }

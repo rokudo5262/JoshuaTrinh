@@ -8,17 +8,17 @@ use App\Models\User;
 use App\Http\Requests\CreateUserRequest;
 
 
-class UserController extends Controller {
+class UserApiController extends Controller {
     public function index() {
         return User::where('is_deleted',0)->withFirstPost()->withCount('posts')->get();
     }
 
     public function store(CreateUserRequest $request) {
         $new_user = User::create([
-            'first_name'    => Str::ucfirst($request->get('first_name')),
-            'last_name'     => Str::ucfirst($request->get('last_name')),
-            'email'         => $request->get('email'),
-            'password'      => Hash::make($request->get('password')),
+            'first_name' => Str::ucfirst($request->get('first_name')),
+            'last_name' => Str::ucfirst($request->get('last_name')),
+            'email' => $request->get('email'),
+            'password' => Hash::make($request->get('password')),
         ]);
         $new_user->assignRole('user');
         return $new_user;

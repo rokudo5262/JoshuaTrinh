@@ -61,6 +61,9 @@ Vue.component('setting-component', require('./components/SettingComponent.vue').
 // task kanban
 Vue.component('task-kanban-board', require('./components/KanbanBoardComponent.vue').default);
 
+//system-setting
+Vue.component('system-setting-component', require('./components/SystemSettingComponent.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
