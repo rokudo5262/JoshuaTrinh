@@ -6,19 +6,16 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-6 success alert alert-success">
+                    <div class="col-6">
                         <count-user-component></count-user-component>
                     </div>
-                    <div class="col-6 success alert alert-success">
+                    <div class="col-6">
                         <count-post-component></count-post-component>
                     </div>
-                    <div class="col-6 success alert alert-success">
+                    <div class="col-6">
                         <count-comment-component></count-comment-component>
                     </div>
-                      <div class="col-6 success alert alert-success">
-                        <count-task-component></count-task-component>
-                    </div>
-                    <div class="col-6 success alert alert-success">
+                    <div class="col-6">
                         <counter-component></counter-component>
                     </div>
                 </div>
@@ -32,7 +29,6 @@
     import CountPostComponent from './post/CountPostComponent'
     import CountUserComponent from './user/CountUserComponent'
     import CountCommentComponent from './comment/CountCommentComponent'
-    import CountTaskComponent from './task/CountTaskComponent'
     import CounterComponent from './CounterComponent'
     export default {
         mounted() {
@@ -42,7 +38,6 @@
             CountPostComponent,
             CountUserComponent,
             CountCommentComponent,
-            CountTaskComponent,
             CounterComponent,
         }
     }

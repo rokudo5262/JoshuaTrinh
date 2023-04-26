@@ -5,12 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
-<<<<<<< Updated upstream
-use App\Http\Controllers\TaskController;
-use App\Http\Controllers\StatusController;
-=======
 use App\Http\Controllers\RoleController;
->>>>>>> Stashed changes
 
 
 /*
@@ -65,26 +60,10 @@ Route::prefix('/admin')->group(function(){
                 Route::post('/delete/{id}',[UserController::class, 'delete'])->name('user.delete');
                 Route::post('/destroy/{id}',[UserController::class, 'destroy'])->name('user.destroy');
             });
-<<<<<<< Updated upstream
-            // task route
-            Route::get('/task',[TaskController::class, 'index'])->name('task');
-            Route::prefix('/task')->group( function () {
-                Route::get('/show/{id}',[TaskController::class, 'show'])->name('task.show');
-                Route::post('/store',[TaskController::class, 'store'])->name('task.store');
-                Route::get('/create',[TaskController::class, 'create'])->name('task.create');
-                Route::get('/edit/{id}',[TaskController::class, 'edit'])->name('task.edit');
-                Route::put('/sync', [TaskController::class, 'sync'])->name('tasks.sync');
-                Route::put('/update/{task}',[TaskController::class, 'update'])->name('task.update');
-                Route::post('/destroy/{id}',[TaskController::class, 'destroy'])->name('task.destroy');
-            });
-            Route::post('/status', 'StatusController@store')->name('status.store');
-            Route::put('/status', 'StatusController@update')->name('status.update');
-=======
 
             //role route
             Route::get('/role',[RoleController::class, 'index'])->name('role');
 
->>>>>>> Stashed changes
             Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
     });
 

@@ -15,6 +15,8 @@ const store = new Vuex.Store({
         user: {},
         posts: [],
         post: {},
+        roles: [],
+        role: {},
         user_ids: [],
         search_user: null,
         errors:{},

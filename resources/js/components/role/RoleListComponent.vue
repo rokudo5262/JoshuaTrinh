@@ -54,15 +54,13 @@
                 ids: [],
                 posts: [],
                 success: {
-                    delete_multiple_post: false,
-                    delete_post: false,
+                    delete_multiple_role: false,
+                    delete_role: false,
                 },
                 errors: {},
             }
         },
-        mounted() {
-            console.log('Post Component mounted.')
-        },
+
         created() {
             this.$store.dispatch('get_posts');
         },
@@ -82,7 +80,7 @@
                 }
             },
             delete_post(id) {
-                if(confirm("Do you really want to delete this post ?")) {
+                if(confirm("Do you really want to delete this role ?")) {
                     this.$store.dispatch('delete_post',id)
                     .then( response => {
                         this.success.delete_post = true;

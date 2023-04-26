@@ -64,12 +64,11 @@
                 errors: {},
             }
         },
-        mounted() {
-            console.log('Post Component mounted.')
-        },
+
         created() {
             this.$store.dispatch('get_posts');
         },
+
         methods: {
             delete_multiple_post() {
                 if(confirm("Do you really want to delete multiple posts ?")) {
